@@ -1,0 +1,266 @@
+<div class="hero-section section pt-0">
+  <div class="container pt-5">
+    <app-header></app-header>
+
+  </div>
+
+
+</div>
+
+
+
+<div class="results-section section container" style="margin-top:-40px">
+
+  <div class="section-title">
+    <div class="d-block d-md-flex align-items-center justify-content-between mb-3">
+      <p class="fs-5 mb-0 text-capitalize">MOMBASA -> NAIROBI: <i class="fas fa-calendar-day mx-2"></i>10 oct 2022</p>
+      <div class="d-flex gap-2 mt-2">
+        <button class="btn btn-secondary">modify</button>
+        <button class="btn btn-secondary">add a return ticket</button>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="section-body">
+    <div class="" *ngFor="let item of buses;let i=index">
+      <div class="row align-items-start  py-2 py-md-3 container-fluid px-0 px-md-3 result-row">
+        <div class="col-4 d-block d-md-none">
+          <img src="https://cdn-icons-png.flaticon.com/512/1819/1819543.png" alt="bus icon" height="40" width="40">
+          <p class="mb-0 fw-bold small">{{item.trip_code}}</p>
+          <!-- <small class="small" style="font-size:8;">{{item.bus_type}}</small> -->
+        </div>
+        <div class="col-3 d-block d-md-none">
+          <p class="mb-0 fw-bold small">{{item.departure_time}}</p>
+          <div class="mb-0">
+            <i class="far fa-star fa-xs"></i>
+            <i class="far fa-star fa-xs"></i>
+            <i class="far fa-star fa-xs"></i>
+            <i class="far fa-star fa-xs"></i>
+            <i class="far fa-star fa-xs"></i>
+          </div>
+          <div class="">
+            <i class="fas fa-fan fa-xs" title="a/c available" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               data-bs-title="a/c available"></i>
+            <i class="fas fa-wifi fa-xs" title="free wifi" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               data-bs-title="free wifi"></i>
+            <i class="fas fa-bolt fa-xs" title="charging point" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               data-bs-title="charging point"></i>
+            <i class="fas fa-newspaper fa-xs" title="free newspaper" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               data-bs-title="free newspaper"></i>
+          </div>
+        </div>
+        <div class="col-5 d-block d-md-none">
+          <table class="table table-sm table-borderless mb-0">
+            <tr  *ngFor="let class of item.defaultTripPriceList">
+              <td class="small" style="text-transform: capitalize">{{class.seatType}}:</td>
+              <td class="small fw-bold"> {{class.amount | number: '1.0-0'}} </td>
+            </tr>
+          
+          </table>
+          <button class="btn btn-sm view-seats float-end">view seats</button>
+        </div>
+      </div>
+      <div class="row align-items-start border-bottom py-2 py-md-3 container-fluid px-0 px-md-3 result-row">
+        <div class="col-1 d-none d-md-block">
+          <img src="https://cdn-icons-png.flaticon.com/512/1819/1819543.png" alt="bus icon" height="50" width="50">
+        </div>
+        <div class="col-3 d-none d-md-block">
+          <p class="mb-0 fw-bold">{{item.trip_code}}</p>
+          <small>{{item.bus_type}}</small>
+          <div class="d-flex gap-3 mt-2">
+            <i class="fas fa-fan" title="a/c available" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               data-bs-title="a/c available"></i>
+            <i class="fas fa-wifi" title="free wifi" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               data-bs-title="free wifi"></i>
+            <i class="fas fa-bolt" title="charging point" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               data-bs-title="charging point"></i>
+            <i class="fas fa-newspaper" title="free newspaper" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               data-bs-title="free newspaper"></i>
+          </div>
+        </div>
+        <div class="text-center col-2 d-none d-md-flex align-items-center">
+          <img src="https://cdn-icons-png.flaticon.com/512/581/581838.png" alt="" height="40">
+          <div>
+            <p class="">{{item.departure_time}}</p>
+            <p class="mb-0">{{item.arrival_time}}</p>
+          </div>
+        </div>
+        <div class="col-2 d-none d-md-block">
+          <p>Rating</p>
+          <div class="d-flex">
+            <i class="far fa-star fa-sm"></i>
+            <i class="far fa-star fa-sm"></i>
+            <i class="far fa-star fa-sm"></i>
+            <i class="far fa-star fa-sm"></i>
+            <i class="far fa-star fa-sm"></i>
+          </div>
+        </div>
+        <div class="col-4 d-none d-md-flex justify-content-between">
+          <div class="text-end">
+            <p class="mb-0">VIP:</p>
+            <p class="mb-0">Normal:</p>
+          </div>
+          <div>
+            <p class="mb-0">KES 2,800</p>
+            <p class="mb-0">KES 2,300</p>
+          </div>
+          <div class="text-end">
+            <p class="mb-1 primary">{{item.available_seat_count}} seats available</p>
+            <button class="btn btn-sm view-seats" (click)="getSeats(item)">view seats</button>
+          </div>
+        </div>
+     
+      </div>
+    </div>
+  </div>
+
+
+ 
+</div>
+
+
+<div class="modal fade" bsModal #reviewModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+  aria-labelledby="dialog-static-name">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-static-name" class="modal-title pull-left">Trip Review</h4>
+        <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="reviewModal.hide()">
+          <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row" ng-if="reviewInfo.onwardticket" style="padding-bottom: 5px">
+          <div class="row" style="font-size: 15px;font-weight: 600;margin-bottom: 10px">
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 padding-0"><span class="crossBorderSpan"
+                style="background-color:#cbffcb"><span style="font-size:18px">Onward</span> |
+                {{reviewInfo.onwardticket?.source_city}} <i class="fa-solid fa-chevron-right"></i>
+                {{reviewInfo.onwardticket?.dest_city}} | <span class="ng-binding">12 Oct 2022</span></span>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="text-align: right"><span
+                style="padding-right: 5px">Seat(s):</span>
+              <span
+                *ngFor="let eachseat of reviewInfo?.onwardticket?.passenger;let last=last">{{eachseat.seat_name}}{{last
+                ? '' : ', '}}</span>
+            </div>
+          </div>
+          <div class="row disableBorder" style="display: flex;flex-wrap: wrap">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 padding-left-0 sameHeightColumn" style="text-align: center">
+              <img src="assets/img/bus.svg" alt="bus" style="width: 65px;opacity: 0.4">
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 padding-left-0 sameHeightColumn">
+              <div class="reviewPadding">
+                <div style="font-size:15px" class="hidden-xs"><b>Company Name</b></div>
+                <div style="font-size:15px" class="ng-binding">{{reviewInfo?.onwardticket?.company_name}}</div>
+              </div>
+              <div class="reviewPadding">
+                <div style="font-size:15px"><b>Bus</b></div>
+                <div style="font-size:15px" class="ng-binding">{{reviewInfo?.onwardticket?.bus_title}}</div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 row sameHeightColumn" style="padding-right: 0">
+              <div class="reviewPadding">
+                <div style="font-size:15px"><b>Depart</b></div>
+                <div style="font-size:15px" class="ng-binding">{{reviewInfo?.onwardticket?.source_city}}</div>
+              </div>
+              <div class="reviewPadding">
+                <div style="font-size:15px"><b>Boarding</b></div>
+                <div style="font-size:15px" class="ng-binding">{{reviewInfo?.onwardticket?.boardingPointname}}</div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 row sameHeightColumn" style="padding-right: 0">
+              <div class="reviewPadding">
+                <div style="font-size:15px"><b>Arrive</b></div>
+                <div style="font-size:15px" class="ng-binding">{{reviewInfo?.onwardticket?.dest_city}}</div>
+              </div>
+              <div class="reviewPadding">
+                <div style="font-size:15px"><b>Dropping</b></div>
+                <div style="font-size:15px" class="ng-binding">{{reviewInfo?.onwardticket?.droppingPointname}}</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-7 sameHeightColumn">
+
+              <div class="row reviewPadding">
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-4 padding-0" style="font-size:16px"><b>Total:</b></div>
+                <div class="col-lg-8 col-md-4 col-sm-6 col-xs-8" style="text-align:right;font-size:16px;padding-left:0">
+                  <b class="ng-binding">{{reviewInfo?.totalTicketPrice| number}}</b>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row" *ngIf="reviewInfo.returnticket" style="margin-top:10px">
+          <div class="row" style="font-size: 15px;font-weight: 600;margin-bottom: 10px">
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12  padding-0">
+              <span class="crossBorderSpan" style="background-color: #ffe7fe"><span style="font-size:18px">Return</span>
+                | <span>{{reviewInfo.returnticket.source_city}} to {{reviewInfo.returnticket.dest_city}}</span> |
+                <span>{{reviewInfo.returnticket.booking_date|date:'dd MMM yyyy'}}</span></span>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="text-align: right">
+              <span style="padding-right: 5px">Seat(s):</span><span
+                *ngFor="let eachseat of reviewInfo.returnticket.passenger">{{eachseat.seat_name}}{{$last ? '' : ',
+                '}}</span>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 10px;padding-bottom: 5px;display: flex;flex-wrap: wrap">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 padding-left-0 sameHeightColumn" style="text-align: center">
+              <img src="../assets/bus.svg" alt="bus" style="width: 65px;opacity: 0.4" />
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 sameHeightColumn padding-left-0">
+              <div class="reviewPadding">
+                <div style="font-size:15px"><b>Company Name</b></div>
+                <div style="font-size:15px">{{reviewInfo.returnticket.company_name}}</div>
+              </div>
+              <div class="reviewPadding">
+                <div style="font-size:15px"><b>Bus</b></div>
+                <div style="font-size:15px">{{reviewInfo.returnticket.bus_title}}</div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 sameHeightColumn" style="padding-right: 0">
+              <div class="reviewPadding">
+                <div style="font-size:15px"><b>Depart</b></div>
+                <div style="font-size:15px">{{reviewInfo.returnticket.source_city}}</div>
+              </div>
+              <div class="reviewPadding">
+                <div style="font-size:15px"><b>Boarding</b></div>
+                <div style="font-size:15px">{{reviewInfo.returnticket.boardingPointname}}</div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-3 sameHeightColumn" style="padding-right: 0">
+              <div class="reviewPadding">
+                <div style="font-size:15px"><b>Arrive</b></div>
+                <div style="font-size:15px">{{reviewInfo.returnticket.dest_city}}</div>
+              </div>
+              <div class="reviewPadding">
+                <div style="font-size:15px"><b>Dropping</b></div>
+                <div style="font-size:15px">{{reviewInfo.returnticket.droppingPointname}}</div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-7 sameHeightColumn">
+              <div class="row" style="padding:5px 0">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 padding-0" style="font-size:16px"><b>Total: </b></div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="text-align:right;font-size:16px;padding-left:0">
+                  <b>{{reviewInfo.returnticket.currency}} {{reviewInfo.returnticket.total|num}}</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row reviewPayable">
+          <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">Grand Total</div>
+          <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6 ng-binding" style="text-align: right">KES<span
+              style="padding-left:5px" class="ng-binding">{{reviewInfo?.totalTicketPrice| number}}</span></div>
+        </div>
+        <div class="row" style="text-align: right">
+          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+            <button class="btn view-seats" (click)="continue()" style="margin-right: 0px !important;float: right;">CONTINUE <i
+                class="fa-solid fa-chevron-right"></i></button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

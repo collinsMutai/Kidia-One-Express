@@ -1,0 +1,133 @@
+<div class="hero-section section pt-0">
+    <div class="container pt-5">
+    <app-header></app-header>
+    <div class="container h-100 text-white">
+      </div>
+    </div>
+   
+  </div>
+
+
+<div class="section-1 container">
+   <div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 >Payments</h4>
+            </div>
+            <div class="row">
+                <div class="col-sm-7"><div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                    <mat-tab-group [selectedIndex]="0"
+                    >
+                    <mat-tab *ngFor="let tab of payments; let index = index" [label]="tab">
+                        <div class="row container">
+                            <span>To complete the payment you will receive a prompt from {{tab}} on the mobile number below</span>                        
+                            <div class="col-sm-12">
+                                <form [formGroup]="paymentForm" (ngSubmit)="login()">
+                                <div class="row">
+                                  <div class="col-sm-4">
+                                    <mat-form-field appearance="outline">
+                                      <mat-label>Code</mat-label>
+                                      <input matInput readonly formControlName="country_code"    placeholder="code">
+                                    </mat-form-field>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <mat-form-field appearance="outline">
+                                      <mat-label>Mobile</mat-label>
+                                      <input matInput  readonly formControlName="mobile"    placeholder="Mobile">
+                                  </mat-form-field>
+                                  </div>
+                                 
+                                  <div class="col-sm-12">
+                                    <button class="btn view-seats" [disabled]="paymentForm.invalid" style="float: right;">Make Payment</button>
+                                  </div>
+                                </div>
+                                </form>
+                              </div>
+                        </div>
+                    </mat-tab>
+                    </mat-tab-group>
+                        </div>
+                    </div>
+                  </div></div>
+                <div class="col-sm-5">
+                    <div class="card">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-sm-12">
+                                <div>
+                                    <tabset>
+                                      <tab heading="ONWARD" id="tab1">
+                                        <br>
+                                      <div class="row details">
+                                        <div class="col-sm-12">
+                                            <img src="assets/img/bus.svg" alt="bus" style="width: 65px;opacity: 0.4">
+                                        </div>
+                                        <div class="col-sm-6">Bus</div>
+                                        <div class="col-sm-6"></div>
+                                        <div class="col-sm-6">Booking date</div>
+                                        <div class="col-sm-6"></div>
+                                        <div class="col-sm-6">Departure Time</div>
+                                        <div class="col-sm-6"></div>
+                                        <div class="col-sm-6">Boarding Point</div>
+                                        <div class="col-sm-6"></div>
+                                        <div class="col-sm-6">Dropping Point</div>
+                                        <div class="col-sm-6"></div>
+
+                                      </div>
+                                    </tab>
+                                      <tab heading="RETURN"  >
+                                        <br>
+                                        <div class="row details">
+                                            <div class="col-sm-12">
+                                                <img src="assets/img/bus.svg" alt="bus" style="width: 65px;opacity: 0.4">
+                                            </div>
+                                            <div class="col-sm-6">Bus</div>
+                                            <div class="col-sm-6"></div>
+                                            <div class="col-sm-6">Booking date</div>
+                                            <div class="col-sm-6"></div>
+                                            <div class="col-sm-6">Departure Time</div>
+                                            <div class="col-sm-6"></div>
+                                            <div class="col-sm-6">Boarding Point</div>
+                                            <div class="col-sm-6"></div>
+                                            <div class="col-sm-6">Dropping Point</div>
+                                            <div class="col-sm-6"></div>
+    
+                                          </div>
+                                      </tab>
+                                    </tabset>
+                                  </div>
+                                   
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card" style="margin-top: 10px;">
+                        <div class="card-body">
+                          <h5 class="card-title">Fare Breakup</h5>
+                          <div class="row breakup">
+                            <div class="col-sm-8">
+                                ONWARD FARE
+                            </div>
+                            <div class="col-sm-4 text-right" >4000</div>
+                            <div class="col-sm-8">
+                                RETURN FARE
+                            </div>
+                            <div class="col-sm-4 text-right">4000</div>
+                          </div>
+                        </div>
+                        <div class="card-footer" style="background-color: black;color:white;font-weight: 600;font-size: 13px;">
+                            <span style="float:right;font-size: 12px;">TOTAL:</span>
+                          </div>
+                      </div>
+                </div>
+
+            </div>
+        </div>
+        
+    </div>
+   </div>
+  </div>
+

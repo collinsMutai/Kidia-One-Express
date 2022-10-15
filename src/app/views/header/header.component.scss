@@ -1,0 +1,26 @@
+.bg-dark{
+    background-color: #ffe716 !important;
+    color:black !important;
+}
+.navbar-nav .nav-link.active, .navbar-nav .show>.nav-link {
+    color:#ffe716;
+}
+::ng-deep .mat-form-field-wrapper{
+    margin-bottom: -0.65em !important;
+ }
+
+.view-seats {
+    display: inline-block;
+    border: 1px solid #ffe716;
+    font-size: 13px;
+    padding: 6px 10px;
+    text-transform: capitalize;
+    color:black;
+    margin-top: 5px;
+    font-weight: 700;
+    background-color: #ffe716;
+    border-radius: 20px;
+}
+.offcanvas, .offcanvas-lg, .offcanvas-md, .offcanvas-sm, .offcanvas-xl, .offcanvas-xxl {
+    width: 280px !important;
+}

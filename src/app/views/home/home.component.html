@@ -1,0 +1,210 @@
+<main>
+    <div class="hero-section section pt-0">
+      <div class="container pt-5">
+      <app-header></app-header>
+      </div>
+      <div class="container h-100 text-white">
+        <p class="display-6 fw-bold text-center pt-5">BOOK <i class="fa-solid fa-angles-right"></i> PAY <i class="fa-solid fa-angles-right"></i> TRAVEL</p>
+      </div>
+    </div>
+    <div class="search-section section container">
+      <div class="card border-0 shadow p-1 p-lg-4" >
+        <div class="card-body">
+          
+          <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" >
+          <div class="row">
+           
+              <div class="col-md-3">
+                  <mat-form-field appearance="outline">
+                      <mat-label>From</mat-label>
+                      <input matInput  formControlName="sourceCity"    [matAutocomplete]="auto" placeholder="From">
+                      <mat-autocomplete   #auto="matAutocomplete">
+                        <mat-option     *ngFor="let option of filteredOptions | async" [value]="option">
+                          {{option.city_name}}
+                        </mat-option>
+                      </mat-autocomplete>
+                  </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                  <mat-form-field appearance="outline">
+                      <mat-label>Destination</mat-label>
+                      <input matInput  formControlName="destCity"  [matAutocomplete]="dest"  placeholder="Destination">
+                      <mat-autocomplete   #dest="matAutocomplete">
+                        <mat-option  *ngFor="let option of destOptions | async" [value]="option">
+                          {{option.city_name}}
+                        </mat-option>
+                      </mat-autocomplete>
+                  </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                  <mat-form-field appearance="outline">
+                      <mat-label>Date</mat-label>
+                      <input matInput  formControlName="date" [matDatepicker]="picker1" placeholder="Date">
+                      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                      <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                  <mat-form-field appearance="outline">
+                      <mat-label>Return Date</mat-label>
+                      <input matInput  formControlName="returnDate" [matDatepicker]="picker" placeholder="Return Date">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+              </div>
+          
+              <div class="col-md-2">
+                  <button class="pull-right btn btn-lg btn-success"> <i class="fa-solid fa-bus"></i> | Search</button>
+              </div>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+   
+    <div class="stats-section section container">
+      <div class="row align-items-stretch h-100">
+        <!-- <div class="col-12 col-lg-6">
+            <img src="../../../assets/img/mobile.png" class="rotated center" style="width: 240px;height:486px"   >
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <p class="fs-4">Download our app</p>
+                    <div class="d-flex gap-3">
+                      <button class="btn btn-sm btn-primary"><i class="fab fa-app-store me-2"></i>download on app store</button>
+                      <button class="btn btn-sm btn-success"><i class="fab fa-google-play me-2"></i>get it on google play</button>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="col-12 col-lg-12">
+          <h2 align="center">Why  Us</h2>
+          <div class="section-body">
+            <div class="row g-4 row-cols-1 row-cols-lg-3">
+              <div class="col">
+                <div class="card border-0 shadow">
+                  <div class="card-body">
+                    <img src="assets/img/save.png" class="center" alt="">
+                    <h3 class="fs-4">Save</h3>
+                    <p>Pay less when using our new Mobile App. You can save up to 25% of your Promo Cash balance in a single purchase.</p>
+                  </div>
+                 
+                </div>
+              </div>
+              <div class="col">
+                <div class="card border-0 shadow">
+                  <div class="card-body">
+                    <img src="assets/img/routes.png" class="center" alt="">
+                    <h3 class="fs-4">Multiple Routes                    </h3>
+                    <p>We cover multiple routes and the widest connectivity in Kenya, Uganda and Rwanda..</p>
+                  </div>
+                 
+                </div>
+              </div>
+              
+              <div class="col">
+                <div class="card border-0 shadow">
+                  <div class="card-body">
+                    <img src="assets/img/credits.png" class="center" alt="">
+                    <h3 class="fs-4">Earn Credits</h3>
+                    <p>Receive more credit during promotional periods which will be added into your Promo Cash account.</p>
+                  </div>
+                 
+                </div>
+              </div>
+             
+        
+          
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-1 container">
+      <div class="display-6 fw-normal">Our Services</div>
+      <div class="section-body">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          <div class="col">
+            <div class="card border-0 shadow">
+              <img src="../../../assets/img/delivery.png" alt="...">
+              <div class="card-img-overlay">
+                <span class="badge text-bg-light">Parcel Delivery</span>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Parcel Delivery</h5>
+                <p class="card-text">We deliver parcels to all major towns in the country.</p>
+              </div>
+             
+            </div>
+          </div>
+          <div class="col">
+            <div class="card border-0 shadow">
+              <img src="../../../assets/img/fleet.png" alt="...">
+
+              <div class="card-img-overlay">
+                <span class="badge text-bg-light">Fleet Services</span>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Fleet</h5>
+                <p class="card-text">Our fleet includes <br> buses.</p>
+              </div>
+             
+            </div>
+          </div>
+          <div class="col">
+            <div class="card border-0 shadow">
+              <img src="../../../assets/img/map.png" alt="...">
+              <div class="card-img-overlay">
+                <span class="badge text-bg-light">Routes</span>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Routes</h5>
+                <p class="card-text">We operate in all counties  in <br> Kenya.</p>
+              </div>
+             
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="download-section section-1 text-white">
+        <div class="col-12 col-lg-6 offset-0 offset-lg-6 py-3 py-lg-4">
+          <p class="display-6 fw-normal">Travel With Us</p>
+          <p style="font-size:30px;">
+            Biggest bus operating system in Africa www.voltic-africa.co
+          </p>
+        
+        </div>
+      </div>
+      <div class="blog-section section-1 container" >
+        <div class="row">
+          <div class="col-12 col-md-4">
+            <div class="row">
+              <div class="col-sm-6">
+                <img src="../../../assets/img/playstore.png" alt="" style="width: 100%;object-fit: cover;">
+              </div>
+              <div class="col-sm-6">
+                <img src="../../../assets/img/appstore.png" alt="" style="width: 100%;object-fit: cover;">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-8 col-8">
+            <div class="row">
+              <div class="col-sm-6"></div>
+              <div class="col-sm-4">
+                <img src="../../../assets/img/boss.png" alt="" style="width: 100%;object-fit: cover;">
+              </div>
+              <div class="col-sm-2">
+                <img src="../../../assets/img/voltic.svg" alt="" style="width: 100%;object-fit: cover;">
+              </div>
+            </div>
+          </div>
+         
+        </div>
+      </div>
+
+    
+  
+  </main>

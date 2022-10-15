@@ -1,1 +1,134 @@
-/* You can add global styles to this file, and also import other style files */
+
+mat-form-field{
+width: 100%;
+}
+
+
+
+
+
+.chair-right{
+    position: absolute;
+    bottom: 0;
+    left: 27px;
+    right: 5px;
+    width: 10px;
+    height: 39px;
+    border-width: 2px;
+    top: -3px;
+    border-style: solid;
+    border-left-width:3px !important;
+    border-left-style: solid !important;
+    border:solid 1px !important;
+
+}
+.chair-top{
+    position: absolute;
+    left: 10px;
+    width: 18px;
+    height: 10px;
+    border-width: 2px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    top: -3px;
+    border-bottom-width: 3px !important;
+    border-bottom-style:solid !important;
+    border:solid 1px !important;
+    border-right:0 !important;
+}
+.chair-bottom{
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    width: 18px;
+    height: 10px;
+    border-width: 2px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    top: 26px;
+    border-style: solid;
+    border-right: 0;
+    border-top-width:3px !important;
+    border-top-style: solid !important;
+    border:solid 1px !important;
+    border-right:none !important;
+}
+.chair-seat{
+    /*background-color: green;*/
+    margin: 7px 0;
+    width: 37px;
+    height: 33px;
+    border-width: 2px;
+    border-color: #aaa;
+    border-top-left-radius: 5px;
+    align-items: center;
+    justify-content: center;
+    border-bottom-left-radius: 5px;
+    border-style: solid;
+}
+.selectedSeat{
+    background-color: #990000 !important;
+}
+.alreadySelectedSeat{
+    background-color: #990000 !important;
+    color:#fff;
+    border-color: #990000;
+}
+.alreayBooked{
+    background-color: #ada9a9 !important;
+    pointer-events:none;
+    border-color: #888888;
+}
+.seatPaneltext{
+    padding-left: 0;
+    padding-right: 0px;
+    font-size: 13px;
+    font-family: inherit;
+}
+.seatpanelfont{
+    font-size: 13px;
+    font-family: inherit;
+}
+
+.seatLayout{
+    height: 300px;
+    position: relative;
+    background-color: #fff;
+    box-shadow: 0 1px 8px #ccc;
+    cursor: pointer
+}
+
+.orange{
+    background-color: orange
+}
+.green{
+    background-color: green
+}
+.blue{
+    background-color: blue
+}
+.padding-right-none{
+    padding-right: 0px;
+}
+
+.cdk-global-overlay-wrapper, .cdk-overlay-container {
+    z-index: 99999 !important;
+ }
+
+ .crossBorderSpan {
+    padding: 10px 40px 10px 10px;
+    -webkit-clip-path: polygon(100% 0,86% 100%,0 100%,0 0);
+    clip-path: polygon(93% 0,100% 100%,0 100%,0 0);
+}
+.reviewPayable {
+    padding: 5px 0;
+    background-color: #e8e8e8;
+    margin: 8px 0;
+    font-size: 17px;
+    font-weight: 700;
+    margin-right: 15px;
+}
+
+.text-right{
+    text-align: right;
+}

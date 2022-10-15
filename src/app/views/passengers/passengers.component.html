@@ -1,0 +1,102 @@
+<div class="hero-section section pt-0">
+    <div class="container pt-5">
+    <app-header></app-header>
+    <div class="container h-100 text-white">
+      </div>
+    </div>
+   
+  </div>
+
+
+<div class="section-1 container">
+   <div class="row">
+    <div class="col-md-6 offset-lg-3">
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 align="center">Passenger Details</h4>
+            </div>
+        </div>
+        <form #passegerForm="ngForm" (ngSubmit)="onClickSubmit()"> 
+            
+            <div class="row" *ngFor="let item of data?.onwardticket?.passenger;let index=index">
+            
+
+                            <div class="col-sm-8">
+                                <h5>
+                                    <p class="modalpassenger" *ngIf="index == 0" style="color:blue">Primary Passenger</p>
+                                    <p class="modalpassenger" *ngIf="index > 0" style="color:orange">Co-Passenger</p>
+        
+                                </h5>
+                                </div>
+                                <div class="col-sm-4" style="text-align:right">
+                                    Seat :<b>{{item.seat_name}}</b><b *ngIf="data?.returnticket?.passenger">, {{data.returnticket.passenger[index].seat_name}}</b>
+
+                                </div>
+                
+                
+                  <div class="col-sm-3">
+                    
+                    <mat-form-field appearance="outline">
+                        <mat-label>Name</mat-label>
+                        <input matInput  name="seat{{item.seat_name}}"  [(ngModel)]="item.name"    placeholder="Name" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Age</mat-label>
+                        <input matInput  name="age{{item.seat_name}}"  [(ngModel)]="item.age"    placeholder="Age" required>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" >
+                      <mat-label>Code</mat-label>
+                      <mat-select name="mobileId{{item.seat_name}}" [(ngModel)]="item.mobileId"    required >
+                        <mat-option *ngFor="let code of codes" [value]="code"  >
+                          {{code}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-sm-5">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Phone</mat-label>
+                      <input matInput  name="phone{{item.seat_name}}"    placeholder="Phone" [(ngModel)]="item.mobile">
+                  </mat-form-field>
+                  </div>
+                  <div class="col-sm-12">
+                    <mat-radio-group name="gender{{item.seat_name}}" [(ngModel)]="item.gender"   >
+                        <div class="row">
+                         <div class="col-sm-3 col-6">
+                            <mat-radio-button selected value="F">Female </mat-radio-button>
+                         </div>
+                         <div class="col-sm-3 col-6">
+                            <mat-radio-button value="M">Male</mat-radio-button> 
+                        </div>
+              
+                        </div>
+                    </mat-radio-group>
+                    </div>
+                    <div class="col-sm-6" style="margin-top: 10px;">
+                        <mat-form-field appearance="outline" >
+                          <mat-label>Nationality</mat-label>
+                          <input matInput type="text" required  name="nationality{{item.seat_name}}"  [(ngModel)]="item.nationality"    placeholder="Nationality">
+                      </mat-form-field>
+                      </div>
+                      <div class="col-sm-6">
+                        <mat-form-field appearance="outline" >
+                          <mat-label>National ID</mat-label>
+                          <input matInput type="text"  name="id_no{{item.seat_name}}" required [(ngModel)]="item.id_no"  placeholder="ID Number">
+                      </mat-form-field>
+                      </div> 
+
+              
+            </div>
+
+            <button type="submit" [disabled]="passegerForm.invalid" class="btn view-seats btn-sm" style="float: right;" value="submit">PROCEED TO PAY</button>
+         </form>
+        
+    </div>
+   </div>
+  </div>
+

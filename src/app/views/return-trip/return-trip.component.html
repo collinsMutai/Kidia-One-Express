@@ -1,0 +1,287 @@
+<div class="hero-section section pt-0">
+    <div class="container pt-5">
+      <app-header></app-header>
+  
+    </div>
+  
+  
+  </div>
+
+
+<div class="results-section section container" style="margin-top:-40px">
+    <tabset  #bookingTabs  >
+        <tab heading="ONWARD JOURNEY"  [disabled]="disabled=='onward'" [active]="active=='onward'">
+          <div class="results-section section container" style="margin-top:-40px">
+            <div class="section-title">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <p class="mb-0 text-capitalize" style="font-size:16px;font-weight:700;">{{params.source_city}} <i
+                    class="fa-solid fa-chevron-right"></i> {{params.dest_city}}: <i
+                    class="fas fa-calendar-day mx-2"></i>{{params.travel_date}}</p>
+                <div>
+          
+                  <button class="btn search-seats"> <i class="fa-regular fa-pen-to-square"></i> Modify Search</button>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="section-body">
+              <div class="row align-items-start border-bottom py-3 container-fluid result-row"
+                *ngFor="let item of buses;let i=index">
+                <div class="col-1">
+                  <img src="assets/img/bus.svg" alt="bus" style="width: 65px;opacity: 0.4">
+                </div>
+                <div class="col-3">
+                  <p class="mb-0 fw-bold">{{item.trip_code}}</p>
+                  <small>{{item.bus_type}}</small>
+                  <div class="d-flex gap-3 mt-2">
+                    <i class="fas fa-fan" title="a/c available" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                      data-bs-title="a/c available"></i>
+                    <i class="fas fa-wifi" title="free wifi" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                      data-bs-title="free wifi"></i>
+                    <i class="fas fa-bolt" title="charging point" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                      data-bs-title="charging point"></i>
+                    <i class="fas fa-newspaper" title="free newspaper" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                      data-bs-title="free newspaper"></i>
+                  </div>
+                </div>
+                <div class="text-center col-2 d-flex align-items-center">
+                  <img src="https://cdn-icons-png.flaticon.com/512/581/581838.png" alt="" height="40">
+                  <div>
+                    <p class="" style="font-weight:700;">{{item.departure_time}}</p>
+                    <p class="mb-0">{{item.arrival_time}}</p>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <p>Rating</p>
+                  <div class="d-flex">
+                    <i class="fa-solid fa-star star"></i>
+                    <i class="fa-solid fa-star star"></i>
+                    <i class="fa-solid fa-star star"></i>
+                    <i class="fa-solid fa-star star"></i>
+                    <i class="fa-solid fa-star star"></i>
+                  </div>
+                </div>
+                <div class="col-4 d-flex justify-content-between">
+                  <div class="text-end" *ngFor="let class of item.defaultTripPriceList">
+                    <p class="mb-0" style="text-transform:Capitalize">{{class.seatType}}:</p>
+                  </div>
+                  <div *ngFor="let class of item.defaultTripPriceList">
+                    <p class="mb-0">{{class.currencyCode}} {{class.amount}}</p>
+                  </div>
+                  <div class="text-end">
+                    <p class="mb-1  primary">{{item.available_seat_count}} seats available</p>
+                    <button class="btn btn-sm view-seats" (click)="getSeats(item)"> view
+                      seats</button>
+                  </div>
+                </div>
+          
+                <div class="col-sm-12 pb-2" style="margin-top: 15px;background-color:#f8f3c1;border-radius:5px"
+                  *ngIf="selectedTripData.bus_id == item.bus_id && selectedTripData.delayedDate == item.delayedDate">
+                  <div class="row pt-1">
+                    <div class="col-sm-8">
+                      <span style="font-size: 14px;font-weight:700;text-transform:capitalize">Customise your journey</span>
+                    </div>
+                    <div class="col-sm-4">
+                      <i class="fa-regular fa-circle-xmark text-danger" style="float:right;font-size:24px"
+                        (click)="getSeats(item)"></i>
+                    </div>
+          
+                  </div>
+          
+                  <div class="row pt-3">
+          
+                    <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6 padding-0 fs-13 pt-12">
+          
+                      <div class="col-md-4 padding-0" *ngFor="let eachSeatType of item.defaultTripPriceList"> <i
+                          class="fa-solid fa-circle"
+                          [ngClass]="{'orange-color':eachSeatType.seatType == 'vip', 'green-color':eachSeatType.seatType == 'bclass', 'blue-color':eachSeatType.seatType == 'normal'}"></i>
+                        <span style="text-transform: capitalize;margin-left: 5px;">{{eachSeatType.seatType}}: <span
+                            style="font-weight: 700;">{{eachSeatType.currencyCode}}</span> {{eachSeatType.amount}}</span>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6 padding-0 text-center">
+                      <div class="row">
+                        <div class="col-md-4 row padding-right-none" style="position: relative">
+                          <div class="col-lg-4 col-md-4">
+                            <div style="position:absolute;top:0;left:32px">
+                              <div style="position: relative;width:31px;height:24px;">
+                                <div class="chair-seat" style="text-align: center;background-color:#fff;width:26px;height: 27px;">
+                                  A</div>
+                                <div class="chair-right" style="background-color:#fff;height:29px;width: 7px;left:24px;top:-1px">
+                                </div>
+                                <div class="chair-top" style="background-color:#fff;height: 7px;left:10px;width:15px;top:-1px">
+                                </div>
+                                <div class="chair-bottom" style="background-color:#fff;top:21px;height:7px;left:10px;width:15px">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-8 col-md-8 padding-0" style="line-height:39px">Available Seat</div>
+                        </div>
+                        <div class="col-md-4 row padding-right-none" style="position: relative">
+                          <div class="col-lg-4 col-md-4">
+                            <div style="position:absolute;top:0;left:32px">
+                              <div style="position: relative;width:31px;height:24px;">
+                                <div class="chair-seat"
+                                  style="text-align: center;background-color:#9a2718;width:26px;height: 27px;color:#fff">S</div>
+                                <div class="chair-right"
+                                  style="background-color:#9a2718;height:29px;width: 7px;left:24px;top:-1px"></div>
+                                <div class="chair-top" style="background-color:#9a2718;height: 7px;left:10px;width:15px;top:-1px">
+                                </div>
+                                <div class="chair-bottom"
+                                  style="background-color:#9a2718;top:21px;height:7px;left:10px;width:15px"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-8 col-md-8 padding-0" style="line-height:39px">Selected seats</div>
+                        </div>
+                        <div class="col-md-4 row padding-right-none" style="position: relative">
+                          <div class="col-lg-4 col-md-4">
+                            <div style="position:absolute;top:0;left:38px">
+                              <div style="position: relative;width:31px;height:24px;">
+                                <div class="chair-seat"
+                                  style="text-align: center;background-color: #ada9a9;width:26px;height: 27px;">B</div>
+                                <div class="chair-right"
+                                  style="background-color:#ada9a9;height:29px;width: 7px;left:24px;top:-1px"></div>
+                                <div class="chair-top" style="background-color:#ada9a9;height: 7px;left:10px;width:15px;top:-1px">
+                                </div>
+                                <div class="chair-bottom"
+                                  style="background-color:#ada9a9;top:21px;height:7px;left:10px;width:15px"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-8 col-md-8 padding-0" style="line-height:39px">Booked seats</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <div class="hidden-xs seatLayout">
+                        <div [ngStyle]="{'position':'absolute', 'top':eachseat.top + 'px', 'left':eachseat.left + 'px'}"
+                          *ngFor="let eachseat of seatList" data-toggle="tooltip" data-placement="bottom"
+                          title="{{tooltip(eachseat,item)}}" (click)="selectSeat(eachseat)">
+                          <div style="position: relative;width:50px;height:45px;">
+                            <div *ngIf="eachseat.seat_type.toLowerCase() == 'driver'" class="default-cursor">
+                              <img src="assets/img/driver.png" alt="Driver" class="driver">
+                            </div>
+                            <div *ngIf="eachseat.seat_type.toLowerCase() == 'door'" class="default-cursor">
+                              <div
+                                [ngStyle]="{'width': eachseat.seat_width, 'height':eachseat.seat_height, 'line-height':eachseat.seat_height + 'px', 'border':'2px dashed #e8e8e8', 'text-align':'center', 'font-size':'18px', 'color':'#e8e8e8', 'text-transform':'uppercase'}">
+                                {{eachseat.seat_name}}</div>
+                            </div>
+                            <div style="position: relative;width:50px;height:45px;"
+                              *ngIf="eachseat.seat_type.toLowerCase() != 'driver' && eachseat.seat_type.toLowerCase() != 'door'">
+                              <div class="chair-seat"
+                                [ngClass]="{alreadySelectedSeat: eachseat.selectSeat, alreayBooked:eachseat.selection_status || eachseat.seat_type.toLowerCase().trim() == 'staff' || eachseat.seat_name.toLowerCase().trim() == 'staff'}"
+                                style="text-align: center;padding-right: 8px;padding-top: 5px;"><span
+                                  *ngIf="eachseat.seat_type.toLowerCase().trim() == 'staff'"
+                                  style="padding-right: 10px;">STF</span><span
+                                  *ngIf="eachseat.seat_type.toLowerCase().trim() != 'staff'">{{eachseat.seat_name }}</span></div>
+                              <div class="chair-right"
+                                [ngClass]="{selectedSeat: eachseat.selectSeat, alreayBooked:eachseat.selection_status || eachseat.seat_type.toLowerCase().trim() == 'staff' || eachseat.seat_name.toLowerCase().trim() == 'staff'}"
+                                [ngStyle]="{'background-color': eachseat.seat_color, 'border-color':'#000', 'border-left': eachseat.seat_color}">
+                              </div>
+                              <div class="chair-top"
+                                [ngClass]="{selectedSeat: eachseat.selectSeat, alreayBooked:eachseat.selection_status || eachseat.seat_type.toLowerCase().trim() == 'staff' || eachseat.seat_name.toLowerCase().trim() == 'staff'}"
+                                [ngStyle]="{'background-color': eachseat.seat_color, 'border-color':'#000', 'border-bottom': eachseat.seat_color}">
+                              </div>
+                              <div class="chair-bottom"
+                                [ngClass]="{selectedSeat: eachseat.selectSeat, alreayBooked:eachseat.selection_status || eachseat.seat_type.toLowerCase().trim() == 'staff' || eachseat.seat_name.toLowerCase().trim() == 'staff'}"
+                                [ngStyle]="{'background-color': eachseat.seat_color, 'border-color':'#000', 'border-top': eachseat.seat_color}">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+          
+          
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="card">
+                        <!-- <div class="card-header">
+                           <span class="text-black" style="font-size: 13px;font-weight:500">Selected Seats</span>
+                           <span style="float: right;font-size: 20px;">
+                            <mat-icon matBadge="{{seats.length}}" >receipt</mat-icon>
+          
+                          </span>
+                          </div> -->
+                        <div class="card-body">
+                          <div class="row">
+          
+                            <div class="col-sm-12">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Boarding Point</mat-label>
+                                <mat-select [(ngModel)]="boarding" (ngModelChange)="selectBoarding(boarding)">
+                                  <mat-option *ngFor="let boarding of boarding_points" [value]="boarding">
+                                    {{boarding.name}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+          
+                            <div class="col-sm-12">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Dropping Point</mat-label>
+                                <mat-select [(ngModel)]="dropping" (ngModelChange)="selectDropping(dropping)">
+                                  <mat-option *ngFor="let dropping of dropping_points" [value]="dropping">
+                                    {{dropping.name}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-sm-12">
+                              <div class="row">
+                                <div class="col-sm-4">Seats</div>
+                                <div class="col-sm-8">
+                                  <span *ngFor="let seat of seats;let last = last;">
+                                    {{seat.seat_name}} {{last ? '' : ', '}}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-12" *ngFor="let data of selectedData | keyvalue">
+                              <span *ngIf="(data.value | json) != '{}'">
+                                <span style="text-transform:capitalize;">{{data.key}}</span>:
+                                <span style="float: right;">{{data.value.totalSeat}} X {{data.value.ticketFare}} = <span
+                                    style="font-weight: 600;">{{data.value.currency}} {{data.value.totalTicketFare}}</span>
+                                </span>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card-footer" style="background-color: black;color:white;font-weight: 600;font-size: 13px;">
+                          <mat-icon matBadge="{{seats.length}}">receipt</mat-icon>
+                          <span style="float:right;font-size: 12px;"> FARE: {{total | number:'1.2-2'}}</span>
+                        </div>
+                      </div>
+                    </div>
+          
+          
+          
+          
+                    <div class="col-sm-12">
+                      <button class="btn search-seats" [disabled]="!seats.length" style="margin-right: 5px;float: right;"
+                        (click)="save()">CONTINUE <i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                  </div>
+                </div>
+          
+              </div>
+          
+            </div>
+          </div>
+
+        </tab>
+        <tab heading="RETURN JOURNEY"  [disabled]="disabled=='return'" [active]="active=='return'">
+            <app-return></app-return>
+        </tab>
+      </tabset>
+   
+  </div>
+  
+
+
+  <div>
+    
+  </div>

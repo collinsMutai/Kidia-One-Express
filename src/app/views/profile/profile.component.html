@@ -1,0 +1,180 @@
+<div class="hero-section section pt-0">
+    <div class="container pt-5">
+    <app-header></app-header>
+    <div class="container h-100 text-white">
+      </div>
+    </div>
+   
+  </div>
+
+
+<div class="section container">
+    <div class="row">
+        <div class="col-sm-8 offset-lg-2">
+            <div class="row"> 
+                <div class="col-sm-2">
+                    <img src="../../../assets/img/user.png" width="100" height="100" alt="">
+                </div>
+                <div class="col-sm-4">
+                <div class="row">
+                    <div class="col-sm-12">
+                        Name: <span style="font-weight:600;">Davis Mutuku</span>
+                    </div>
+                    <div class="col-sm-12">
+                        Contact: <span style="font-weight:600;">+254792101386</span>
+                    </div>
+                    <div class="col-sm-12">
+                        Age: <span style="font-weight:600;">26</span>
+                    </div>
+                    <div class="col-sm-12">
+                        <span style="font-weight:900" class="text-success">Wallet Amount</span>: <span style="font-weight:900;">0.00</span>
+                    </div>
+                </div>
+                </div>
+
+            <div class="col-sm-12" style="margin-top: 10px;">
+                    <tabset>
+                        <tab heading="Profile">
+                            <br>
+                           <div class="row">
+                            <div class="col-sm-8">
+                                <form [formGroup]="registerForm">
+                                    <div class="row">
+                                      <div class="col-sm-12">
+                                        <mat-form-field appearance="outline">
+                                          <mat-label>Name</mat-label>
+                                          <input matInput   formControlName="name"    placeholder="Name">
+                                      </mat-form-field>
+                                      </div>
+                                      <div class="col-sm-4">
+                                        <mat-form-field appearance="outline">
+                                          <mat-label>Code</mat-label>
+                                          <mat-select formControlName="country_code" >
+                                            <mat-option *ngFor="let code of codes" value="code">
+                                              {{code}}
+                                            </mat-option>
+                                          </mat-select>
+                                        </mat-form-field>
+                                      </div>
+                                      <div class="col-sm-8">
+                                        <mat-form-field appearance="outline">
+                                          <mat-label>Phone</mat-label>
+                                          <input matInput  formControlName="phone"    placeholder="Phone">
+                                      </mat-form-field>
+                                      </div>
+                                      <div class="col-sm-6">
+                                        <mat-form-field appearance="outline">
+                                          <mat-label>Date of Birth</mat-label>
+                                          <input matInput  formControlName="dob" [matDatepicker]="picker1" placeholder="Date">
+                                          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                          <mat-datepicker #picker1></mat-datepicker>
+                                      </mat-form-field>
+                                      </div>
+                                      <div class="col-sm-6">
+                                        <mat-form-field appearance="outline">
+                                          <mat-label>Gender</mat-label>
+                                          <mat-select formControlName="gender" >
+                                            <mat-option  value="Female">
+                                             Female
+                                            </mat-option>
+                                            <mat-option  value="Male">
+                                              Male
+                                             </mat-option>
+                                          </mat-select>
+                                        </mat-form-field>
+                                      </div>
+                                      <div class="col-sm-12">
+                                        <mat-form-field appearance="outline">
+                                          <mat-label>Password</mat-label>
+                                          <input matInput type="password"  formControlName="password"    placeholder="Password">
+                                      </mat-form-field>
+                                      </div>
+                                      <div class="col-sm-12">
+                                        <button class="btn btn-primary" style="width: 100%;">Register</button>
+                                      </div>
+                                    </div>
+                                    </form>
+                            </div>
+                           </div>
+                          </tab>
+                      <tab heading="My Trips">
+                        Trips here
+                      </tab>
+                      <tab heading="Wallet">
+                        <br>
+                        <div class="mat-elevation-z8">
+                            <table mat-table [dataSource]="dataSource">
+                          
+                              <ng-container matColumnDef="position">
+                                <th mat-header-cell *matHeaderCellDef> No. </th>
+                                <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                              </ng-container>
+                          
+                              <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef> Name </th>
+                                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                              </ng-container>
+                          
+                              <ng-container matColumnDef="amount">
+                                <th mat-header-cell *matHeaderCellDef>Amount</th>
+                                <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                              </ng-container>
+                          
+                              <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef> Status </th>
+                                <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="comment">
+                                <th mat-header-cell *matHeaderCellDef> Comment</th>
+                                <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                              </ng-container>
+                          
+                              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                          
+                            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                          </div>
+                      </tab>
+                      <tab heading="Change Password">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <form [formGroup]="passwordForm" (ngSubmit)="login()" style="margin-top: 10px;">
+                                    <div class="row">
+                                     
+                                      <div class="col-sm-12">
+                                        <mat-form-field appearance="outline">
+                                          <mat-label>Current Password</mat-label>
+                                          <input matInput type="password"  formControlName="current"  placeholder=" Current Password">
+                                      </mat-form-field>
+                                      </div>
+                                      <div class="col-sm-12">
+                                        <mat-form-field appearance="outline">
+                                          <mat-label>New Password</mat-label>
+                                          <input matInput type="password"  formControlName="password"  placeholder="New Password">
+                                      </mat-form-field>
+                                      </div>
+                                      <div class="col-sm-12">
+                                        <mat-form-field appearance="outline">
+                                          <mat-label>Confirm Password</mat-label>
+                                          <input matInput type="password"  formControlName="confirm"  placeholder="Confirm Password">
+                                      </mat-form-field>
+                                      </div>
+                                      <div class="col-sm-12">
+                                        <button class="btn view-seats" [disabled]="passwordForm.invalid" style="float: right;">Change</button>
+                                      </div>
+                                    </div>
+                                    </form>
+                            </div>
+                        </div>
+                      </tab>
+                    </tabset>
+               
+            </div>
+            </div>
+        </div>
+    </div>
+   
+    
+  </div>

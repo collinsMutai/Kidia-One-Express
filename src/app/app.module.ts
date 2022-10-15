@@ -1,18 +1,90 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+import { HeaderComponent } from './views/header/header.component';
+import { HomeComponent } from './views/home/home.component';
+import { FooterComponent } from './views/footer/footer.component';
+import { AboutComponent } from './views/about/about.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatInputModule } from '@angular/material/input'
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatRadioModule } from '@angular/material/radio';
+import { TicketComponent } from './views/ticket/ticket.component';
+import {MatButtonModule} from '@angular/material/button';
+import { ContactComponent } from './views/contact/contact.component';
+import { BuslistComponent } from './views/buslist/buslist.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatTableModule} from '@angular/material/table';
+import {MatIconModule} from '@angular/material/icon';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { BackendInterceptor } from './backend.interceptor';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatSelectModule} from '@angular/material/select';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatTabsModule} from '@angular/material/tabs';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { ReturnTripComponent } from './views/return-trip/return-trip.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import { StepsetModule } from 'stepper-library';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ProfileComponent } from './views/profile/profile.component';
+import { PaymentsComponent } from './views/payments/payments.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { ReturnComponent } from './views/return/return.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { ToastrModule } from 'ngx-toastr';
+import { PassengersComponent } from './views/passengers/passengers.component';
 @NgModule({
   declarations: [
-    AppComponent
-  ],
+    AppComponent,
+    HeaderComponent,
+    HomeComponent,
+    FooterComponent,
+    AboutComponent,
+    TicketComponent,
+    ContactComponent,
+    BuslistComponent,
+    ReturnTripComponent,
+    ProfileComponent,
+    PaymentsComponent,
+    ReturnComponent,
+    PassengersComponent
+    ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatInputModule,
+    MatFormFieldModule,
+    BrowserAnimationsModule,
+    MatRadioModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatTableModule,
+    MatIconModule,
+    HttpClientModule,
+    MatAutocompleteModule,
+    MatSelectModule,
+    MatBadgeModule,
+    MatTabsModule,
+    ModalModule.forRoot(),
+    MatStepperModule,
+    StepsetModule,
+    TabsModule.forRoot(),
+    MatPaginatorModule,
+    NgxSpinnerModule,
+    ToastrModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass:BackendInterceptor, multi: true }
+
+  ],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

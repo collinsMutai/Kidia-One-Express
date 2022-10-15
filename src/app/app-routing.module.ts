@@ -1,7 +1,53 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AboutComponent } from './views/about/about.component';
+import { BuslistComponent } from './views/buslist/buslist.component';
+import { ContactComponent } from './views/contact/contact.component';
+import { HomeComponent } from './views/home/home.component';
+import { PassengersComponent } from './views/passengers/passengers.component';
+import { PaymentsComponent } from './views/payments/payments.component';
+import { ProfileComponent } from './views/profile/profile.component';
+import { ReturnTripComponent } from './views/return-trip/return-trip.component';
+import { TicketComponent } from './views/ticket/ticket.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path:'',
+    component:HomeComponent
+  },
+  {
+    path:'about',
+    component:AboutComponent
+  },
+  {
+    path:'payment/:reference/:mobile/:token',
+    component:PaymentsComponent
+  },
+  {
+    path:'passengers',
+    component:PassengersComponent
+  },
+  {
+    path:'profile',
+    component:ProfileComponent
+  },
+  {
+    path:'print-ticket',
+    component:TicketComponent
+  },
+  {
+    path:'contact',
+    component:ContactComponent
+  },
+  {
+    path:'buslist/:id1/:id2/:id3/:id4/:id5',
+    component:BuslistComponent
+  },
+  {
+    path:'buslist/:id1/:id2/:id3/:id4/:id5/:id6',
+    component:ReturnTripComponent
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
