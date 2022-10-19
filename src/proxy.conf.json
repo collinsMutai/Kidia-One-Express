@@ -1,0 +1,11 @@
+
+{
+    "/appApi/*": {
+        "target": "http://bossapi.99synergy.com",
+        "secure": false,
+        "changeOrigin":true,
+        "logLevel": "debug",
+        "pathRewrite": {"^/appApi" : "http://bossapi.99synergy.com/appApi"}
+
+    }
+}

@@ -1,0 +1,11 @@
+
+{
+    "/appApi/*": {
+        "target": "http://api.ma3app.com/appApi",
+        "secure": false,
+        "changeOrigin":true,
+        "logLevel": "debug",
+        "pathRewrite": {"^/appApi" : "http://api.ma3app.com/appApi"}
+
+    }
+}

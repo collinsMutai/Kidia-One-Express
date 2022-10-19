@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
-// export const endpoint='http://bossapi.99synergy.com/appApi/';
-export const endpoint='http://api.ma3app.com/appApi/';
+export const endpoint='/appApi';
 @Injectable({
   providedIn: 'root'
 })
@@ -27,11 +26,11 @@ export class ServiceService {
 
 
   getCities(): Observable<any> {
-    return this.http.post(endpoint+'common/getCity',{"city_id":0,"city_type":"source","token":"FA992334-76E3-44AD-BB4E-062FD0266D71"}).pipe(
+    return this.http.post(endpoint+'/common/getCity',{"city_id":0,"city_type":"source","token":"FA992334-76E3-44AD-BB4E-062FD0266D71"}).pipe(
       map(this.extractData));
   }
   getDestinations(id): Observable<any> {
-    return this.http.post(endpoint+'common/getCity',{"city_id":id,"city_type":"destination","token":"FA992334-76E3-44AD-BB4E-062FD0266D71"}).pipe(
+    return this.http.post(endpoint+'/common/getCity',{"city_id":id,"city_type":"destination","token":"FA992334-76E3-44AD-BB4E-062FD0266D71"}).pipe(
       map(this.extractData));
   }
 
