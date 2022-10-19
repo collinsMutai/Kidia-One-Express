@@ -40,6 +40,10 @@ const routes: Routes = [
     component:ContactComponent
   },
   {
+    path:'onward-trip/:id1/:id2/:id3/:id4/:id5',
+    component:ContactComponent
+  },
+  {
     path:'buslist/:id1/:id2/:id3/:id4/:id5',
     component:BuslistComponent
   },

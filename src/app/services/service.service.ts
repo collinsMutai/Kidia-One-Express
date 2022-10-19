@@ -14,7 +14,6 @@ export class ServiceService {
   }
   private extractData(res: any) {
     const  body = res;
-    console.log('service response', res);
     return body || { };
   }
   private handleError<T> (operation = 'operation', result?: T) {
@@ -55,9 +54,30 @@ export class ServiceService {
     return this.http.post(endpoint+'/AppUser/LoginUsers',data).pipe(
       map(this.extractData));
   }
+  otpVerification(data): Observable<any> {
+    return this.http.post(endpoint+'/AppUser/UserOTPVerification',data).pipe(
+      map(this.extractData));
+  }
+  sigup(data): Observable<any> {
+    return this.http.post(endpoint+'/AppUser/RegisterUsers',data).pipe(
+      map(this.extractData));
+  }
+changePassword(data): Observable<any> {
+    return this.http.post(endpoint+'/AppUser/ChangePassword',data).pipe(
+      map(this.extractData));
+  }
   paymentMethods(data): Observable<any> {
     return this.http.post(endpoint+'/booking/paymentMethod',data).pipe(
       map(this.extractData));
   }
+
+makePayment(data): Observable<any> {
+    return this.http.post(endpoint+'/paymentGateway/init',data).pipe(
+      map(this.extractData));
+}
+checkMpesaPayment(data): Observable<any> {
+  return this.http.post(endpoint+'/paymentGateway/checkMpesaPayment',data).pipe(
+    map(this.extractData));
+}
  
 }

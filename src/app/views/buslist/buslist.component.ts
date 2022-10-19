@@ -4,13 +4,22 @@ import { ServiceService } from 'src/app/services/service.service';
 import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
 import { BookingService } from 'src/app/services/booking.service';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { DatePipe } from '@angular/common';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+import { City } from '../home/home.component';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-buslist',
   templateUrl: './buslist.component.html',
-  styleUrls: ['./buslist.component.scss']
+  styleUrls: ['./buslist.component.scss'],
+  providers:[DatePipe]
 })
 export class BuslistComponent implements OnInit {
+  modify=false;
+  show=false;
+  returnTicket=false;
   buses=[]
   seats=[];
   boarding_points=[];
@@ -26,10 +35,43 @@ export class BuslistComponent implements OnInit {
   addressForm: FormGroup;
   selectedData={}
   reviewInfo:any={};
+  cities=[];
+  open=false;
+  destinations=[];
+  return_min:Date;
+  filteredOptions: Observable<City[]>;
+  destOptions: Observable<City[]>;
   @ViewChild('reviewModal', { static: false }) reviewModal?: ModalDirective;
-
-  constructor(public service:ServiceService,public activated:ActivatedRoute,private formBuilder: FormBuilder,public bookingService:BookingService,public route:Router) { }
+  searchForm: FormGroup;
+  returnForm: FormGroup;
+  loading=false;
+  user:any={};
+  date = new Date()
+  boardingForm: FormGroup;
+  constructor(public service:ServiceService,public activated:ActivatedRoute,private formBuilder: FormBuilder,public bookingService:BookingService,public route:Router,public datePipe:DatePipe,public commonService:CommonService) { 
+  }
   ngOnInit() {
+    this.bookingService.reset();
+    this.user=JSON.parse(sessionStorage.getItem('loggedUser'));
+    this.searchForm = this.formBuilder.group({
+      date: ['', Validators.required],
+      sourceCity:['', Validators.required],
+      returnDate: [''],
+      city_id:['', Validators.required],
+      destCity:['',Validators.required],
+      dest_id:['',],
+    });
+    this.boardingForm = this.formBuilder.group({
+      dropping:['', Validators.required],
+      boarding:['', Validators.required],
+    });
+
+    this.returnForm = this.formBuilder.group({
+      returnDate: [''],
+     
+    });
+
+    this.initParams();
     this.bookingService.review_info.subscribe((res)=>{
      this.reviewInfo=res;
     })
@@ -58,61 +100,109 @@ export class BuslistComponent implements OnInit {
       boarding_point:['', Validators.required],
       dropping_point:['', Validators.required]
     });
-   this.activated.paramMap.subscribe((res)=>{  
-    this.params.source_city_id=res.get('id1')
-    this.params.destination_city_id=res.get('id2')
-    this.params.travel_date =res.get('id3')
-    this.params.source_city=res.get('id4');
-    this.params.dest_city=res.get('id5');
-    this.bookingService.setBookingParams(this.params)
-    let data= {
-      "source_city_id":res.get('id1'),
-      "destination_city_id":res.get('id2'),
-      "travel_date":res.get('id3'),
-      "avg_rating": null,
-      "departure_time": null,
-      "fare": null,
-      "seat_type": "",
-      "travels": "",
-      "boarding_points": [],
-      "dropping_points": [],
-      "bus_with_amenities": [],
-      "high_rating": true,
-      "bus_with_live_tracking": false,
-      "cabs": false,
-      "hot_deals": false,
-      "on_time": false,
-      "bus_type": [],
-      "time_range": [],
-      "record_type": "data",
-      "currencyId": "1",
+    this.initForm();
+    this.getCities();
+   this.filteredOptions = this.searchForm.get('sourceCity').valueChanges.pipe(
+    startWith(''),
+    map(value => {
+       if(value.id){
+        this.searchForm.patchValue({"city_id":value.id,"sourceCity":value.city_name})
+        this.destination()
+      }
+      const name = typeof value === 'string' ? value : value?.city_name;
+     
+      return name ? this._filter(name as string) : this.cities.slice();
+    }),
+  );
+
+
+  this.destOptions = this.searchForm.get('destCity').valueChanges.pipe(
+    startWith(''),
+    map(value => {
+       if(value.id){
+        this.searchForm.patchValue({"dest_id":value.id,"destCity":value.city_name})
+      }
+      const name = typeof value === 'string' ? value : value?.city_name;
+     
+      return name ? this._filterDestinations(name as string) : this.destinations.slice();
+    }),
+  );
+
   }
-  this.service.getTrips(data).subscribe((res)=>{
-   this.buses = res.data;
-  })
-   })
+  initParams(){
+    this.activated.paramMap.subscribe((res)=>{  
+      this.params.source_city_id=res.get('id1')
+      this.params.destination_city_id=res.get('id2')
+      this.params.travel_date =res.get('id3')
+      this.params.source_city=res.get('id4');
+      this.params.dest_city=res.get('id5');
+      this.bookingService.setBookingParams(this.params)
+      let data= {
+        "source_city_id":res.get('id1'),
+        "destination_city_id":res.get('id2'),
+        "travel_date":res.get('id3'),
+        "avg_rating": null,
+        "departure_time": null,
+        "fare": null,
+        "seat_type": "",
+        "travels": "",
+        "boarding_points": [],
+        "dropping_points": [],
+        "bus_with_amenities": [],
+        "high_rating": true,
+        "bus_with_live_tracking": false,
+        "cabs": false,
+        "hot_deals": false,
+        "on_time": false,
+        "bus_type": [],
+        "time_range": [],
+        "record_type": "data",
+        "currencyId": "1",
+    }
+    this.return_min=new Date(this.params.travel_date)
+    this.return_min.setDate(this.return_min.getDate() + 1);
+    this.service.getTrips(data).subscribe((res)=>{
+      this.loading=true;
+     this.buses = res.data;
+    })
+     })
   }
 
+  initForm(){
+    this.searchForm.patchValue(({date:new Date(this.params.travel_date),sourceCity:this.params.source_city,destCity:this.params.dest_city,dest_id:this.params.destination_city_id,city_id:this.params.source_city_id}))
+  }
+  onSubmit(){
+    let data=this.searchForm.value
+    this.modify=false;
+    this.route.navigate(['buslist',data.city_id,data.dest_id,this.datePipe.transform(data.date,'yyyy-MM-dd'),data.sourceCity,data.destCity])
+  }
   getSeats(item){
     this.bus=item;
     this.bookingService.toggleBusDetail(item);
+  }
+ 
+  getCities(){
+    this.service.getCities().subscribe((res)=>{
+       this.cities = res.data
+      })
+  }
   
+  private _filter(name: string){
+    const filterValue = name.toLowerCase();
+    return this.cities.filter(option => option.city_name.toLowerCase().includes(filterValue));
   }
-  getBoardingDroping(item,index){
-    let data={
-      "source":this.params.source_city_id,
-      "destination":this.params.destination_city_id,
-      "booking_date":this.params.travel_date,
-      "trip":item.bus_id,
-      "delayedFlag": 0,
-      "delayedDate":item.delayedDate,
+  private _filterDestinations(name: string){
+    const filterValue = name.toLowerCase();
+    return this.destinations.filter(option => option.city_name.toLowerCase().includes(filterValue));
   }
-  this.service.getBoardingDroping(data).subscribe((res)=>{
-      this.buses[index].dropping = res.dropping
-      this.buses[index].boarding = res.boarding
 
-  })
+  
+  destination(){
+    this.service.getDestinations(this.searchForm.get('city_id').value).subscribe((res)=>{
+      this.destinations= res.data
+    })
   }
+
   tooltip(item,bus){
     if(item.seat_type =='normal' || item.seat_type =='bclass' || item.seat_type =='vip'){
       let obj=bus.defaultTripPriceList.find(ob=>ob.seatType == item.seat_type)
@@ -122,7 +212,12 @@ export class BuslistComponent implements OnInit {
     }
    
   }
+  onReturnSearch(){
+    let date = this.returnForm.get('returnDate').value
+    let data = this.params
+    this.route.navigate(['buslist',data.source_city_id,data.destination_city_id,this.datePipe.transform(data.travel_date,'yyyy-MM-dd'),data.source_city,data.dest_city,this.datePipe.transform(date,'yyyy-MM-dd')])
 
+  }
 selectSeat(item){
    this.bookingService.selectSeat(item);
 }
@@ -137,7 +232,20 @@ save(){
   this.reviewModal.show();
 }
 continue(){
-this.route.navigateByUrl('/passengers')
+  this.reviewModal.hide();
+  if(this.user !=undefined){
+    this.route.navigateByUrl('/passengers')
+  }else{
+    this.commonService.loginModal.next(true);
+    this.checkLoginEvent();
+  }
 }
 
+checkLoginEvent(){
+   this.commonService.auth.subscribe((res)=>{
+      if(res){
+        this.route.navigateByUrl('/passengers')
+      }
+    })
+}
 }

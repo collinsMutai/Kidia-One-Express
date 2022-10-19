@@ -1,11 +1,6 @@
-
 mat-form-field{
 width: 100%;
 }
-
-
-
-
 
 .chair-right{
     position: absolute;
@@ -111,10 +106,6 @@ width: 100%;
     padding-right: 0px;
 }
 
-.cdk-global-overlay-wrapper, .cdk-overlay-container {
-    z-index: 99999 !important;
- }
-
  .crossBorderSpan {
     padding: 10px 40px 10px 10px;
     -webkit-clip-path: polygon(100% 0,86% 100%,0 100%,0 0);
@@ -132,3 +123,15 @@ width: 100%;
 .text-right{
     text-align: right;
 }
+.pull-right{
+float: right;
+}
+
+.btn-black{
+color: black;
+}
+@media only screen and (max-width: 600px) {
+    .row {
+      margin:0 !important;
+    }
+  }

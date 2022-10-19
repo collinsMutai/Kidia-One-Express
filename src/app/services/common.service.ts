@@ -11,6 +11,8 @@ export class CommonService {
   loginModal:BehaviorSubject<Boolean> = new BehaviorSubject(false);
   login_modal=this.loginModal.asObservable();
   booking_token=this.token.asObservable();
+  authenticated:BehaviorSubject<Boolean> = new BehaviorSubject(false);
+  auth=this.authenticated.asObservable();
   constructor() { }
   openLoginModal(){
     this.loginModal.next(true);
@@ -21,4 +23,5 @@ setBooking(data){
 setToken(text){
   this.token.next(text);
 }
+
 }

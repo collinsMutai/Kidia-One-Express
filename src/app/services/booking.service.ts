@@ -282,4 +282,10 @@ this.selectSeatName = [];
     this.selectSeatName.push(this.selectedseat.value[i].seat_name);
   }
 };
+reset(){
+  this.bookingdata.next({});
+  this.selectedseat.next([]);
+  this.selectedSeatsData.next({});
+  this.selectedTripData.next({});
+}
 }

@@ -39,7 +39,7 @@
               <div class="col-md-2">
                   <mat-form-field appearance="outline">
                       <mat-label>Date</mat-label>
-                      <input matInput  formControlName="date" [matDatepicker]="picker1" placeholder="Date">
+                      <input matInput [min]="date"  (ngModelChange)="setDate(f.date.value)"  formControlName="date" [matDatepicker]="picker1" placeholder="Date">
                       <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                       <mat-datepicker #picker1></mat-datepicker>
                   </mat-form-field>
@@ -47,7 +47,7 @@
               <div class="col-md-2">
                   <mat-form-field appearance="outline">
                       <mat-label>Return Date</mat-label>
-                      <input matInput  formControlName="returnDate" [matDatepicker]="picker" placeholder="Return Date">
+                      <input matInput  formControlName="returnDate" [min]="return_min" [matDatepicker]="picker" placeholder="Return Date">
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
@@ -83,7 +83,7 @@
               <div class="col">
                 <div class="card border-0 shadow">
                   <div class="card-body">
-                    <img src="assets/img/save.png" class="center" alt="">
+                    <img src="assets/img/save.png"  class="center" alt="">
                     <h3 class="fs-4">Save</h3>
                     <p>Pay less when using our new Mobile App. You can save up to 25% of your Promo Cash balance in a single purchase.</p>
                   </div>
@@ -120,7 +120,7 @@
       </div>
     </div>
 
-    <div class="section-1 container">
+    <div class="section container">
       <div class="display-6 fw-normal">Our Services</div>
       <div class="section-body">
         <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -169,7 +169,7 @@
     </div>
 
     
-    <div class="download-section section-1 text-white">
+    <div class="download-section section text-white">
         <div class="col-12 col-lg-6 offset-0 offset-lg-6 py-3 py-lg-4">
           <p class="display-6 fw-normal">Travel With Us</p>
           <p style="font-size:30px;">
@@ -178,7 +178,7 @@
         
         </div>
       </div>
-      <div class="blog-section section-1 container" >
+      <div class="blog-section section container" >
         <div class="row">
           <div class="col-12 col-md-4">
             <div class="row">

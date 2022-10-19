@@ -24,3 +24,7 @@
 .offcanvas, .offcanvas-lg, .offcanvas-md, .offcanvas-sm, .offcanvas-xl, .offcanvas-xxl {
     width: 280px !important;
 }
+
+::ng-deep .cdk-overlay-container {
+    z-index: 9999;
+}

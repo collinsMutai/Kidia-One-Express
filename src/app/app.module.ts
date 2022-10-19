@@ -37,6 +37,7 @@ import { ReturnComponent } from './views/return/return.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ToastrModule } from 'ngx-toastr';
 import { PassengersComponent } from './views/passengers/passengers.component';
+import { OnwardTripComponent } from './views/onward-trip/onward-trip.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +52,8 @@ import { PassengersComponent } from './views/passengers/passengers.component';
     ProfileComponent,
     PaymentsComponent,
     ReturnComponent,
-    PassengersComponent
+    PassengersComponent,
+    OnwardTripComponent
     ],
   imports: [
     BrowserModule,

@@ -21,9 +21,14 @@ export class PassengersComponent implements OnInit {
 
   ngOnInit(): void {
     this.user=JSON.parse(sessionStorage.getItem('loggedUser'))
-    console.log(this.user);
     this.commonService.review_info.subscribe((res)=>{
       this.data=res
+      if(Object.entries(res).length==0){
+        this.router.navigateByUrl('/')
+      }
+    
+    })
+    if (window.confirm("Are you travelling?")) {
       this.data.onwardticket.c_email=this.user.email;
       this.data.onwardticket.currencyId=1;
       this.data.onwardticket.passenger[0].name = this.user.name;
@@ -34,8 +39,7 @@ export class PassengersComponent implements OnInit {
       this.data.onwardticket.passenger[0].nationality = this.user.nationality;
       this.data.onwardticket.passenger[0].mobile = this.user.phone;
       this.data.onwardticket.selectedSeat=this.getSeatsBooked(this.data.onwardticket.passenger);
-    })
-
+    }
   }
   onClickSubmit(){
     delete this.data.onwardticket.fareBreakup

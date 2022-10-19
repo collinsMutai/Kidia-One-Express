@@ -148,6 +148,7 @@ changeDropping(item) {
   this.selectedDropping.next(item);
 };
 changeBoarding(item) {
+  console.log('dddd',item);
   this.selectedBoarding.next(item);
 };
 
@@ -222,69 +223,76 @@ checkSelectedSeats(seatId, value) {
 }
 
 saveReturn() {
-  if (!this.selectedBoarding.value && !this.selectedDropping.value) {
-      alert("Please select boarding & dropping point");
-  } else if (!this.selectedDropping) {
-    alert("Please select Dropping point");
-  } else if (!this.selectedBoarding) {
-    alert("Please select Boarding point");
-
-  } else {
-      let booking = {
-          booking_date: this.params.travel_date,
-          pickup_id: this.params.source_city_id,
-          return_id: this.params.destination_city_id,
-          source_city:this.params.source_city,
-          dest_city:this.params.dest_city,
-          bus_title: this.selectedTripData.value.trip_code,
-          company_logo: this.selectedTripData.value.company_logo,
-          company_name: this.selectedTripData.value.company_name,
-          currency: '254',
-          departure_time: this.selectedTripData.value.departure_time,
-          boardingPointId: (this.selectedBoarding.value) ? this.selectedBoarding.value.id : "",
-          droppingPointId: (this.selectedDropping.value) ? this.selectedDropping.value.id : "",
-          boardingPointname: (this.selectedBoarding.value) ? this.selectedBoarding.value.name : "",
-          droppingPointname: (this.selectedDropping.value) ? this.selectedDropping.value.name : "",
-          bus_id: this.selectedTripData.value.bus_id,
-          currencyId:'KES',
-          ticket_cnt: this.selectedseat.value.length,
-          bs_number_of_seats: this.selectedTripData.value.available_seat_count,
-          available_Seats: 'f',
-          sub_total: this.totalTicketPrice.value,
-          is_flat_offer: this.selectedTripData.value.flatOffer ? this.selectedTripData.value.flatOffer : false,
-          tax: '0.00',
-          total: this.totalTicketPrice.value,
-          is_luggage: false,
-          c_address: "",
-          c_city: "",
-          c_state: "",
-          c_zip: "",
-          c_country: "",
-          fareBreakup: this.selectedSeatsData.value,
-          route_id: this.selectedTripData.value.route_id,
-          isPromotional: this.selectedTripData.value.isPromotional,
-          promotionalTripMsg: this.selectedTripData.value.isPromotional ? this.selectedTripData.value.message : "",
-          seatSelectionLimit: this.selectedTripData.value.seatSelectionLimit,
-          delayedFlag: this.selectedTripData.value.delayedFlag,
-          delayedDate: this.selectedTripData.value.delayedDate,
-          passenger: this.selectedseat.value
-      };
-      this.bookingdata.next(booking);
-      let data:any={}
-      this.bookingService.review_info.subscribe((res)=>{
-      data=res;
-      data.returnticket=booking
-      data.totalTicketPrice = this.totalTicketPrice.value + res.totalTicketPrice;
-      this.commonService.setBooking(data);
-      })
-      this.getAllSelectSeatName();
-  }
-
+  let booking = {
+    booking_date: this.params.travel_date,
+    pickup_id: this.params.source_city_id,
+    return_id: this.params.destination_city_id,
+    source_city:this.params.source_city,
+    dest_city:this.params.dest_city,
+    bus_title: this.selectedTripData.value.trip_code,
+    company_logo: this.selectedTripData.value.company_logo,
+    company_name: this.selectedTripData.value.company_name,
+    currency: '254',
+    departure_time: this.selectedTripData.value.departure_time,
+    boardingPointId: (this.selectedBoarding.value) ? this.selectedBoarding.value.id : "",
+    droppingPointId: (this.selectedDropping.value) ? this.selectedDropping.value.id : "",
+    boardingPointname: (this.selectedBoarding.value) ? this.selectedBoarding.value.name : "",
+    droppingPointname: (this.selectedDropping.value) ? this.selectedDropping.value.name : "",
+    bus_id: this.selectedTripData.value.bus_id,
+    currencyId:'KES',
+    ticket_cnt: this.selectedseat.value.length,
+    bs_number_of_seats: this.selectedTripData.value.available_seat_count,
+    available_Seats: 'f',
+    sub_total: this.totalTicketPrice.value,
+    is_flat_offer: this.selectedTripData.value.flatOffer ? this.selectedTripData.value.flatOffer : false,
+    tax: '0.00',
+    total: this.totalTicketPrice.value,
+    is_luggage: false,
+    c_address: "",
+    c_city: "",
+    c_state: "",
+    c_zip: "",
+    c_country: "",
+    fareBreakup: this.selectedSeatsData.value,
+    route_id: this.selectedTripData.value.route_id,
+    isPromotional: this.selectedTripData.value.isPromotional,
+    promotionalTripMsg: this.selectedTripData.value.isPromotional ? this.selectedTripData.value.message : "",
+    seatSelectionLimit: this.selectedTripData.value.seatSelectionLimit,
+    delayedFlag: this.selectedTripData.value.delayedFlag,
+    delayedDate: this.selectedTripData.value.delayedDate,
+    passenger: this.selectedseat.value
 };
+this.bookingdata.next(booking);
+let data:any={}
+this.bookingService.review_info.subscribe((res)=>{
+data=res;
+data.returnticket=booking
+data.totalTicketPrice = this.totalTicketPrice.value + res.totalTicketPrice;
+this.commonService.setBooking(data);
+})
+this.getAllSelectSeatName();
+};
+setBoadingDropping(){
+ let booking = this.bookingdata.value
+ booking.boardingPointId= (this.selectedBoarding.value) ? this.selectedBoarding.value.id : "",
+ booking.droppingPointId= (this.selectedDropping.value) ? this.selectedDropping.value.id : "",
+ booking.boardingPointname=(this.selectedBoarding.value) ? this.selectedBoarding.value.name : "",
+ booking.droppingPointname=(this.selectedDropping.value) ? this.selectedDropping.value.name : ""
+ this.bookingdata.next(booking);
+}
 getAllSelectSeatName () {
 this.selectSeatName = [];
   for (var i = 0; i < this.selectedseat.value.length; i++) {
     this.selectSeatName.push(this.selectedseat.value[i].seat_name);
   }
 };
+
+reset(){
+  this.bookingdata.next({});
+  this.selectedseat.next([]);
+  this.selectedSeatsData.next({});
+  this.selectedTripData.next({});
+  this.commonService.bookingdata.next({});
+}
+
 }

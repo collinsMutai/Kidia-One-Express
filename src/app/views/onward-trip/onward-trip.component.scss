@@ -1,0 +1,257 @@
+.hero-section {
+    min-height: 0px;
+}
+
+.departure {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #1f1309;
+    margin-bottom: 15px;
+}
+
+.view-seats {
+    display: inline-block;
+    border: 1px solid #ffe716;
+    font-size: 13px;
+    padding: 6px 10px;
+    text-transform: capitalize;
+    color:black;
+    margin-top: 5px;
+    font-weight: 700;
+    background-color: #ffe716;
+    border-radius: 20px;
+}
+.search-seats {
+    display: inline-block;
+    border: 1px solid black;
+    font-size: 13px;
+    padding: 6px 10px;
+    text-transform: capitalize;
+    color:white;
+    margin-top: 5px;
+    font-weight: 700;
+    background-color: black;
+    border-radius: 20px;
+}
+.bold {
+    font-weight: 700;
+}
+.primary {
+    color: black!important;
+    font-weight: 600;
+}
+
+
+.star{
+ color:#ffe716 !important;
+}
+div{
+    font-size: 15px !important;
+}
+
+
+::ng-deep .mat-tab-label {
+padding: 0px !important;
+justify-content: left !important;
+}
+
+
+::ng-deep mat-form-field.mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix  { padding: 0.6em 0px !important }
+::ng-deep mat-form-field.mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix > span.mat-form-field-label-wrapper { top: -1.3em !important }
+
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+transform: translateY(-1.1em) scale(.75) !important;
+width: 133.33333% !important;
+}
+
+.mat-badge-content {
+background: red !important;
+color: blue !important;
+}
+
+
+.identifiedType{
+    padding: 0px 8px;
+    border-radius: 50px;
+    margin-right: 5px;
+}
+
+.orange-color{
+    color: orange
+}
+.green-color{
+    color: green
+}
+.blue-color{
+    color: blue
+}
+::ng-deep .mat-form-field-wrapper{
+    margin-bottom: -0.65em !important;
+    margin-top: -0.15em !important;
+ }
+
+
+ .mobileSeatLayout {
+    height: 700px;
+    margin: 0 auto;
+    position: relative;
+    background-color: #fff;
+    box-shadow: 0 1px 8px #ccc;
+    cursor: pointer;
+    width: 300px;
+    // margin: 0 auto;
+}
+
+
+ .chair-seat-mob {
+    background-color: #fff;
+    margin: 0px 3px;
+    width: 30px;
+    height: 25px;
+    border-width: 2px;
+    border-color: #aaa;
+    border-top-left-radius: 5px;
+    align-items: center;
+    justify-content: center;
+    border-top-right-radius: 5px;
+    border-style: solid;
+    border-bottom: solid 1px black !important;
+}
+.chair-bottom-mob {
+    position: absolute;
+    bottom: 5px;
+    left: 1px;
+    right: 0;
+    width: 34px;
+    height: 7px;
+    border-width: 2px;
+    border-style: solid;
+    border-left-width: 3px !important;
+    border-left-style: solid !important;
+    border: solid 1px !important;
+    z-index: 1;
+    border-top: 0 !important;
+}
+.chair-left-mob {
+    position: absolute;
+    bottom: 0;
+    left: 1px;
+    width: 8px;
+    height: 18px;
+    border-width: 2px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    top: 11px;
+    border-style: solid;
+    border-right: 0;
+    border-top-width: 3px !important;
+    border-top-style: solid !important;
+    border: solid 1px !important;
+}
+.chair-right-mob {
+    position: absolute;
+    right: 2px;
+    width: 8px;
+    height: 18px;
+    border-width: 2px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    top: 11px;
+    border-bottom-width: 8px !important;
+    border-bottom-style: solid !important;
+    border: solid 1px !important;
+}
+.static-top-mob{
+    background-color: #fff;
+    height: 21px;
+    left: 0px;
+    width: 7px;
+    top: 9px;
+    position: absolute;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-width: 8px !important;
+    border-bottom-style: solid !important;
+    border: solid 1px !important;
+}
+.static-bottom-mob{
+    background-color: #fff;
+    border-top: solid 1px !important;
+    top: 23px;
+    width: 31px;
+    left: 0; 
+    position: absolute;
+    bottom: 9px;
+    right: 0;
+    height: 7px;
+    border-width: 2px;
+    border-style: solid;
+    border-left-width: 3px !important;
+    border-left-style: solid !important;
+    border: solid 1px !important;
+    z-index: 1;
+}
+.static-right-mob{
+    background-color: #fff;
+    height: 21px;
+    left: 24px;
+    border: solid 1px !important;
+    position: absolute;
+    right: 6px;
+    width: 7px;
+    border-width: 2px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    top: 9px;
+    border-bottom-style: solid !important;
+}
+.static-seat-mob{
+    background-color: #fff;
+    margin: 0px 3px;
+    width: 26px;
+    height: 27px;
+    border-width: 2px;
+    border-color: #aaa;
+    border-top-left-radius: 5px;
+    align-items: center;
+    justify-content: center;
+    border-top-right-radius: 5px;
+    border-style: solid;
+    border-bottom: solid 1px black !important;
+    text-align: center;
+    padding-top: 3px;
+}
+
+.selectedSeat{
+    background-color: #990000 !important;
+}
+.alreadySelectedSeat{
+    background-color: #990000 !important;
+    color:#fff;
+    border-color: #990000;
+}
+.alreayBooked{
+    background-color: #ada9a9 !important;
+    pointer-events:none;
+    border-color: #888888;
+}
+
+
+
+.hd {
+    padding: 0 0 0;
+    margin-top: 0;
+}
+
+.onward-return-tab {
+    background-color:#F0E68C;
+    color:black;
+}
+.enable {
+    background-color:#FDDA0D;
+}
+.disable{
+    pointer-events:none;
+  }

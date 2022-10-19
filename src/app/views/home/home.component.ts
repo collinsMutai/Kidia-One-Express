@@ -18,6 +18,8 @@ export interface City {
 export class HomeComponent implements OnInit {
   searchForm: FormGroup;
   cities=[];
+  date= new Date()
+  return_min:Date;
   destinations=[];
   filteredOptions: Observable<City[]>;
   destOptions: Observable<City[]>;
@@ -91,5 +93,10 @@ export class HomeComponent implements OnInit {
     this.service.getDestinations(this.searchForm.get('city_id').value).subscribe((res)=>{
       this.destinations= res.data
     })
+  }
+  setDate(item){
+    this.return_min=new Date(item)
+    this.return_min.setDate(this.return_min.getDate() + 1);
+
   }
 }

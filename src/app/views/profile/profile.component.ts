@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
+import { ServiceService } from 'src/app/services/service.service';
 
 @Component({
   selector: 'app-profile',
@@ -10,19 +13,24 @@ import {MatTableDataSource} from '@angular/material/table';
 })
 export class ProfileComponent implements OnInit {
   passwordForm: FormGroup;
+
   displayedColumns: string[] = ['position', 'name', 'amount', 'status','comment'];
+  tripColumns: string[] = ['date', 'route', 'boarding', 'status'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
+  trips = new MatTableDataSource([])
   @ViewChild(MatPaginator) paginator: MatPaginator;
   registerForm: FormGroup;
   codes=['254']
-  constructor(private formBuilder: FormBuilder) { }
+  user:any={};
+  i={ "userId": "222950", "username": "", "email": "paul@gmail.com", "api_token": "vPZBSfUwUTzfKiNKVSXiOVsWO52Fn1BJVyB3W02H8NrmWeS6jk_1665804977", "country_code": "254", "phone": "799442437", "age": "22", "name": "Paul Obiero", "last_name": "Obiero", "gender": "male", "currencyId": "0", "identity_number": "0121975" }
+  constructor(private formBuilder: FormBuilder,public toastr:ToastrService,public service:ServiceService,public spinner:NgxSpinnerService) { }
 
   ngOnInit(): void {
+    this.user=JSON.parse(sessionStorage.getItem('loggedUser'));
     this.registerForm = this.formBuilder.group({
       name: ['', Validators.required],
       dob: ['', Validators.required],
       gender: ['', Validators.required],
-      password:['', Validators.required],
       phone:['', Validators.required],
       country_code:['', Validators.required]
     });
@@ -31,36 +39,27 @@ export class ProfileComponent implements OnInit {
       password:['', Validators.required],
       confirm:['', Validators.required],
     });
-   
+   this.registerForm.patchValue({name:this.user.name,country_code:this.user.country_code,gender:this.user.gender,phone:this.user.phone})
+   console.log(this.registerForm.value);
   }
-
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+  changePassword(){
+  this.spinner.show();
+  let data = this.passwordForm.value
+  if(data.password !=data.confirm){
+    this.toastr.info("Password didn't match","Password Mismatch")
+    return
   }
-login(){
-  console.log(this.passwordForm.value)
+  this.service.changePassword({"newPassword":data.password,"confirmPassword":data.confirm,"oldPassword":data.current,"country_code":this.user.country_code,"sourcetype": "web"}).subscribe((res)=>{
+    if(res.isSuccess){
+      this.spinner.hide();
+      this.toastr.success("Password Succefully changed","Success");
+      this.passwordForm.reset();
+    }else{
+      this.spinner.hide();
+      this.toastr.error(res.msg,"Failed")
+    }
+  })
 }
 }
 const ELEMENT_DATA = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-  {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-  {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-  {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-  {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-  {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-  {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-  {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-  {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-  {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
 ];
