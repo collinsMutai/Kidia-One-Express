@@ -4,8 +4,7 @@
         "target": "http://api.ma3app.com",
         "secure": false,
         "changeOrigin":true,
-        "logLevel": "debug",
-        "pathRewrite": {"^/appApi" : "http://api.ma3app.com/appApi/"}
+        "logLevel": "debug"
 
     }
 }
