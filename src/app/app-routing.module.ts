@@ -6,6 +6,7 @@ import { ContactComponent } from './views/contact/contact.component';
 import { HomeComponent } from './views/home/home.component';
 import { PassengersComponent } from './views/passengers/passengers.component';
 import { PaymentsComponent } from './views/payments/payments.component';
+import { PrivacyComponent } from './views/privacy/privacy.component';
 import { ProfileComponent } from './views/profile/profile.component';
 import { ReturnTripComponent } from './views/return-trip/return-trip.component';
 import { TicketComponent } from './views/ticket/ticket.component';
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path:'about',
     component:AboutComponent
+  },
+  {
+    path:'privacy',
+    component:PrivacyComponent
   },
   {
     path:'payment/:reference/:mobile/:token',
