@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceService } from 'src/app/services/service.service';
 import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
@@ -9,14 +9,14 @@ import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { City } from '../home/home.component';
 import { CommonService } from 'src/app/services/common.service';
-
+declare var anime: any;
 @Component({
   selector: 'app-buslist',
   templateUrl: './buslist.component.html',
   styleUrls: ['./buslist.component.scss'],
   providers:[DatePipe]
 })
-export class BuslistComponent implements OnInit {
+export class BuslistComponent implements OnInit,AfterViewInit {
   modify=false;
   show=false;
   returnTicket=false;
@@ -258,4 +258,27 @@ onActivity($event){
     this.route.navigateByUrl('/passengers')
   }
 }
+ngAfterViewInit(): void {
+  const textWrapper = document.querySelector('.an-1');
+  textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+  
+  anime.timeline({loop: true})
+  .add({
+    targets: '.an-1 .letter',
+    scale: [4,1],
+    opacity: [0,1],
+    translateZ: 0,
+    easing: "easeOutExpo",
+    duration: 950,
+    delay: (el, i) => 70*i
+  }).add({
+    targets: '.an-1',
+    opacity: 0,
+    duration: 1000,
+    easing: "easeOutExpo",
+    delay: 3000
+  });
+  
+  
+  }
 }

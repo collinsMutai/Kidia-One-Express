@@ -1,168 +1,7 @@
-<!-- <div class="hero-section section pt-0">
-    <div class="container pt-5">
-    <app-header></app-header>
-    <div class="container h-100 text-white">
-      </div>
-    </div>
-   
-  </div>
 
-
-<div class="section container">
-   <div class="row">
-    <div class="col-md-12">
-        <div class="row">
-         
-            <div class="row">
-                <div class="col-sm-7"><div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                          <div class="col-sm-12">
-                            <span style="font-weight:800;font-size:14px;" class="text-success"></span>
-                          </div>
-                    <mat-tab-group [selectedIndex]="selected" (selectedIndexChange)="setIndex($event)">
-                    <mat-tab *ngFor="let tab of payments;let index = index" [label]="tab" >
-                        <div class="row container" *ngIf="selected==0"  style="margin-top: 10px;">
-                            <span>To complete the payment you will receive a prompt from {{tab}} on the mobile number below</span>                        
-                            <div class="col-sm-12" >
-                                <form [formGroup]="paymentForm" (ngSubmit)="makePayment()">
-                                <div class="row">
-                                  <div class="col-sm-4">
-                                    <mat-form-field appearance="outline">
-                                      <mat-label>Code</mat-label>
-                                      <input matInput readonly formControlName="country_code"    placeholder="code">
-                                    </mat-form-field>
-                                  </div>
-                                  <div class="col-sm-8">
-                                    <mat-form-field appearance="outline">
-                                      <mat-label>Mobile</mat-label>
-                                      <input matInput  readonly formControlName="mobile"    placeholder="Mobile">
-                                  </mat-form-field>
-                                  </div>
-                                 
-                                  <div class="col-sm-12">
-                                    <button  class="btn btn-success" [disabled]="paymentForm.invalid" style="float: right;">Make Payment</button>
-                                  </div>
-                                </div>
-                                </form>
-                                <br>
-                              </div>
-                        </div>
-                        <div class="row container" *ngIf="selected==1">
-                          <span class="text-warning">  Fetching your payment status. Please wait <span class="text-success">{{seconds}}...</span></span>
-                        </div>
-                        <div class="row container" *ngIf="selected==2">
-                          <div class="col-sm-12" style="margin-top: 10px;">
-                            <h4>Proceed To Pay</h4>
-                          </div>
-                          <div class="col-sm-12">
-                            <ol>
-                              <li>You will be prompted to enter your MPESA pin to authorize your payment request of KES <b>{{data?.totalTicketPrice}}</b> to <b>{{ref_no}}</b></li>
-                              <li>Choose MPESA
-                                <ol  style="list-style:upper-roman;">
-                                  <li>Go to your sim toolkit enter</li>
-                                  <li>Use account number <b>{{ref_no}}</b></li>
-                                  <li>Enter 857988 as your business number</li>
-                                  <li>Enter <b>{{ref_no}}</b></li>
-                                  <li>Enter KES <b>{{data?.totalTicketPrice}}</b></li>
-                                  <li>Enter PIN</li>
-                                </ol>
-                              </li>
-                            </ol>
-                          </div>
-                        </div>
-                    </mat-tab>
-                 
-
-                    </mat-tab-group>
-                        </div>
-                    </div>
-                  </div></div>
-                <div class="col-sm-5">
-                    <div class="card">
-                        <div class="card-body">
-                          <div class="row">
-                            <div class="col-sm-12">
-                                <div>
-                                    <tabset>
-                                      <tab heading="ONWARD" id="tab1">
-                                        <br>
-                                      <div class="row details">
-                                        <div class="col-sm-12">
-                                            <img src="assets/img/bus.svg" alt="bus" style="width: 65px;opacity: 0.4">
-                                        </div>
-                                        <div class="col-sm-6 col-6  fw-normal">Bus</div>
-                                        <div class="col-sm-6 col-6 fw-normal">{{data?.onwardticket?.bus_title}}</div>
-                                        <div class="col-sm-6 col-6 fw-normal">Booking date</div>
-                                        <div class="col-sm-6 col-6 fw-normal">{{data?.onwardticket?.booking_date}}</div>
-                                        <div class="col-sm-6 col-6 fw-normal">Departure Time</div>
-                                        <div class="col-sm-6 col-6 fw-normal">{{data?.onwardticket?.departure_time}}</div>
-                                        <div class="col-sm-6 col-6 fw-normal">Boarding Point</div>
-                                        <div class="col-sm-6 col-6 fw-normal">{{data?.onwardticket?.boardingPointname}}</div>
-                                        <div class="col-sm-6 col-6 fw-normal">Dropping Point</div>
-                                        <div class="col-sm-6 col-6 fw-normal">{{data?.onwardticket?.droppingPointname}}</div>
-
-                                      </div>
-                                    </tab>
-                                      <tab heading="RETURN" *ngIf="data?.returnticket"  >
-                                        <br>
-                                        <div class="row details">
-                                            <div class="col-sm-12">
-                                                <img src="assets/img/bus.svg" alt="bus" style="width: 65px;opacity: 0.4">
-                                            </div>
-                                            <div class="col-sm-6 col-6 fw-normal">Bus</div>
-                                            <div class="col-sm-6 col-6 fw-normal">{{data?.returnticket?.bus_title}}</div>
-                                            <div class="col-sm-6 col-6 fw-normal">Booking date</div>
-                                            <div class="col-sm-6 col-6 fw-normal">{{data?.returnticket?.booking_date}}</div>
-                                            <div class="col-sm-6 col-6 fw-normal">Departure Time</div>
-                                            <div class="col-sm-6 col-6 fw-normal">{{data?.returnticket?.departure_time}}</div>
-                                            <div class="col-sm-6 col-6 fw-normal">Boarding Point</div>
-                                            <div class="col-sm-6 col-6 fw-normal">{{data?.returnticket?.boardingPointname}}</div>
-                                            <div class="col-sm-6 col-6 fw-normal">Dropping Point</div>
-                                            <div class="col-sm-6 col-6 fw-normal">{{data?.returnticket?.droppingPointname}}</div>
-    
-                                          </div>
-                                      </tab>
-                                    </tabset>
-                                  </div>
-                                   
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="card" style="margin-top: 10px;">
-                        <div class="card-body">
-                          <h5 class="card-title">Fare Breakup</h5>
-                          <div class="row">
-                            <div class="col-sm-6 col-6 fw-normal">ONWARD FARE</div>
-                            <div class="col-sm-6 col-6 fw-normal" style="font-weight:600;font-size:15px">{{data?.onwardticket?.total}}</div>
-
-                            <div class="col-sm-6 col-6 fw-normal" *ngIf="data?.returnticket">RETURN FARE</div>
-                            <div class="col-sm-6 col-6 fw-normal" *ngIf="data?.returnticket">{{data?.returnticket?.total}}</div>
-
-                          </div>
-                        </div>
-                        <div class="card-footer" style="background-color: black;color:white;font-weight: 600;font-size: 13px;">
-                            <span style="float:right;font-size:15px;">TOTAL: {{data?.totalTicketPrice}}</span>
-                          </div>
-                      </div>
-                </div>
-
-            </div>
-        </div>
-        
-    </div>
-   </div>
-  </div>
-
-  <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#ffe716" type = "pacman" [fullScreen] = "true"><p style="color: white" >Please wait... </p></ngx-spinner>
-
- -->
-
-
+  <app-header></app-header>
   <div class="hero-section section pt-0">
     <div class="container pt-5">
-    <app-header></app-header>
     <div class="container h-100 text-white">
       </div>
     </div>
@@ -237,7 +76,7 @@
                       <ol  style="list-style:upper-roman;">
                         <li>Go to your sim toolkit enter</li>
                         <li>Use account number <b>{{ref_no}}</b></li>
-                        <li>Enter 857988 as your business number</li>
+                        <li>Enter 4101701 as your business number</li>
                         <li>Enter <b>{{ref_no}}</b></li>
                         <li>Enter KES <b>{{data?.totalTicketPrice}}</b></li>
                         <li>Enter PIN</li>
@@ -337,7 +176,6 @@
 
 </div>
   </div>
-   
 <div class="modal fade" bsModal #paymentModal="bs-modal" [config]="{backdrop: 'static'}"
 tabindex="-1" role="dialog" aria-labelledby="dialog-static-name">
 <div class="modal-dialog modal-md">
@@ -382,3 +220,4 @@ tabindex="-1" role="dialog" aria-labelledby="dialog-static-name">
 
   <ngx-spinner bdColor = "rgba(0, 0, 0, 0)" size = "medium" color = "#ffe716" type = "pacman" [fullScreen] = "true"><p style="color: white" >Please wait... </p></ngx-spinner>
 
+  <app-footer></app-footer>

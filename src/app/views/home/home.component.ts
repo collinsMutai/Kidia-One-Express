@@ -1,10 +1,11 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ServiceService } from 'src/app/services/service.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+declare var anime: any;                                  // declare like this
 export interface City {
   id: string;
   city_name:string
@@ -15,7 +16,7 @@ export interface City {
   styleUrls: ['./home.component.scss'],
   providers:[DatePipe]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit,AfterViewInit {
   searchForm: FormGroup;
   cities=[];
   date= new Date()
@@ -99,4 +100,28 @@ export class HomeComponent implements OnInit {
     this.return_min.setDate(this.return_min.getDate() + 1);
 
   }
+   
+  ngAfterViewInit(): void {
+const textWrapper = document.querySelector('.an-1');
+textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+anime.timeline({loop: true})
+.add({
+  targets: '.an-1 .letter',
+  scale: [4,1],
+  opacity: [0,1],
+  translateZ: 0,
+  easing: "easeOutExpo",
+  duration: 950,
+  delay: (el, i) => 70*i
+}).add({
+  targets: '.an-1',
+  opacity: 0,
+  duration: 1000,
+  easing: "easeOutExpo",
+  delay: 3000
+});
+
+
+}
 }
