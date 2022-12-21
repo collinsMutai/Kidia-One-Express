@@ -16,7 +16,7 @@
                 <h4 align="center">Passenger Details</h4>
             </div>
         </div>
-        <form #passegerForm="ngForm" (ngSubmit)="onClickSubmit()"> 
+        <form #passegerForm="ngForm"> 
             
             <div class="row" *ngFor="let item of data?.onwardticket?.passenger;let index=index">
             
@@ -93,10 +93,10 @@
               
             </div>
 
-            <button type="submit" [disabled]="passegerForm.invalid" class="btn view-seats btn-sm" style="float: right;" value="submit">PROCEED TO PAY</button>
+            <button type="submit" [disabled]="passegerForm.invalid" (click)="initPassenger();onClickSubmit()" class="btn view-seats btn-sm" style="float: right;" value="submit">PROCEED TO PAY</button>
          </form>
         
     </div>
    </div>
   </div>
-
+  <app-footer></app-footer>

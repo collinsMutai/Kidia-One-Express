@@ -39,6 +39,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { PassengersComponent } from './views/passengers/passengers.component';
 import { OnwardTripComponent } from './views/onward-trip/onward-trip.component';
 import { PrivacyComponent } from './views/privacy/privacy.component';
+import { RegisterComponent } from './views/register/register.component';
+import { DatePipe } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,7 +57,8 @@ import { PrivacyComponent } from './views/privacy/privacy.component';
     ReturnComponent,
     PassengersComponent,
     OnwardTripComponent,
-    PrivacyComponent
+    PrivacyComponent,
+    RegisterComponent
     ],
   imports: [
     BrowserModule,
@@ -85,7 +88,8 @@ import { PrivacyComponent } from './views/privacy/privacy.component';
     ToastrModule.forRoot()
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass:BackendInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass:BackendInterceptor, multi: true },
+    DatePipe
 
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],

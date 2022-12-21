@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BookingService } from 'src/app/services/booking.service';
 import { CommonService } from 'src/app/services/common.service';
 import { ServiceService } from 'src/app/services/service.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-passengers',
@@ -20,7 +21,10 @@ export class PassengersComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,public commonService:CommonService,public service:ServiceService,public router:Router) { }
 
   ngOnInit(): void {
-    this.user=JSON.parse(sessionStorage.getItem('loggedUser'))
+    if(sessionStorage.getItem('loggedUser') !=undefined){
+      this.user=JSON.parse(sessionStorage.getItem('loggedUser'))
+    }else{
+    }
     this.commonService.review_info.subscribe((res)=>{
       this.data=res
       if(Object.entries(res).length==0){
@@ -29,7 +33,10 @@ export class PassengersComponent implements OnInit {
     
     })
     if (window.confirm("Are you travelling?")) {
-      this.data.onwardticket.c_email=this.user.email;
+      if (Object.keys(this.user).length === 0) {
+        
+      } else {
+      this.data.onwardticket.c_email=this.user.email ? this.user.email:'';
       this.data.onwardticket.currencyId=1;
       this.data.onwardticket.passenger[0].name = this.user.name;
       this.data.onwardticket.passenger[0].age = parseInt(this.user.age);
@@ -39,6 +46,8 @@ export class PassengersComponent implements OnInit {
       this.data.onwardticket.passenger[0].nationality = this.user.nationality;
       this.data.onwardticket.passenger[0].mobile = this.user.phone;
       this.data.onwardticket.selectedSeat=this.getSeatsBooked(this.data.onwardticket.passenger);
+      }
+      
     }
   }
   onClickSubmit(){
@@ -47,7 +56,7 @@ export class PassengersComponent implements OnInit {
     this.data.onwardticket.passenger.forEach((element,i)=> {
       if(this.data.returnticket){
         delete this.data.returnticket.fareBreakup
-        this.data.returnticket.c_email=element.c_email
+        this.data.returnticket.c_email=element.c_email ? element.c_email :'';
         this.data.returnticket.currencyId=1;
         this.data.returnticket.passenger[i].name =element.name
         this.data.returnticket.passenger[i].age = element.age
@@ -62,7 +71,7 @@ export class PassengersComponent implements OnInit {
     this.unsetNotRequiredParams();
     this.service.bookingTicket({ticketDetail:this.data,bookedThrough:"web"}).subscribe((res)=>{
       this.commonService.setToken(token);
-      console.log(res);
+      sessionStorage.setItem('time',moment().format('HH:mm:ss a'))
       if(res.isSuccess){
         this.router.navigate(['/payment',res.booking_reference,this.data.onwardticket.passenger[0].mobileId + this.data.onwardticket.passenger[0].mobile,token])
       }
@@ -113,4 +122,17 @@ export class PassengersComponent implements OnInit {
         }
     }
 };
+initPassenger(){
+  this.user=this.data.onwardticket.passenger[0]
+  this.data.onwardticket.c_email=this.user.email ? this.user.email:'';
+  this.data.onwardticket.currencyId=1;
+  this.data.onwardticket.passenger[0].name = this.user.name;
+  this.data.onwardticket.passenger[0].age = parseInt(this.user.age);
+  this.data.onwardticket.passenger[0].gender = (this.user.gender == 'male') ? 'M' : 'F';
+  this.data.onwardticket.passenger[0].id_no = this.user.id_no;
+  this.data.onwardticket.passenger[0].mobileId = '254';
+  this.data.onwardticket.passenger[0].nationality = this.user.nationality;
+  this.data.onwardticket.passenger[0].mobile = this.user.mobile;
+  this.data.onwardticket.selectedSeat=this.getSeatsBooked(this.data.onwardticket.passenger);
+}
 }

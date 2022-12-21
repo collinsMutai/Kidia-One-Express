@@ -42,6 +42,7 @@ export class BuslistComponent implements OnInit {
   filteredOptions: Observable<City[]>;
   destOptions: Observable<City[]>;
   @ViewChild('reviewModal', { static: false }) reviewModal?: ModalDirective;
+  @ViewChild('loginModal', { static: false }) loginModal?: ModalDirective;
   searchForm: FormGroup;
   returnForm: FormGroup;
   loading=false;
@@ -236,8 +237,9 @@ continue(){
   if(this.user !=undefined){
     this.route.navigateByUrl('/passengers')
   }else{
-    this.commonService.loginModal.next(true);
-    this.checkLoginEvent();
+    // this.commonService.loginModal.next(true);
+    // this.checkLoginEvent();
+    this.loginModal.show();
   }
 }
 
@@ -247,5 +249,13 @@ checkLoginEvent(){
         this.route.navigateByUrl('/passengers')
       }
     })
+}
+onActivity($event){
+  this.loginModal.hide();
+  if($event=='guest'){
+    this.route.navigateByUrl('/passengers')
+  }else{
+    this.route.navigateByUrl('/passengers')
+  }
 }
 }

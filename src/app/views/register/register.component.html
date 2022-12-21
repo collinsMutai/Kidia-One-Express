@@ -1,0 +1,142 @@
+
+
+  <div class="" *ngIf="!otp">
+    <mat-radio-group [(ngModel)]="type"  >
+        <div class="row">
+         <div class="col-sm-3 col-6">
+            <mat-radio-button selected value="1">SIGN IN </mat-radio-button>
+         </div>
+         <div class="col-sm-3 col-6">
+            <mat-radio-button value="2">REGISTER</mat-radio-button> 
+        </div>
+    
+        </div>
+    </mat-radio-group>
+    <div style="margin-top: 20px;" *ngIf="type=='1'">
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <div class="row">
+        <div class="col-sm-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Code</mat-label>
+            <mat-select formControlName="country_code" >
+              <mat-option *ngFor="let code of codes" [value]="code">
+                {{code}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-8">
+          <mat-form-field appearance="outline">
+            <mat-label>Username</mat-label>
+            <input matInput  formControlName="username"    placeholder="Username">
+        </mat-form-field>
+        </div>
+        <div class="col-sm-12">
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput type="password"  formControlName="password"    placeholder="Password">
+        </mat-form-field>
+        </div>
+        <div class="col-sm-12">
+          <button class="btn view-seats" [disabled]="loginForm.invalid" style="float: right;">Sign In</button>
+        </div>
+      </div>
+      </form>
+    
+    </div>
+    <div class="" style="margin-top: 20px;" *ngIf="type=='2'">
+        <form [formGroup]="registerForm" >
+        <div class="row">
+          <div class="col-sm-12">
+            <mat-form-field appearance="outline">
+              <mat-label>Name</mat-label>
+              <input matInput   formControlName="name"    placeholder="Name">
+          </mat-form-field>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Code</mat-label>
+              <mat-select formControlName="country_code" >
+                <mat-option *ngFor="let code of codes" [value]="code">
+                  {{code}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-8">
+            <mat-form-field appearance="outline">
+              <mat-label>Phone</mat-label>
+              <input matInput  formControlName="phone"    placeholder="Phone">
+          </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Date of Birth</mat-label>
+              <input matInput  formControlName="dob" [max]="max_date" [matDatepicker]="picker1" placeholder="Date">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Gender</mat-label>
+              <mat-select formControlName="gender" >
+                <mat-option  value="Female">
+                 Female
+                </mat-option>
+                <mat-option  value="Male">
+                  Male
+                 </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+    
+          <div class="col-sm-7">
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput type="email"  formControlName="email"    placeholder="Email">
+          </mat-form-field>
+          </div>
+    
+          <div class="col-sm-5">
+            <mat-form-field appearance="outline">
+              <mat-label>Password</mat-label>
+              <input matInput type="password"  formControlName="password"    placeholder="Password">
+          </mat-form-field>
+          </div>
+          <div class="col-sm-12">
+            <button class="btn btn-black" (click)="register()" [disabled]="registerForm.invalid" style="float: right;width: 100% !important;" >REGISTER</button>
+          </div>
+          <div class="col-sm-12 text-center mb-1 mt-1">
+            OR
+          </div>
+          <div class="col-sm-12" >
+            <button class="btn btn-success"  (click)="guest()" style="float: right;width: 100% !important;" >CONTINUE AS GUEST</button>
+          </div>
+        </div>
+        </form>
+      </div>
+  </div>
+
+  <div class="row" *ngIf="otp">
+    <form [formGroup]="otpForm" (ngSubmit)="onOtp()">
+      <div class="row">
+        <div class="col-sm-12">
+          <mat-form-field appearance="outline">
+            <mat-label>Enter Otp</mat-label>
+            <input matInput  type="password" formControlName="code"    placeholder="Otp Code">
+        </mat-form-field>
+        </div>
+        
+        <div class="col-sm-12">
+          <button class="btn btn-primary" [disabled]="otpForm.invalid" style="float: right;" >Verify </button>
+        </div>
+      </div>
+      </form>
+  </div>
+
+
+
+
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#ffe716" type = "pacman" [fullScreen] = "true"><p style="color: white" >Please wait... </p></ngx-spinner>

@@ -1,4 +1,4 @@
-<div class="hero-section section pt-0">
+<!-- <div class="hero-section section pt-0">
     <div class="container pt-5">
     <app-header></app-header>
     <div class="container h-100 text-white">
@@ -156,3 +156,229 @@
   </div>
 
   <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#ffe716" type = "pacman" [fullScreen] = "true"><p style="color: white" >Please wait... </p></ngx-spinner>
+
+ -->
+
+
+  <div class="hero-section section pt-0">
+    <div class="container pt-5">
+    <app-header></app-header>
+    <div class="container h-100 text-white">
+      </div>
+    </div>
+   
+  </div>
+
+
+<div class="section container p-0 pt-4">
+  <div class="row">
+    <div class="col-sm-7">
+      <div class="row">
+        <div class="col-sm-12">
+          <span style="font-weight:800;font-size:14px;" class="text-success"></span>
+        </div>
+        <div class="col-sm-12">
+          <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" [ngClass]="{'active':selected==0 || selected==1,'show':selected==0 || selected==1}" id="pills-mpesa-tab" data-bs-toggle="pill" data-bs-target="#pills-mpesa" type="button" role="tab" aria-controls="pills-mpesa" aria-selected="true">Mpesa</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="pills-paybill-tab" [ngClass]="{'active':selected==2}" data-bs-toggle="pill" data-bs-target="#pills-paybill" type="button" role="tab" aria-controls="pills-paybill" aria-selected="false">Paybill</button>
+            </li>
+            
+          </ul>
+          <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane" [ngClass]="{'active':selected==0 || selected==1,'show':selected==0 || selected==1}"  id="pills-mpesa" role="tabpanel" aria-labelledby="pills-mpesa-tab" tabindex="0">
+              <div class=""   style="margin-top: 10px;">
+                <div class="alert alert-danger" role="alert">
+                  
+                  
+                <span style="color:black;">  <span><b class="text-danger"> {{10 - time.minutes}} Minutes : {{60-time.seconds}} Seconds </b></span> Please complete payment within <span><b class="text-danger">10:00 Minutes</b></span> .Your seat will be release to others if you do not pay within 10:00 minutes.</span>
+                </div>
+                
+                <span>To complete the payment you will receive a prompt from Mpesa on the mobile number below</span>                        
+                    <form [formGroup]="paymentForm" (ngSubmit)="makePayment()">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Code</mat-label>
+                          <input matInput readonly formControlName="country_code"    placeholder="code">
+                        </mat-form-field>
+                      </div>
+                      <div class="col-sm-8">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Mobile</mat-label>
+                          <input matInput formControlName="mobile"    placeholder="Mobile">
+                      </mat-form-field>
+                      </div>
+                     
+                      <div class="col-sm-12">
+                        <button  class="btn btn-black" [disabled]="paymentForm.invalid" style="float: right;">Make Payment</button>
+                      </div>
+                    </div>
+                    </form>
+                    <br>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="row" *ngIf="selected==1">
+                      <span class="text-success" style="font-size:20px;font-family: 600;">  Fetching your payment status. Please wait <span class="text-warning">{{seconds}} s ..</span></span>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            </div>
+            <div class="tab-pane fade " [ngClass]="{'active':selected==2,'show':selected==2}"  id="pills-paybill" role="tabpanel" aria-labelledby="pills-paybill-tab" tabindex="0">
+              <div class="row">
+                <div class="col-sm-12">
+                  <h4 style="margin-left:15px">Proceed To pay</h4>
+                  <ol>
+                    <li>You will be prompted to enter your MPESA pin to authorize your payment request of KES <b>{{data?.totalTicketPrice}}</b> to <b>{{ref_no}}</b></li>
+                    <li>Choose MPESA
+                      <ol  style="list-style:upper-roman;">
+                        <li>Go to your sim toolkit enter</li>
+                        <li>Use account number <b>{{ref_no}}</b></li>
+                        <li>Enter 857988 as your business number</li>
+                        <li>Enter <b>{{ref_no}}</b></li>
+                        <li>Enter KES <b>{{data?.totalTicketPrice}}</b></li>
+                        <li>Enter PIN</li>
+                      </ol>
+                    </li>
+                  </ol>
+                </div>
+                <div class="col-sm-12 text-center">
+                  <button class="btn btn-danger btn-sm" (click)="openModal()" style="margin-right:5px;">New Payment Request</button>
+                  <button class="btn btn-success btn-sm" (click)="checkMpesaPayment()">Confirm Payment</button>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-sm-5">
+        <div class="card">
+          <div class="card-header bg-success" style="color: white;">
+            Ticket Details
+          </div>
+            <div class="card-body p-1">
+              <div class="row">
+                <div class="col-sm-12">
+                  <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="pills-onward-tab" data-bs-toggle="pill" data-bs-target="#pills-onward" type="button" role="tab" aria-controls="pills-onward" aria-selected="true">Onward</button>
+                    </li>
+                    <li class="nav-item" role="presentation" [hidden]="!data?.returnticket">
+                      <button class="nav-link" id="pills-return-tab" data-bs-toggle="pill" data-bs-target="#pills-return" type="button" role="tab" aria-controls="pills-return" aria-selected="false">Return</button>
+                    </li>
+                    
+                  </ul>
+                  <div class="tab-content" id="pills-tabContent1">
+                    <div class="tab-pane fade show active" id="pills-onward" role="tabpanel" aria-labelledby="pills-onward-tab" tabindex="0">
+                      <div class="row details">
+                        <div class="col-sm-12">
+                            <img src="assets/img/bus.svg" alt="bus" style="width: 65px;opacity: 0.4">
+                        </div>
+                        <div class="col-sm-6 col-6  fw-normal">Bus</div>
+                        <div class="col-sm-6 col-6 fw-normal">{{data?.onwardticket?.bus_title}}</div>
+                        <div class="col-sm-6 col-6 fw-normal">Booking date</div>
+                        <div class="col-sm-6 col-6 fw-normal">{{data?.onwardticket?.booking_date}}</div>
+                        <div class="col-sm-6 col-6 fw-normal">Departure Time</div>
+                        <div class="col-sm-6 col-6 fw-normal">{{data?.onwardticket?.departure_time}}</div>
+                        <div class="col-sm-6 col-6 fw-normal">Boarding Point</div>
+                        <div class="col-sm-6 col-6 fw-normal">{{data?.onwardticket?.boardingPointname}}</div>
+                        <div class="col-sm-6 col-6 fw-normal">Dropping Point</div>
+                        <div class="col-sm-6 col-6 fw-normal">{{data?.onwardticket?.droppingPointname}}</div>
+
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-return" role="tabpanel" aria-labelledby="pills-return-tab" [hidden]="!data?.returnticket" tabindex="0">
+                      <div class="row details">
+                        <div class="col-sm-12">
+                            <img src="assets/img/bus.svg" alt="bus" style="width: 65px;opacity: 0.4">
+                        </div>
+                        <div class="col-sm-6 col-6 fw-normal">Bus</div>
+                        <div class="col-sm-6 col-6 fw-normal">{{data?.returnticket?.bus_title}}</div>
+                        <div class="col-sm-6 col-6 fw-normal">Booking date</div>
+                        <div class="col-sm-6 col-6 fw-normal">{{data?.returnticket?.booking_date}}</div>
+                        <div class="col-sm-6 col-6 fw-normal">Departure Time</div>
+                        <div class="col-sm-6 col-6 fw-normal">{{data?.returnticket?.departure_time}}</div>
+                        <div class="col-sm-6 col-6 fw-normal">Boarding Point</div>
+                        <div class="col-sm-6 col-6 fw-normal">{{data?.returnticket?.boardingPointname}}</div>
+                        <div class="col-sm-6 col-6 fw-normal">Dropping Point</div>
+                        <div class="col-sm-6 col-6 fw-normal">{{data?.returnticket?.droppingPointname}}</div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="card" style="margin-top: 10px;">
+            <div class="card-body">
+              <h5 class="card-title">Fare Breakup</h5>
+              <div class="row">
+                <div class="col-sm-6 col-6 fw-normal">ONWARD FARE</div>
+                <div class="col-sm-6 col-6 fw-normal" style="font-weight:600;font-size:15px">{{data?.onwardticket?.total}}</div>
+
+                <div class="col-sm-6 col-6 fw-normal" *ngIf="data?.returnticket">RETURN FARE</div>
+                <div class="col-sm-6 col-6 fw-normal" *ngIf="data?.returnticket">{{data?.returnticket?.total}}</div>
+
+              </div>
+            </div>
+            <div class="card-footer" style="background-color: black;color:white;font-weight: 600;font-size: 13px;">
+                <span style="float:right;font-size:15px;">TOTAL: {{data?.totalTicketPrice}}</span>
+              </div>
+          </div>
+    </div>
+
+</div>
+  </div>
+   
+<div class="modal fade" bsModal #paymentModal="bs-modal" [config]="{backdrop: 'static'}"
+tabindex="-1" role="dialog" aria-labelledby="dialog-static-name">
+<div class="modal-dialog modal-md">
+<div class="modal-content">
+ <div class="modal-header">
+   <h5 id="dialog-static-name" class="modal-title pull-left">New  Payment Request</h5>
+   <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="paymentModal.hide()">
+     <span aria-hidden="true" class="visually-hidden">&times;</span>
+   </button>
+ </div>
+ <div class="modal-body">
+  <div class="row">
+    <div class="col-sm-12" style="font-size: 14px;">
+      For sending new payment request you can use the same phone number or use another phone number.
+    </div>
+    
+  </div>
+  <form [formGroup]="paymentForm" (ngSubmit)="makePayment()">
+    <div class="row">
+      <div class="col-sm-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Code</mat-label>
+          <input matInput readonly formControlName="country_code"    placeholder="code">
+        </mat-form-field>
+      </div>
+      <div class="col-sm-8">
+        <mat-form-field appearance="outline">
+          <mat-label>Mobile</mat-label>
+          <input matInput formControlName="mobile"    placeholder="Mobile">
+      </mat-form-field>
+      </div>
+     
+      <div class="col-sm-12">
+        <button  class="btn btn-black" [disabled]="paymentForm.invalid" style="float: right;">New Payment Request</button>
+      </div>
+    </div>
+    </form>
+ </div>
+</div>
+</div>
+</div>
+
+  <ngx-spinner bdColor = "rgba(0, 0, 0, 0)" size = "medium" color = "#ffe716" type = "pacman" [fullScreen] = "true"><p style="color: white" >Please wait... </p></ngx-spinner>
+

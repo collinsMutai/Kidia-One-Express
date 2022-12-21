@@ -33,6 +33,7 @@ export class ReturnComponent implements OnInit {
   loading=false;
   @Input() modify=false;
   @ViewChild('reviewModal', { static: false }) reviewModal?: ModalDirective;
+  @ViewChild('loginModal', { static: false }) loginModal?: ModalDirective;
   return_min: Date;
   user:any={};
   boardingForm: FormGroup;
@@ -168,19 +169,28 @@ save(){
 }
 
 continueBooking(){
+// this.reviewModal.hide();
+// if(this.user !=undefined){
+//   this.route.navigateByUrl('/passengers')
+// }else{
+//   this.commonService.loginModal.next(true);
+//   this.checkLoginEvent();
+// }
 this.reviewModal.hide();
 if(this.user !=undefined){
   this.route.navigateByUrl('/passengers')
 }else{
-  this.commonService.loginModal.next(true);
-  this.checkLoginEvent();
+  // this.commonService.loginModal.next(true);
+  // this.checkLoginEvent();
+  this.loginModal.show();
 }
 }
 onSubmit(){
   let date = this.searchForm.get('returnDate').value
   this.params.return_date = this.datePipe.transform(date,'yyyy-MM-dd')
   let data = this.params
-  this.route.navigate(['buslist',data.destination_city_id,data.source_city_id,this.datePipe.transform(data.travel_date,'yyyy-MM-dd'),data.dest_city,data.source_city,this.datePipe.transform(date,'yyyy-MM-dd')])
+  this.route.navigate(['buslist',data.destination_city_id,data.source_city_id,this.datePipe.transform(data.travel_date,'yyyy-MM-dd'),data.dest_city,data.source_city,this.datePipe.transform(date,'yyyy-MM-dd')]);
+  // this.ngOnInit();
 }
 
 checkLoginEvent(){
@@ -189,5 +199,13 @@ checkLoginEvent(){
        this.route.navigateByUrl('/passengers')
      }
    })
+}
+onActivity($event){
+  this.loginModal.hide();
+  if($event=='guest'){
+    this.route.navigateByUrl('/passengers')
+  }else{
+    this.route.navigateByUrl('/passengers')
+  }
 }
 }

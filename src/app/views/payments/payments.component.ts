@@ -1,11 +1,13 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ServiceService } from 'src/app/services/service.service';
 import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
 import { CommonService } from 'src/app/services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import * as moment from 'moment';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-payments',
@@ -13,16 +15,24 @@ import { Observable } from 'rxjs';
   styleUrls: ['./payments.component.scss']
 })
 export class PaymentsComponent implements OnInit {
+  @ViewChild('paymentModal', { static: false }) paymentModal?: ModalDirective;
   payments=[];
   paymentForm: FormGroup;
   user: any={};
   data:any={};
-  selected=0;
-  seconds=10;
+  selected=2;
+  seconds=20;
   ref_no='';
   id;
-  constructor(public service:ServiceService,private formBuilder: FormBuilder,public commonService:CommonService,public toastr:ToastrService,public spinner:NgxSpinnerService,public activated:ActivatedRoute) { }
+  id1;
+  time: any={};
+  constructor(public service:ServiceService,private formBuilder: FormBuilder,public commonService:CommonService,public toastr:ToastrService,public spinner:NgxSpinnerService,public activated:ActivatedRoute,public router:Router) { }
   ngOnInit(): void {
+ 
+    this.paymentForm = this.formBuilder.group({
+      mobile: ['', Validators.required],
+      country_code:['', Validators.required]
+    });
     this.activated.paramMap.subscribe((res)=>{
       this.ref_no=res.get('reference');
     })
@@ -32,15 +42,17 @@ export class PaymentsComponent implements OnInit {
       }
     })
     this.data=JSON.parse(localStorage.getItem('transline.paymentDetail'))
-    this.user=JSON.parse(sessionStorage.getItem('loggedUser'))
-    this.paymentForm = this.formBuilder.group({
-      mobile: ['', Validators.required],
-      country_code:['', Validators.required]
-    });
-
-    if(this.user!=undefined){
-      this.paymentForm.patchValue({country_code:this.user.country_code,mobile:this.user.phone})
+    if(sessionStorage.getItem('loggedUser') !=undefined){
+      this.user=JSON.parse(sessionStorage.getItem('loggedUser'))
+      this.paymentForm.patchValue({country_code:this.user.country_code,mobile:this.user.phone});
+      
+    }else{
+      let info = this.data.onwardticket.passenger[0]
+      this.paymentForm.patchValue({country_code:info.mobileId,mobile:info.mobile})
     }
+  
+
+    
     this.service.paymentMethods({}).subscribe((res)=>{
       Object.entries(res).forEach(([key, value]) => {
         if(value){
@@ -48,7 +60,7 @@ export class PaymentsComponent implements OnInit {
         }
       });
     })
-   
+   this.tickerTimer();
   }
 
   makePayment(){
@@ -67,6 +79,7 @@ export class PaymentsComponent implements OnInit {
     }
     this.service.makePayment(data).subscribe((res)=>{
       this.spinner.hide();
+      this.paymentModal.hide();
       if(res.isSuccess){
         localStorage.setItem("payment_status",'initiated');
         this.toastr.success("Successfully initiated","Success")
@@ -82,6 +95,21 @@ timer(){
     if(this.seconds < 1){
       clearInterval(this.id);
       this.checkMpesaPayment()
+    }
+   }, 1000); 
+}
+
+
+tickerTimer(){
+  this.id1 = setInterval(() => {
+    let start= moment(sessionStorage.getItem('time'), 'HH:mm:ss a')
+    let end=moment(); 
+    let duration:any = moment.duration(end.diff(start));
+    this.time=duration._data
+    if(this.time.minutes==10){
+      clearInterval(this.id1);
+      localStorage.clear();
+      this.router.navigateByUrl('/')
     }
    }, 1000); 
 }
@@ -110,6 +138,10 @@ checkMpesaPayment(){
     }
   })
 }
+openModal(){
+  this.paymentModal.show();
+}
+
 @HostListener('window:beforeunload', ['$event'])
 canLeavePage($event: any): Observable<void> {
   if(confirm('You data is loading. Are you sure you want to leave?')) {
