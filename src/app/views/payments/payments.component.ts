@@ -20,7 +20,7 @@ export class PaymentsComponent implements OnInit {
   paymentForm: FormGroup;
   user: any={};
   data:any={};
-  selected=2;
+  selected=0;
   seconds=20;
   ref_no='';
   id;
