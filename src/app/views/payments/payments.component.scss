@@ -2,13 +2,13 @@
 //     min-height: 0px;
 // }
 ::ng-deep .nav-tabs {
-    border-bottom: 1px solid #ffe716 !important;
+    border-bottom: 1px solid #e20613 !important;
    }
 ::ng-deep .nav-tabs .nav-link.active {
     color:black !important;
     font-weight: 500;
     background-color: #fff;
-    border-color: #ffe716 #ffe716 #fff;
+    border-color: #e20613 #e20613 #fff;
 }
 .breakup{
     padding-left: 8px;
@@ -33,14 +33,14 @@ span{
 }
 .view-seats {
     display: inline-block;
-    border: 1px solid #ffe716;
+    border: 1px solid #e20613;
     font-size: 13px;
     padding: 6px 10px;
     text-transform: capitalize;
     color:black;
     margin-top: 5px;
     font-weight: 700;
-    background-color: #ffe716;
+    background-color: #e20613;
     border-radius: 20px;
 }
 

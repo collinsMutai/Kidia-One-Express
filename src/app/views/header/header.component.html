@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-light rounded sticky-top shadow p-2 p-lg-0">
     <div class="container px-0 ps-3">
       <a class="navbar-brand" href="#">
-        <img src="assets/img/logo.png" height="50px" width="130px" alt="">
+        <img src="assets/img/logo.png" height="80px" width="80px" alt="">
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
               aria-controls="offcanvasNavbar">
@@ -19,20 +19,20 @@
           <ul
             class="navbar-nav ms-auto my-2 my-lg-0 align-items-start align-items-lg-center navbar-nav-scroll pe-3">
             <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active"  [routerLink]="['/']" [routerLinkActiveOptions]="{ exact: true }" >Home</a>
+              <a class="nav-link" routerLinkActive="active"  [routerLink]="['/']" [routerLinkActiveOptions]="{ exact: true }" >HOME</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active"  [routerLink]="['/about']" [routerLinkActiveOptions]="{ exact: true }"  routerLink="/about">About Us</a>
+              <a class="nav-link" routerLinkActive="active"  [routerLink]="['/about']" [routerLinkActiveOptions]="{ exact: true }"  routerLink="/about">ABOUT US</a>
             </li>
             
             <li class="nav-item">
-              <a class="nav-link"  routerLinkActive="active"  [routerLink]="['/contact']" [routerLinkActiveOptions]="{ exact: true }"  routerLink="/contact">Contact Us</a>
+              <a class="nav-link"  routerLinkActive="active"  [routerLink]="['/contact']" [routerLinkActiveOptions]="{ exact: true }"  routerLink="/contact">CONTACT US</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link"  routerLinkActive="active"  [routerLink]="['/print-ticket']" [routerLinkActiveOptions]="{ exact: true }"  routerLink="/print-ticket" >Print Ticket</a>
+              <a class="nav-link"  routerLinkActive="active"  [routerLink]="['/print-ticket']" [routerLinkActiveOptions]="{ exact: true }"  routerLink="/print-ticket" >PRINT TICKET</a>
             </li>
             <li class="nav-item" (click)="loginModal.show()" *ngIf="!authenticated">
-              <a class="nav-link" >Sign In/Register</a>
+              <a class="nav-link" >SIGN IN/REGISTER</a>
             </li>
             <li class="nav-item dropdown" *ngIf="authenticated">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -40,14 +40,14 @@
                  <i class="fa-solid fa-user-tie"></i> {{user.name}}
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" routerLink="/profile">Profile</a></li>
-                <li><a class="dropdown-item" (click)="logout()" >Sign Out</a></li>
+                <li><a class="dropdown-item" routerLink="/profile">PROFILE</a></li>
+                <li><a class="dropdown-item" (click)="logout()" >SIGN OUT</a></li>
 
               </ul>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link"  routerLinkActive="active"  [routerLink]="['/privacy']" [routerLinkActiveOptions]="{ exact: true }"  routerLink="/contact">Privacy</a>
+              <a class="nav-link"  routerLinkActive="active"  [routerLink]="['/privacy']" [routerLinkActiveOptions]="{ exact: true }"  routerLink="/contact">PRIVACY</a>
             </li>
           </ul>
           <!-- <div class="bg-dark text-white p-3 d-flex align-items-center gap-2 rounded-end d-none d-lg-flex">
