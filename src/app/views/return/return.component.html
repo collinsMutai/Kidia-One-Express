@@ -671,6 +671,22 @@ aria-labelledby="dialog-static-name">
 </div>
 </div>
 
+<div class="modal fade" bsModal #loginModal="bs-modal" [config]="{backdrop: 'static'}"
+     tabindex="-1" role="dialog" aria-labelledby="dialog-static-name">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-static-name" class="modal-title pull-left">Join SR Classic</h4>
+        <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="loginModal.hide()">
+          <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mb-2">
+        <app-register (action)="onActivity($event)"></app-register>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <app-footer></app-footer>
