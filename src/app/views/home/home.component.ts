@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { ServiceService } from 'src/app/services/service.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+
 declare var anime: any;                                  // declare like this
 export interface City {
   id: string;
@@ -24,9 +26,12 @@ export class HomeComponent implements OnInit,AfterViewInit {
   destinations=[];
   filteredOptions: Observable<City[]>;
   destOptions: Observable<City[]>;
-  constructor(private formBuilder: FormBuilder,public datePipe:DatePipe,private route:Router,public service:ServiceService) { }
+  constructor(private formBuilder: FormBuilder,public datePipe:DatePipe,private route:Router,public service:ServiceService,private http: HttpClient) { }
 
   ngOnInit(): void {
+  
+    this.getLocation();
+
     this.searchForm = this.formBuilder.group({
       date: ['', Validators.required],
       returnDate: [''],
@@ -69,9 +74,11 @@ export class HomeComponent implements OnInit,AfterViewInit {
   onSubmit(){
     let data=this.searchForm.value
     if(!data.returnDate){
-    this.route.navigate(['buslist',data.city_id,data.dest_id,this.datePipe.transform(data.date,'yyyy-MM-dd'),data.sourceCity,data.destCity])
+    this.route.navigate(['buslist',data.city_id,data.dest_id,this.datePipe.transform(data.date,'yyyy-MM-dd'),data.sourceCity,data.destCity,''])
     }else{
-        this.route.navigate(['buslist',data.city_id,data.dest_id,this.datePipe.transform(data.date,'yyyy-MM-dd'),data.sourceCity,data.destCity,this.datePipe.transform(data.returnDate,'yyyy-MM-dd')])
+      this.route.navigate(['buslist',data.city_id,data.dest_id,this.datePipe.transform(data.date,'yyyy-MM-dd'),data.sourceCity,data.destCity,this.datePipe.transform(data.returnDate,'yyyy-MM-dd')])
+
+        // this.route.navigate(['buslist',data.city_id,data.dest_id,this.datePipe.transform(data.date,'yyyy-MM-dd'),data.sourceCity,data.destCity,this.datePipe.transform(data.returnDate,'yyyy-MM-dd')])
     }
   }
   getCities(){
@@ -99,6 +106,16 @@ export class HomeComponent implements OnInit,AfterViewInit {
     this.return_min=new Date(item)
     this.return_min.setDate(this.return_min.getDate() + 1);
 
+  }
+  getLocation(){
+    this.http.get('http://ip-api.com/json').subscribe((response: any) => {
+      if(response.country=='Kenya'){
+        sessionStorage.setItem("currencyId","3")
+      }else{
+        sessionStorage.setItem("currencyId","1")
+      }
+      
+    });
   }
    
   ngAfterViewInit(): void {

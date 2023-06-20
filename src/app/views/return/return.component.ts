@@ -6,6 +6,9 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ReturnService } from 'src/app/services/return.service';
 import { CommonService } from 'src/app/services/common.service';
 import { DatePipe } from '@angular/common';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+import { City } from '../home/home.component';
 
 @Component({
   selector: 'app-return',
@@ -24,6 +27,7 @@ export class ReturnComponent implements OnInit {
   obj:any={}
   seatList=[]
   total=0
+  cities=[];
   bus:any={}
   selectedTripData:any={}
   selectedData={}
@@ -31,17 +35,28 @@ export class ReturnComponent implements OnInit {
   continue=false;
   searchForm: FormGroup;
   loading=false;
+  destOptions: Observable<City[]>;
+  destinations=[];
   @Input() modify=false;
   @ViewChild('reviewModal', { static: false }) reviewModal?: ModalDirective;
   @ViewChild('loginModal', { static: false }) loginModal?: ModalDirective;
   return_min: Date;
   user:any={};
+  date = new Date()
+  filteredOptions: Observable<City[]>;
   boardingForm: FormGroup;
   constructor(public service:ServiceService,public activated:ActivatedRoute,private formBuilder: FormBuilder,public returnService:ReturnService,public commonService:CommonService,public route:Router,public datePipe:DatePipe) {
     this.returnService.reset();
    }
   ngOnInit() {
     this.user=JSON.parse(sessionStorage.getItem('loggedUser'));
+    this.searchForm = this.formBuilder.group({
+      date: ['', Validators.required],
+      sourceCity:['', Validators.required],
+      city_id:['', Validators.required],
+      destCity:['',Validators.required],
+      dest_id:['',],
+    });
     this.commonService.review_info.subscribe((res)=>{
      this.reviewInfo=res;
     })
@@ -79,16 +94,58 @@ export class ReturnComponent implements OnInit {
     
    })
    this.getBuses();
-   this.searchForm = this.formBuilder.group({
-    returnDate: [''],
-   
-  });
+   this.searchForm.patchValue(({date:new Date(this.params.travel_date),sourceCity:this.params.source_city,destCity:this.params.dest_city,dest_id:this.params.destination_city_id,city_id:this.params.source_city_id}))
+
   this.return_min=new Date(this.params.travel_date)
   this.return_min.setDate(this.return_min.getDate() + 1);
   this.boardingForm = this.formBuilder.group({
     dropping:['', Validators.required],
     boarding:['', Validators.required],
   });
+  this.filteredOptions = this.searchForm.get('sourceCity').valueChanges.pipe(
+    startWith(''),
+    map(value => {
+       if(value.id){
+        this.searchForm.patchValue({"city_id":value.id,"sourceCity":value.city_name})
+        this.destination()
+      }
+      const name = typeof value === 'string' ? value : value?.city_name;
+     
+      return name ? this._filter(name as string) : this.cities.slice();
+    }),
+  );
+
+  this.destOptions = this.searchForm.get('destCity').valueChanges.pipe(
+    startWith(''),
+    map(value => {
+       if(value.id){
+        this.searchForm.patchValue({"dest_id":value.id,"destCity":value.city_name})
+      }
+      const name = typeof value === 'string' ? value : value?.city_name;
+     
+      return name ? this._filterDestinations(name as string) : this.destinations.slice();
+    }),
+  );
+
+
+  }
+  
+
+  private _filterDestinations(name: string){
+    const filterValue = name.toLowerCase();
+    return this.destinations.filter(option => option.city_name.toLowerCase().includes(filterValue));
+  }
+
+
+  destination(){
+    this.service.getDestinations(this.searchForm.get('city_id').value).subscribe((res)=>{
+      this.destinations= res.data
+    })
+  }
+  
+  private _filter(name: string){
+    const filterValue = name.toLowerCase();
+    return this.cities.filter(option => option.city_name.toLowerCase().includes(filterValue));
   }
   getBuses(){
     this.loading=false;
@@ -112,7 +169,7 @@ export class ReturnComponent implements OnInit {
       "bus_type": [],
       "time_range": [],
       "record_type": "data",
-      "currencyId": "1",
+      "currencyId":sessionStorage.getItem('currencyId'),
   }
  
   this.service.getTrips(data).subscribe((res)=>{

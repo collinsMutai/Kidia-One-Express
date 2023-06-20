@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  token:'FA992334-76E3-44AD-BB4E-062FD0266D71'
+  token:'11065004-E295-494E-BD39-02264082B68E'
 };

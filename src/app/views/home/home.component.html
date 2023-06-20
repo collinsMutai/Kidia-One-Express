@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="search-section section container">
-      <div class="card border-0 shadow p-1 p-lg-4" >
+      <div class="card border-0 shadow p-0 p-lg-4" >
         <div class="card-body">
           
           <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" >
@@ -38,7 +38,7 @@
                       </mat-autocomplete>
                   </mat-form-field>
               </div>
-              <div class="col-md-2">
+              <div class="col-md-3">
                   <mat-form-field appearance="outline">
                       <mat-label>Date</mat-label>
                       <input matInput [min]="date"  (ngModelChange)="setDate(f.date.value)"  formControlName="date" [matDatepicker]="picker1" placeholder="Date">
@@ -46,7 +46,7 @@
                       <mat-datepicker #picker1></mat-datepicker>
                   </mat-form-field>
               </div>
-              <div class="col-md-2">
+              <div class="col-md-3">
                   <mat-form-field appearance="outline">
                       <mat-label>Return Date</mat-label>
                       <input matInput  formControlName="returnDate" [min]="return_min" [matDatepicker]="picker" placeholder="Return Date">
@@ -55,8 +55,8 @@
                   </mat-form-field>
               </div>
           
-              <div class="col-md-2">
-                  <button class="pull-right btn btn-lg btn-success"> <i class="fa-solid fa-search"></i> Search</button>
+              <div class="col-md-12">
+                  <button class="btn  btn-success pull-right"> <i class="fa-solid fa-search"></i> Search</button>
               </div>
           </div>
           </form>
@@ -189,15 +189,7 @@
     </div>
 
     
-    <div class="download-section section text-white">
-        <div class="col-12 col-lg-6 offset-0 offset-lg-6 py-3 py-lg-4">
-          <p class="display-6 fw-normal">Travel With Us</p>
-          <p style="font-size:30px;">
-            Biggest bus operating system in Africa <a href="http://volticafrica.com/" style="color: #e20613;text-decoration: none;">http://volticafrica.com</a>
-          </p>
-        
-        </div>
-      </div>
+ 
       <div class="blog-section section container" >
         <div class="row">
           <div class="col-12 col-md-4">

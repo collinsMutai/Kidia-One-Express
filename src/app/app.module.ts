@@ -41,6 +41,7 @@ import { OnwardTripComponent } from './views/onward-trip/onward-trip.component';
 import { PrivacyComponent } from './views/privacy/privacy.component';
 import { RegisterComponent } from './views/register/register.component';
 import { DatePipe } from '@angular/common';
+import { TripReviewComponent } from './views/trip-review/trip-review.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,7 +59,8 @@ import { DatePipe } from '@angular/common';
     PassengersComponent,
     OnwardTripComponent,
     PrivacyComponent,
-    RegisterComponent
+    RegisterComponent,
+    TripReviewComponent
     ],
   imports: [
     BrowserModule,

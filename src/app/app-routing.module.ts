@@ -9,8 +9,9 @@ import { PaymentsComponent } from './views/payments/payments.component';
 import { PrivacyComponent } from './views/privacy/privacy.component';
 import { ProfileComponent } from './views/profile/profile.component';
 import { RegisterComponent } from './views/register/register.component';
-import { ReturnTripComponent } from './views/return-trip/return-trip.component';
 import { TicketComponent } from './views/ticket/ticket.component';
+import { ReturnComponent } from './views/return/return.component';
+import { TripReviewComponent } from './views/trip-review/trip-review.component';
 
 const routes: Routes = [
   {
@@ -50,16 +51,20 @@ const routes: Routes = [
     component:ContactComponent
   },
   {
+    path:'trip-review',
+    component:TripReviewComponent
+  },
+  {
     path:'onward-trip/:id1/:id2/:id3/:id4/:id5',
     component:ContactComponent
   },
   {
-    path:'buslist/:id1/:id2/:id3/:id4/:id5',
+    path:'buslist/:id1/:id2/:id3/:id4/:id5/:id6',
     component:BuslistComponent
   },
   {
-    path:'buslist/:id1/:id2/:id3/:id4/:id5/:id6',
-    component:ReturnTripComponent
+    path:'return/:id1/:id2/:id3/:id4/:id5/:id6',
+    component:ReturnComponent
   }
 ];
 

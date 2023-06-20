@@ -76,6 +76,8 @@ makePayment(data): Observable<any> {
     return this.http.post(endpoint+'/paymentGateway/init',data).pipe(
       map(this.extractData));
 }
+
+
 checkMpesaPayment(data): Observable<any> {
   return this.http.post(endpoint+'/paymentGateway/checkMpesaPayment',data).pipe(
     map(this.extractData));

@@ -244,7 +244,7 @@ saveOutward() {
           boardingPointname: (this.selectedBoarding.value) ? this.selectedBoarding.value.name : "",
           droppingPointname: (this.selectedDropping.value) ? this.selectedDropping.value.name : "",
           bus_id: this.selectedTripData.value.bus_id,
-          currencyId:'KES',
+          currencyId:sessionStorage.getItem('currencyId'),
           ticket_cnt: this.selectedseat.value.length,
           bs_number_of_seats: this.selectedTripData.value.available_seat_count,
           available_Seats: 'f',

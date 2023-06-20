@@ -57,7 +57,7 @@ export class BuslistComponent implements OnInit,AfterViewInit {
     this.searchForm = this.formBuilder.group({
       date: ['', Validators.required],
       sourceCity:['', Validators.required],
-      returnDate: [''],
+      return_date: [''],
       city_id:['', Validators.required],
       destCity:['',Validators.required],
       dest_id:['',],
@@ -137,6 +137,11 @@ export class BuslistComponent implements OnInit,AfterViewInit {
       this.params.travel_date =res.get('id3')
       this.params.source_city=res.get('id4');
       this.params.dest_city=res.get('id5');
+      this.params.return_date=res.get('id6');
+      if (this.params.return_date !=''){
+        this.returnTicket=true
+      }
+        
       this.bookingService.setBookingParams(this.params)
       let data= {
         "source_city_id":res.get('id1'),
@@ -158,7 +163,7 @@ export class BuslistComponent implements OnInit,AfterViewInit {
         "bus_type": [],
         "time_range": [],
         "record_type": "data",
-        "currencyId": "1",
+        "currencyId":sessionStorage.getItem('currencyId'),
     }
     this.return_min=new Date(this.params.travel_date)
     this.return_min.setDate(this.return_min.getDate() + 1);
@@ -170,9 +175,16 @@ export class BuslistComponent implements OnInit,AfterViewInit {
   }
 
   initForm(){
-    this.searchForm.patchValue(({date:new Date(this.params.travel_date),sourceCity:this.params.source_city,destCity:this.params.dest_city,dest_id:this.params.destination_city_id,city_id:this.params.source_city_id}))
+    if(this.returnTicket){
+      this.searchForm.patchValue(({date:new Date(this.params.travel_date),sourceCity:this.params.source_city,destCity:this.params.dest_city,dest_id:this.params.destination_city_id,city_id:this.params.source_city_id,return_date:new Date(this.params.return_date)}))
+
+    }else{
+      this.searchForm.patchValue(({date:new Date(this.params.travel_date),sourceCity:this.params.source_city,destCity:this.params.dest_city,dest_id:this.params.destination_city_id,city_id:this.params.source_city_id}))
+    }
+    
   }
   onSubmit(){
+    console.log("Dccc")
     let data=this.searchForm.value
     this.modify=false;
     this.route.navigate(['buslist',data.city_id,data.dest_id,this.datePipe.transform(data.date,'yyyy-MM-dd'),data.sourceCity,data.destCity])
@@ -230,7 +242,14 @@ selectDropping(item){
 }
 save(){
   this.bookingService.saveOutward();
-  this.reviewModal.show();
+  if(this.returnTicket){
+    let data =this.searchForm.value
+    this.route.navigate(['return',data.city_id,data.dest_id,this.datePipe.transform(data.date,'yyyy-MM-dd'),data.sourceCity,data.destCity,this.datePipe.transform(data.return_date,'yyyy-MM-dd')])
+  }else{
+ this.reviewModal.show();
+  }
+ 
+
 }
 continue(){
   this.reviewModal.hide();

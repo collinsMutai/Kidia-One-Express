@@ -1,19 +1,65 @@
 <app-header></app-header>
-<div class="hero-section section pt-0">
-  <div class="container pt-5">
 
+<div class="results-section  container"  style="margin-top:-40px;padding-top:5em;padding-bottom: 0 !important;">
+
+  <div class="card custom-card ">
+    <div class="card-header" style="font-weight: 800;">
+      {{params.source_city}} <i class="fa-solid fa-chevron-right"></i> {{params.dest_city}}
+      <span class="pull-right"> <i class="fas fa-calendar-day mx-2 text-success"></i>{{params.travel_date}}  </span>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+
+          <div class="col-md-3">
+            <mat-form-field appearance="outline">
+              <mat-label>From</mat-label>
+              <input matInput formControlName="sourceCity" [matAutocomplete]="auto" placeholder="From">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{option.city_name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Destination</mat-label>
+              <input matInput formControlName="destCity" [matAutocomplete]="dest" placeholder="Destination">
+              <mat-autocomplete #dest="matAutocomplete">
+                <mat-option *ngFor="let option of destOptions | async" [value]="option">
+                  {{option.city_name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Date</mat-label>
+              <input matInput [min]="date" formControlName="date" [matDatepicker]="picker1" placeholder="Date">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field appearance="outline">
+                <mat-label>Return Date</mat-label>
+                <input matInput  formControlName="return_date" [min]="return_min" [matDatepicker]="picker" placeholder="Return Date">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+
+          <div class="col-md-12" style="text-align:right;">
+            <button class="btn btn-custom" type="submit">Modify Search </button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
-  <div class="container h-100 text-white">
-    <p class="display-6 fw-bold text-center an-1" style="padding-top:6em;" >Getting you sorted</p>
-  </div>
-
-
-</div>
-
-
-
-<div class="results-section  container"  style="margin-top:-40px;padding-top:4em;padding-bottom: 0 !important;">
-  <div class="section-title"  >
+  
+  <!-- <div class="section-title"  >
     <div class="row" *ngIf="!returnTicket"  style="background-color:#ECFFDC;border-radius: 5px;padding:0.4em;">
       <div class="col-sm-8 col-12">
         {{params.source_city}} <i class="fa-solid fa-chevron-right"></i> {{params.dest_city}}
@@ -29,51 +75,9 @@
       </div>
 
     </div>
-<!-- 
-    <div class="hd"  >
-      <div class="row" >
 
-        <div class="col-sm-6 onward-return-tab whitecolor py-2 py-md-3" style="border-radius-left-top:10px;" [ngClass]="{
-          enable:true, disable:false}">
-          <div class="row">
-            <div class="col-sm-12">
-              ONWARD JOURNEY
-            </div>
-            <div class="col-sm-8 col-8">
-              {{params.source_city}} <i class="fa-solid fa-chevron-right"></i> {{params.dest_city}}
-              <br>
-              <i class="fas fa-calendar-day mx-2"></i>{{params.travel_date}}
-            </div>
-            <div class="col-sm-4 col-4">
-              <button class="btn search-seats"  style="margin-right: 5px;float: right;"
-              (click)="modify=!modify"><i class="fa-solid fa-magnifying-glass"></i> Modify</button>
-            </div>
-      
-          </div>
-        </div>
-        <div class="col-sm-6 onward-return-tab whitecolor py-2 py-md-3"  [ngClass]="{
-          enable:false, disable:true}">
-          <div class="row">
-            <div class="col-sm-12">
-              ONWARD JOURNEY
-            </div>
-            <div class="col-sm-8 col-8">
-              {{params.source_city}} <i class="fa-solid fa-chevron-right"></i> {{params.dest_city}}
-              <br>
-              <i class="fas fa-calendar-day mx-2"></i>{{params.travel_date}}
-            </div>
-            <div class="col-sm-4 col-4">
-              <button class="btn search-seats"  style="margin-right: 5px;float: right;"
-              (click)="modify=!modify"><i class="fa-solid fa-magnifying-glass"></i> Modify</button>
-            </div>
-      
-          </div>
-        </div>
-      </div>
-     </div>
-   -->
 
-  </div>
+  </div> -->
 
   <div class="section-body">
 
@@ -104,59 +108,7 @@
           </form>
         </div>
       </div>
-      <div class="row" style="margin-top:15px;" *ngIf="modify">
-        <div class="col-sm-12">
-          <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
-            <div class="row">
-
-              <div class="col-md-3">
-                <mat-form-field appearance="outline">
-                  <mat-label>From</mat-label>
-                  <input matInput formControlName="sourceCity" [matAutocomplete]="auto" placeholder="From">
-                  <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                      {{option.city_name}}
-                    </mat-option>
-                  </mat-autocomplete>
-                </mat-form-field>
-              </div>
-              <div class="col-md-3">
-                <mat-form-field appearance="outline">
-                  <mat-label>Destination</mat-label>
-                  <input matInput formControlName="destCity" [matAutocomplete]="dest" placeholder="Destination">
-                  <mat-autocomplete #dest="matAutocomplete">
-                    <mat-option *ngFor="let option of destOptions | async" [value]="option">
-                      {{option.city_name}}
-                    </mat-option>
-                  </mat-autocomplete>
-                </mat-form-field>
-              </div>
-              <div class="col-md-2">
-                <mat-form-field appearance="outline">
-                  <mat-label>Date</mat-label>
-                  <input matInput [min]="date" formControlName="date" [matDatepicker]="picker1" placeholder="Date">
-                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                  <mat-datepicker #picker1></mat-datepicker>
-                </mat-form-field>
-              </div>
-              <div class="col-md-2">
-                <mat-form-field appearance="outline">
-                    <mat-label>Return Date</mat-label>
-                    <input matInput  formControlName="returnDate" [min]="return_min" [matDatepicker]="picker" placeholder="Return Date">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-            </div>
-
-
-              <div class="col-md-1">
-                <button class="pull-right btn btn-sm view-seats "> Search</button>
-              </div>
-            </div>
-          </form>
-        </div>
-
-      </div>
+      
 
       <div  *ngIf="!buses.length && loading">
         <img src="assets/img/no_bus.png" alt="No Bus">
@@ -171,8 +123,17 @@
       </div>
     </div>
 
+    <div class="mt-2" *ngIf="buses.length && loading">
+      <div class="row">
+        <div class="col-sm-8">
+          <h3 style="font-weight: 600;color: #0F70B7;">Outbound Trip</h3>
 
-    <div class="" *ngFor="let item of buses;let i=index">
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="custom-card mb-2" *ngFor="let item of buses;let i=index">
       <div class="row align-items-start  py-2 container-fluid px-0 px-md-3 result-row">
         <div class="col-4 d-block d-md-none">
           <img src="https://cdn-icons-png.flaticon.com/512/1819/1819543.png" alt="bus icon" height="40" width="40">
@@ -203,7 +164,7 @@
             </tr>
 
           </table>
-          <button (click)="getSeats(item)" class="btn btn-sm view-seats float-end">view seats</button>
+          <button (click)="getSeats(item)" class="btn btn-sm btn-custom float-end">view seats</button>
         </div>
 
 
@@ -528,13 +489,15 @@
                     <div *ngIf="eachseat.seat_type.toLowerCase() == 'driver'" class="default-cursor">
                       <img src="assets/img/driver.png" alt="Driver" class="driver">
                     </div>
-                    <div *ngIf="eachseat.seat_type.toLowerCase() == 'door'" class="default-cursor">
+                    <div *ngIf="eachseat.seat_type.toLowerCase() == 'door' || eachseat.seat_type.toLowerCase() == 'main-door'" class="default-cursor">
                       <div
                         [ngStyle]="{'width': eachseat.seat_width, 'height':eachseat.seat_height, 'line-height':eachseat.seat_height + 'px', 'border':'2px dashed #e8e8e8', 'text-align':'center', 'font-size':'18px', 'color':'#e8e8e8', 'text-transform':'uppercase'}">
-                        {{eachseat.seat_name}}</div>
+                        <!-- {{eachseat.seat_name}} -->
+                        Door
+                      </div>
                     </div>
                     <div style="position: relative;width:50px;height:45px;"
-                      *ngIf="eachseat.seat_type.toLowerCase() != 'driver' && eachseat.seat_type.toLowerCase() != 'door'">
+                      *ngIf="eachseat.seat_type.toLowerCase() != 'driver' && eachseat.seat_type.toLowerCase() != 'door'  && eachseat.seat_type.toLowerCase() != 'toilet' && eachseat.seat_type.toLowerCase() != 'fridge' && eachseat.seat_type.toLowerCase() != 'main-door'">
                       <div class="chair-seat"
                         [ngClass]="{alreadySelectedSeat: eachseat.selectSeat, alreayBooked:eachseat.selection_status || eachseat.seat_type.toLowerCase().trim() == 'staff' || eachseat.seat_name.toLowerCase().trim() == 'staff'}"
                         style="text-align: center;padding-right: 8px;padding-top: 5px;"><span
