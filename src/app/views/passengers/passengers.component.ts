@@ -46,6 +46,7 @@ export class PassengersComponent implements OnInit {
       this.data.onwardticket.passenger[0].nationality = this.user.nationality;
       this.data.onwardticket.passenger[0].mobile = this.user.phone;
       this.data.onwardticket.selectedSeat=this.getSeatsBooked(this.data.onwardticket.passenger);
+      this.data.onwardticket.bookedThrough="Web"
       }
       
     }

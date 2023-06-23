@@ -104,7 +104,7 @@ export class HomeComponent implements OnInit,AfterViewInit {
   }
   setDate(item){
     this.return_min=new Date(item)
-    this.return_min.setDate(this.return_min.getDate() + 1);
+    this.return_min.setDate(this.return_min.getDate());
 
   }
   getLocation(){

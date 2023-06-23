@@ -25,7 +25,19 @@ export class PaymentsComponent implements OnInit {
   ref_no='';
   id;
   id1;
+  selectedPaymentMethod;
   time: any={};
+  paymentMethods= [
+    {
+      name: 'vodacom',
+      logoUrl: 'assets/img/Vodacom-logo.png'
+    },
+    {
+      name: 'tigo',
+      logoUrl: 'assets/img/tigo-logo.png'
+    },
+    // Add more payment methods as needed
+  ];
   constructor(public service:ServiceService,private formBuilder: FormBuilder,public commonService:CommonService,public toastr:ToastrService,public spinner:NgxSpinnerService,public activated:ActivatedRoute,public router:Router) { }
   ngOnInit(): void {
  
@@ -61,6 +73,10 @@ export class PaymentsComponent implements OnInit {
       });
     })
    this.tickerTimer();
+  }
+
+  selectPaymentMethod(paymentMethod) {
+    this.selectedPaymentMethod = paymentMethod;
   }
 
   makePayment(){

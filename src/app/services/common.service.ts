@@ -19,6 +19,7 @@ export class CommonService {
   }
 setBooking(data){
   this.bookingdata.next(data);
+  localStorage.setItem('booking_info',JSON.stringify(data))
 }
 setToken(text){
   this.token.next(text);

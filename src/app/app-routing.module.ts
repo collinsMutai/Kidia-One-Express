@@ -65,7 +65,11 @@ const routes: Routes = [
   {
     path:'return/:id1/:id2/:id3/:id4/:id5/:id6',
     component:ReturnComponent
-  }
+  },
+  {
+    path:'**',
+    component:HomeComponent
+  },
 ];
 
 @NgModule({

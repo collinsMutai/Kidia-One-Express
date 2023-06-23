@@ -221,7 +221,7 @@ save(){
   if(this.reviewInfo.returnticket.passenger.length != this.reviewInfo.onwardticket.passenger.length){
     alert("Please  select "+this.reviewInfo.onwardticket.passenger.length+"  seats")
   }else{
-    this.reviewModal.show();
+    this.continueBooking();
   }
 }
 
@@ -232,10 +232,9 @@ continueBooking(){
 // }else{
 //   this.commonService.loginModal.next(true);
 //   this.checkLoginEvent();
-// }
-this.reviewModal.hide();
+
 if(this.user !=undefined){
-  this.route.navigateByUrl('/passengers')
+  this.route.navigateByUrl('/trip-review')
 }else{
   // this.commonService.loginModal.next(true);
   // this.checkLoginEvent();
@@ -253,16 +252,16 @@ onSubmit(){
 checkLoginEvent(){
   this.commonService.auth.subscribe((res)=>{
      if(res){
-       this.route.navigateByUrl('/passengers')
+        this.route.navigateByUrl('/trip-review')
      }
    })
 }
 onActivity($event){
   this.loginModal.hide();
   if($event=='guest'){
-    this.route.navigateByUrl('/passengers')
+    this.route.navigateByUrl('/trip-review')
   }else{
-    this.route.navigateByUrl('/passengers')
+    this.route.navigateByUrl('/trip-review')
   }
 }
 }

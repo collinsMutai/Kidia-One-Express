@@ -98,10 +98,10 @@ getSeatTypeWisePriceList(selectedseat, vipLimit, bclassLimit, normalLimit) {
     Object.entries(selectedSeatsData).forEach(([key, value]) => {
       let eachItem:any=value
       if (eachItem.totalTicketFare) {
-        totalTicketPrice = totalTicketPrice + eachItem.totalTicketFare;
+        totalTicketPrice +=  eachItem.totalTicketFare;
     }
     });
-  
+  console.log('ddd',totalTicketPrice)
     return totalTicketPrice;
 };
 

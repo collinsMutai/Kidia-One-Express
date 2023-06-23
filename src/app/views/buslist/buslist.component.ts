@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { City } from '../home/home.component';
 import { CommonService } from 'src/app/services/common.service';
+import { ReturnService } from 'src/app/services/return.service';
 declare var anime: any;
 @Component({
   selector: 'app-buslist',
@@ -49,10 +50,12 @@ export class BuslistComponent implements OnInit,AfterViewInit {
   user:any={};
   date = new Date()
   boardingForm: FormGroup;
-  constructor(public service:ServiceService,public activated:ActivatedRoute,private formBuilder: FormBuilder,public bookingService:BookingService,public route:Router,public datePipe:DatePipe,public commonService:CommonService) { 
+  constructor(public service:ServiceService,public activated:ActivatedRoute,private formBuilder: FormBuilder,public bookingService:BookingService,public route:Router,public datePipe:DatePipe,public commonService:CommonService,public returnService:ReturnService) { 
   }
   ngOnInit() {
+    this.returnService.reset();
     this.bookingService.reset();
+    this.initParams();
     this.user=JSON.parse(sessionStorage.getItem('loggedUser'));
     this.searchForm = this.formBuilder.group({
       date: ['', Validators.required],
@@ -72,7 +75,7 @@ export class BuslistComponent implements OnInit,AfterViewInit {
      
     });
 
-    this.initParams();
+  
     this.bookingService.review_info.subscribe((res)=>{
      this.reviewInfo=res;
     })
@@ -132,6 +135,7 @@ export class BuslistComponent implements OnInit,AfterViewInit {
   }
   initParams(){
     this.activated.paramMap.subscribe((res)=>{  
+      console.log('d',res);
       this.params.source_city_id=res.get('id1')
       this.params.destination_city_id=res.get('id2')
       this.params.travel_date =res.get('id3')
@@ -141,7 +145,7 @@ export class BuslistComponent implements OnInit,AfterViewInit {
       if (this.params.return_date !=''){
         this.returnTicket=true
       }
-        
+      sessionStorage.setItem('params',JSON.stringify(this.params))
       this.bookingService.setBookingParams(this.params)
       let data= {
         "source_city_id":res.get('id1'),
@@ -184,10 +188,14 @@ export class BuslistComponent implements OnInit,AfterViewInit {
     
   }
   onSubmit(){
-    console.log("Dccc")
     let data=this.searchForm.value
     this.modify=false;
-    this.route.navigate(['buslist',data.city_id,data.dest_id,this.datePipe.transform(data.date,'yyyy-MM-dd'),data.sourceCity,data.destCity])
+    if(this.returnTicket){
+      this.route.navigate(['return',data.city_id,data.dest_id,this.datePipe.transform(data.date,'yyyy-MM-dd'),data.sourceCity,data.destCity,this.datePipe.transform(data.return_date,'yyyy-MM-dd')])
+    }else{
+      this.route.navigate(['/buslist',data.city_id,data.dest_id,this.datePipe.transform(data.date,'yyyy-MM-dd'),data.sourceCity,data.destCity,''])
+    }
+
   }
   getSeats(item){
     this.bus=item;
@@ -226,9 +234,8 @@ export class BuslistComponent implements OnInit,AfterViewInit {
    
   }
   onReturnSearch(){
-    let date = this.returnForm.get('returnDate').value
-    let data = this.params
-    this.route.navigate(['buslist',data.source_city_id,data.destination_city_id,this.datePipe.transform(data.travel_date,'yyyy-MM-dd'),data.source_city,data.dest_city,this.datePipe.transform(date,'yyyy-MM-dd')])
+    let data =this.searchForm.value
+    this.route.navigate(['return',data.city_id,data.dest_id,this.datePipe.transform(data.date,'yyyy-MM-dd'),data.sourceCity,data.destCity,this.datePipe.transform(data.return_date,'yyyy-MM-dd')])
 
   }
 selectSeat(item){
@@ -246,7 +253,7 @@ save(){
     let data =this.searchForm.value
     this.route.navigate(['return',data.city_id,data.dest_id,this.datePipe.transform(data.date,'yyyy-MM-dd'),data.sourceCity,data.destCity,this.datePipe.transform(data.return_date,'yyyy-MM-dd')])
   }else{
- this.reviewModal.show();
+    this.continue();
   }
  
 
@@ -254,7 +261,7 @@ save(){
 continue(){
   this.reviewModal.hide();
   if(this.user !=undefined){
-    this.route.navigateByUrl('/passengers')
+    this.route.navigateByUrl('/trip-review')
   }else{
     // this.commonService.loginModal.next(true);
     // this.checkLoginEvent();
@@ -272,9 +279,9 @@ checkLoginEvent(){
 onActivity($event){
   this.loginModal.hide();
   if($event=='guest'){
-    this.route.navigateByUrl('/passengers')
+    this.route.navigateByUrl('/trip-review')
   }else{
-    this.route.navigateByUrl('/passengers')
+    this.route.navigateByUrl('/trip-review')
   }
 }
 ngAfterViewInit(): void {

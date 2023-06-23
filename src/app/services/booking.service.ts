@@ -139,7 +139,6 @@ calculateSeatLimit() {
   this.getTotalTicketPrice();
 }
 getTotalTicketPrice() {
-
   this.totalTicketPrice.next(this.busListService.getTotalTicketPrice(this.selectedSeatsData.value));
 }
 changeDropping(item) {
@@ -269,7 +268,7 @@ saveOutward() {
       };
       let data:any={}
       data.onwardticket=booking;
-      data.totalTicketPrice = this.totalTicketPrice.value;
+      data.totalTicketPrice = booking.total;
       this.bookingdata.next(data)
       this.commonService.setBooking(data);
       this.getAllSelectSeatName();
@@ -287,5 +286,7 @@ reset(){
   this.selectedseat.next([]);
   this.selectedSeatsData.next({});
   this.selectedTripData.next({});
+  this.totalTicketPrice.next(0);
+  this.commonService.setBooking({});
 }
 }

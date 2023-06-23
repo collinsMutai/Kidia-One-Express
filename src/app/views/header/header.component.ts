@@ -16,7 +16,7 @@ import { DatePipe } from '@angular/common';
 export class HeaderComponent implements OnInit {
   loginForm: FormGroup;
   type='1'
-  codes=['254']
+  codes=['254','255']
   registerForm: FormGroup;
   user:any={};
   @Input() open=false;

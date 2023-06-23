@@ -23,6 +23,7 @@ import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from "@angular/common
 import { BackendInterceptor } from './backend.interceptor';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatSelectModule} from '@angular/material/select';
+import { MatExpansionModule} from '@angular/material/expansion';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatTabsModule} from '@angular/material/tabs';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -87,6 +88,7 @@ import { TripReviewComponent } from './views/trip-review/trip-review.component';
     TabsModule.forRoot(),
     MatPaginatorModule,
     NgxSpinnerModule,
+    MatExpansionModule,
     ToastrModule.forRoot()
   ],
   providers: [

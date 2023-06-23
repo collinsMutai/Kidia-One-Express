@@ -3,38 +3,230 @@
 <div class="section container">
     <div class="row">
        <div class="col-sm-12">
-        <h5>Previous Page</h5>
+        <h5> <i class="fa-solid fa-chevron-left"></i>Modify Trip</h5>
        </div>
-       <div class="col-sm-8">
+       <div class="col-sm-7">
         <div class="row mt-2">
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <h4>Passengers</h4>
                         <hr>
-                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <form #passegerForm="ngForm"> 
+            
+                          <div class="row" *ngFor="let item of data?.onwardticket?.passenger;let index=index">
+                          
+              
+                                          <div class="col-sm-8">
+                                              <h5>
+                                                  <p class="modalpassenger" *ngIf="index == 0" style="color:blue">Primary Passenger</p>
+                                                  <p class="modalpassenger" *ngIf="index > 0" style="color:orange">Co-Passenger</p>
+                      
+                                              </h5>
+                                              </div>
+                                              <div class="col-sm-4" style="text-align:right">
+                                                  Seat :<b>{{item.seat_name}}</b><b *ngIf="data?.returnticket?.passenger">, {{data.returnticket.passenger[index].seat_name}}</b>
+              
+                                              </div>
+                              
+                              
+                                <div class="col-sm-8">
+                                  
+                                  <mat-form-field appearance="outline">
+                                      <mat-label>Name</mat-label>
+                                      <input matInput  name="seat{{item.seat_name}}"  [(ngModel)]="item.name"    placeholder="Name" required>
+                                  </mat-form-field>
+                              </div>
+              
+                              <div class="col-sm-4">
+                                  <mat-form-field appearance="outline">
+                                      <mat-label>Age</mat-label>
+                                      <input matInput  name="age{{item.seat_name}}"  [(ngModel)]="item.age"    placeholder="Age" required>
+                                  </mat-form-field>
+                              </div>
+                              <div class="col-sm-6">
+                                  <mat-form-field appearance="outline" >
+                                    <mat-label>Code</mat-label>
+                                    <mat-select name="mobileId{{item.seat_name}}" [(ngModel)]="item.mobileId"    required >
+                                      <mat-option *ngFor="let code of codes" [value]="code"  >
+                                        {{code}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-sm-6">
+                                  <mat-form-field appearance="outline">
+                                    <mat-label>Phone</mat-label>
+                                    <input matInput  name="phone{{item.seat_name}}"    placeholder="Phone" [(ngModel)]="item.mobile">
+                                </mat-form-field>
+                                </div> 
+                                <!-- <div class="col-sm-12" style="margin-bottom: 10px;">
+                                  <mat-radio-group name="gender{{item.seat_name}}" [(ngModel)]="item.gender"   >
+                                      <div class="row">
+                                       <div class="col-sm-3 col-6">
+                                          <mat-radio-button selected value="F">Female </mat-radio-button>
+                                       </div>
+                                       <div class="col-sm-3 col-6">
+                                          <mat-radio-button value="M">Male</mat-radio-button> 
+                                      </div>
+                            
+                                      </div>
+                                  </mat-radio-group>
+                                  </div> -->
+                                  <div class="col-sm-6" >
+                                      <mat-form-field appearance="outline" >
+                                        <mat-label>Nationality</mat-label>
+                                        <input matInput type="text" required  name="nationality{{item.seat_name}}"  [(ngModel)]="item.nationality"    placeholder="Nationality">
+                                    </mat-form-field>
+                                    </div>
+                                    <div class="col-sm-6">
+                                      <mat-form-field appearance="outline" >
+                                        <mat-label>National ID</mat-label>
+                                        <input matInput type="text"  name="id_no{{item.seat_name}}" required [(ngModel)]="item.id_no"  placeholder="ID Number">
+                                    </mat-form-field>
+                                    </div> 
+              
+                            
+                          </div>
+
+                       </form>
                     </div>
                   </div>
             </div>
-            <div class="col-sm-12 mt-3">
+            <div class="col-sm-12 mt-3"  *ngIf="data.onwardticket">
                 <div class="card">
                     <div class="card-body">
                         <h4>Outbound Trip</h4>
                         <hr>
-                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <div class="row" style="margin-top:10px">
+                          <div class="row" style="font-size: 15px;font-weight: 600;margin-bottom: 10px">
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12  padding-0">
+                              <span class="crossBorderSpan" style="background-color:#cbffcb;font-size: 12px;">
+                            <span>{{data.onwardticket.source_city}} to {{data.onwardticket.dest_city}}</span> 
+                                <span> | {{data.onwardticket.booking_date|date:'dd MMM yyyy'}}</span></span>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="text-align: right">
+                              <span style="padding-right: 5px">Seat(s):</span><span
+                                *ngFor="let eachseat of data.onwardticket.passenger">{{eachseat.seat_name}}{{$last ? '' : ',
+                                '}}</span>
+                            </div>
+                          </div>
+                          <div class="row" style="margin-top: 10px;padding-bottom: 5px;display: flex;flex-wrap: wrap">
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 padding-left-0 sameHeightColumn" style="text-align: center">
+                              <img src="assets/img/bus.svg" alt="bus" style="width: 65px;opacity: 0.4">
+
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 sameHeightColumn padding-left-0">
+                              <div class="reviewPadding">
+                                <div style="font-size:15px"><b>Company Name</b></div>
+                                <div style="font-size:15px">{{data.onwardticket.company_name}}</div>
+                              </div>
+                              <div class="reviewPadding">
+                                <div style="font-size:15px"><b>Bus</b></div>
+                                <div style="font-size:15px">{{data.onwardticket.bus_title}}</div>
+                              </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 sameHeightColumn" style="padding-right: 0">
+                              <div class="reviewPadding">
+                                <div style="font-size:15px"><b>Depart</b></div>
+                                <div style="font-size:15px">{{data.onwardticket.source_city}}</div>
+                              </div>
+                              <div class="reviewPadding">
+                                <div style="font-size:15px"><b>Boarding</b></div>
+                                <div style="font-size:15px">{{data.onwardticket.boardingPointname}}</div>
+                              </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-3 sameHeightColumn" style="padding-right: 0">
+                              <div class="reviewPadding">
+                                <div style="font-size:15px"><b>Arrive</b></div>
+                                <div style="font-size:15px">{{data.onwardticket.dest_city}}</div>
+                              </div>
+                              <div class="reviewPadding">
+                                <div style="font-size:15px"><b>Dropping</b></div>
+                                <div style="font-size:15px">{{data.onwardticket.droppingPointname}}</div>
+                              </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-7 sameHeightColumn">
+                              <div class="row" style="padding:5px 0">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 padding-0" style="font-size:16px"><b>Total: </b></div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="text-align:right;font-size:16px;padding-left:0">
+                                  <b> {{data.onwardticket.total | number}}</b>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                
                     </div>
                   </div>
             </div>
 
-            <div class="col-sm-12 mt-3">
+            <div class="col-sm-12 mt-3" *ngIf="data.returnticket">
                 <div class="card">
                     <div class="card-body">
                         <h4>Return Trip</h4>
                         <hr>
-                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
+
+                        <div class="row"  style="margin-top:10px">
+                          <div class="row" style="font-size: 15px;font-weight: 600;margin-bottom: 10px">
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12  padding-0">
+                              <span class="crossBorderSpan" style="background-color: #ffe7fe;font-size: 12px;">
+                            <span>{{data.returnticket.source_city}} to {{data.returnticket.dest_city}}</span> 
+                                <span> | {{data.returnticket.booking_date|date:'dd MMM yyyy'}}</span></span>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="text-align: right">
+                              <span style="padding-right: 5px">Seat(s):</span><span
+                                *ngFor="let eachseat of data.returnticket.passenger">{{eachseat.seat_name}}{{$last ? '' : ',
+                                '}}</span>
+                            </div>
+                          </div>
+                          <div class="row" style="margin-top: 10px;padding-bottom: 5px;display: flex;flex-wrap: wrap">
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 padding-left-0 sameHeightColumn" style="text-align: center">
+                              <img src="assets/img/bus.svg" alt="bus" style="width: 65px;opacity: 0.4">
+
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 sameHeightColumn padding-left-0">
+                              <div class="reviewPadding">
+                                <div style="font-size:15px"><b>Company Name</b></div>
+                                <div style="font-size:15px">{{data.returnticket.company_name}}</div>
+                              </div>
+                              <div class="reviewPadding">
+                                <div style="font-size:15px"><b>Bus</b></div>
+                                <div style="font-size:15px">{{data.returnticket.bus_title}}</div>
+                              </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 sameHeightColumn" style="padding-right: 0">
+                              <div class="reviewPadding">
+                                <div style="font-size:15px"><b>Depart</b></div>
+                                <div style="font-size:15px">{{data.returnticket.source_city}}</div>
+                              </div>
+                              <div class="reviewPadding">
+                                <div style="font-size:15px"><b>Boarding</b></div>
+                                <div style="font-size:15px">{{data.returnticket.boardingPointname}}</div>
+                              </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-3 sameHeightColumn" style="padding-right: 0">
+                              <div class="reviewPadding">
+                                <div style="font-size:15px"><b>Arrive</b></div>
+                                <div style="font-size:15px">{{data.returnticket.dest_city}}</div>
+                              </div>
+                              <div class="reviewPadding">
+                                <div style="font-size:15px"><b>Dropping</b></div>
+                                <div style="font-size:15px">{{data.returnticket.droppingPointname}}</div>
+                              </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-7 sameHeightColumn">
+                              <div class="row" style="padding:5px 0">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 padding-0" style="font-size:16px"><b>Total: </b></div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="text-align:right;font-size:16px;padding-left:0">
+                                  <b> {{data.returnticket.total | number}}</b>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                
+                      
                     </div>
                   </div>
             </div>
@@ -42,12 +234,156 @@
             
         </div>
        </div>
-       <div class="col-sm-4">
+       <div class="col-sm-5">
         <h2>Trip Summary</h2>
-        
+        <div class="row">
+          <div class="col-sm-12" *ngIf="pay">
+            <div class="row">
+              <div class="col-sm-6">
+                <h5>Booking Ref No</h5>
+              </div>
+              <div class="col-sm-6"  style="text-align: right;">
+                <h5>{{ref_no}}</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6" >
+            <h5>Onward Trip</h5>
+          </div>
+          <div class="col-sm-6" style="text-align: right;font-weight: 600;font-size: 22px;">
+            {{data.onwardticket.total  | number:'1.2-2'}}
+          </div>
+
+          <div class="col-sm-6" *ngIf="data.returnticket">
+           <h5> Return Trip</h5>
+          </div>
+          <div class="col-sm-6" *ngIf="data.returnticket" style="text-align: right;font-weight:600;font-size: 22px;">
+            {{data.returnticket.total | number:'1.2-2'}}
+          </div>
+
+          <div class="col-sm-12">
+            <hr  style="border-top: dotted 1px;" />
+          </div>
+          <div class="col-sm-6">
+            <h3>Total(inc.VAT)</h3>
+          </div>
+          <div class="col-sm-6" style="text-align: right;">
+            <h3> 
+              <span *ngIf="currency=='3'">
+                TZS
+            </span> 
+            <span *ngIf="currency !='3'">
+              KSH
+          </span> 
+            {{data.totalTicketPrice | number:'1.2-2'}}</h3>
+          </div>
+          <!-- <div class="col-sm-12">
+            <mat-accordion>
+              <mat-expansion-panel hideToggle *ngIf="currency !='3'" (click)="method('Mpesa')">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/M-PESA_LOGO-01.svg/220px-M-PESA_LOGO-01.svg.png" alt="">
+
+                  </mat-panel-title>
+              
+                </mat-expansion-panel-header>
+                <form [formGroup]="paymentForm" >
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Code</mat-label>
+                        <input matInput readonly formControlName="country_code"    placeholder="code">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-sm-8">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Mobile</mat-label>
+                        <input matInput formControlName="mobile"    placeholder="Mobile">
+                    </mat-form-field>
+                    </div>
+                   
+                   
+                  </div>
+                  </form>
+              </mat-expansion-panel>
+              <mat-expansion-panel (opened)="panelOpenState = true"
+                                   (closed)="panelOpenState = false"   *ngIf="currency=='3'"   (click)="method('vodacom')">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <img src="../../../assets/img/vodacom.png" alt="">
+
+                  </mat-panel-title>
+                  
+                </mat-expansion-panel-header>
+                <form [formGroup]="vodacomForm" >
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Code</mat-label>
+                        <input matInput readonly formControlName="country_code"    placeholder="code">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-sm-8">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Mobile</mat-label>
+                        <input matInput formControlName="mobile"    placeholder="Mobile">
+                    </mat-form-field>
+                    </div>
+                   
+                    
+                  </div>
+                  </form>
+              </mat-expansion-panel>
+
+               <mat-expansion-panel (opened)="panelOpenState = true"
+                                   (closed)="panelOpenState = false"   *ngIf="currency=='3'"   (click)="method('tigo')">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <img src="../../../assets/img/tigo.png" width="auto" height="5px" alt="">
+                  </mat-panel-title>
+                 
+                </mat-expansion-panel-header>
+                <form [formGroup]="tigoForm" >
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Code</mat-label>
+                        <input matInput readonly formControlName="country_code"   placeholder="code">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-sm-8">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Mobile</mat-label>
+                        <input matInput formControlName="mobile"    placeholder="Mobile">
+                    </mat-form-field>
+                    </div>
+                   
+                   
+                  </div>
+                  </form>
+              </mat-expansion-panel>
+            </mat-accordion>
+            
+
+
+          <div class="col-sm-12 mt-3">
+            <button   [disabled]="!tigoForm.invalid && paymentForm.invalid && vodacomForm.invalid" (click)="makePayment()" class="btn" style="float: right;background-color:rgb(230,23,115);color: white;" value="submit">Make Payment</button>
+
+          </div>
+
+
+
+        </div> -->
+
+        <div class="col-sm-12 mt-3">
+
+          <button   [disabled]="passegerForm.invalid" (click)="initPassenger();onClickSubmit()"     class="btn" style="float: right;background-color:rgb(230,23,115);color: white;" value="submit">Make Payment</button>
+
+        </div>
+
        </div>
     </div>
    
-    
+    <ngx-spinner bdColor = "rgba(0, 0, 0, 0)" size = "medium" color = "#ffe716" type = "pacman" [fullScreen] = "true"><p style="color: white" >Please wait... </p></ngx-spinner>
+
   </div>
-  <app-footer></app-footer>

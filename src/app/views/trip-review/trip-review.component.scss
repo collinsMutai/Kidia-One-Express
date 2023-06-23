@@ -1,0 +1,94 @@
+
+
+::ng-deep .mat-tab-label {
+    padding: 0px !important;
+    justify-content: left !important;
+}
+
+
+::ng-deep mat-form-field.mat-form-field.mat-form-field-appearance-outline>div.mat-form-field-wrapper>div.mat-form-field-flex>div.mat-form-field-infix {
+    padding: 0.6em 0px !important
+}
+
+::ng-deep mat-form-field.mat-form-field.mat-form-field-appearance-outline>div.mat-form-field-wrapper>div.mat-form-field-flex>div.mat-form-field-infix>span.mat-form-field-label-wrapper {
+    top: -1.3em !important
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.1em) scale(.75) !important;
+    width: 133.33333% !important;
+}
+.connection-line {
+    position: relative;
+    width: 2px;
+    background-color: #000; /* Set your desired line color here */
+    height: 30px; /* Set the height of the line according to your needs */
+    margin: 0 auto; /* Centers the line horizontally */
+  }
+  
+  .connection-line::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background-color: #000; /* Set your desired circle color here */
+    border-radius: 50%;
+  }
+
+  .payment-methods {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .method {
+    margin-bottom: 20px;
+  }
+  
+  .radio-label {
+    margin-left: 10px;
+  }
+  
+.name{
+    background-color: darkgray;
+    color:white;
+    padding: 20px;
+    
+    strong{
+        color:white;
+    }
+}
+.logo{
+    padding: 20px;
+}
+.total{
+    background-color: darkgray;
+    color:white;
+    padding: 20px
+    
+}
+.heading{
+    margin-top: 20px;
+    padding: 20px;
+}
+.main{
+    padding: 20px;
+}
+img{
+    height: 50px;
+}
+.mat-card{
+    margin-bottom: 50px;
+}
+#logo{
+    background-color: black;
+    width: 50%;
+}
+#logo, #pay
+{
+    display:inline;
+    background-color: red;
+}

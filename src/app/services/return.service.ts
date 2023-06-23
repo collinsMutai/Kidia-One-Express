@@ -148,7 +148,6 @@ changeDropping(item) {
   this.selectedDropping.next(item);
 };
 changeBoarding(item) {
-  console.log('dddd',item);
   this.selectedBoarding.next(item);
 };
 
@@ -293,6 +292,8 @@ reset(){
   this.selectedSeatsData.next({});
   this.selectedTripData.next({});
   this.commonService.bookingdata.next({});
+  this.commonService.setBooking({});
+  this.totalTicketPrice.next(0)
 }
 
 }
