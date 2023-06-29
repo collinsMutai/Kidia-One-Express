@@ -117,6 +117,7 @@ export class TripReviewComponent implements OnInit {
   }
   onClickSubmit(){
     // this.spinner.show();
+    this.initPassenger();
     delete this.data.onwardticket.fareBreakup
     let token=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 20);
     this.data.onwardticket.paymentMethod="tigo"
@@ -142,18 +143,18 @@ export class TripReviewComponent implements OnInit {
       }
     });
     this.unsetNotRequiredParams();
-    // this.service.bookingTicket({ticketDetail:this.data}).subscribe((res)=>{
-    //   this.commonService.setToken(token);
+    this.service.bookingTicket({ticketDetail:this.data}).subscribe((res)=>{
+      this.commonService.setToken(token);
       
-    //   sessionStorage.setItem('time',moment().format('HH:mm:ss a'))
-    //   if(res.isSuccess){
-    //     this.spinner.hide();
-    //   this.router.navigate(['/payment',res.booking_reference,this.data.onwardticket.passenger[0].mobileId + this.data.onwardticket.passenger[0].mobile,token]);
+      sessionStorage.setItem('time',moment().format('HH:mm:ss a'))
+      if(res.isSuccess){
+        this.spinner.hide();
+      this.router.navigate(['/payment',res.booking_reference,this.data.onwardticket.passenger[0].mobileId + this.data.onwardticket.passenger[0].mobile,token]);
   
-    //   }else{
-    //     this.spinner.hide();
-    //   }
-    // })
+      }else{
+        this.spinner.hide();
+      }
+    })
   }
 
  
