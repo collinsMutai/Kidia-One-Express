@@ -18,3 +18,18 @@
         margin-right: auto;
         width: 50%;
       }
+
+
+      .feature-custom{
+        text-align: center;
+      border-radius: 200px;
+      background: #fff;
+      box-shadow: 0 5px 10px rgba(0,0,0,.2);
+      position: relative;
+      overflow: hidden;
+      margin: 0;
+      padding: 20px 0;
+      list-style: none;
+      color: white;
+      display: flex;
+      }
