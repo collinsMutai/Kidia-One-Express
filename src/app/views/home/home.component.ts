@@ -110,9 +110,9 @@ export class HomeComponent implements OnInit,AfterViewInit {
   getLocation(){
     this.http.get('http://ip-api.com/json').subscribe((response: any) => {
       if(response.country=='Kenya'){
-        sessionStorage.setItem("currencyId","3")
-      }else{
         sessionStorage.setItem("currencyId","1")
+      }else{
+        sessionStorage.setItem("currencyId","3")
       }
       
     });

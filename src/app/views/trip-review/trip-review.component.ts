@@ -92,23 +92,23 @@ export class TripReviewComponent implements OnInit {
     }else{
 
     }
-    if(localStorage.getItem('booking_info') !=undefined){
-      this.data = JSON.parse(localStorage.getItem('booking_info'))
-      if(this.data.returnticket){
-        this.data.totalTicketPrice = this.data.onwardticket.total + this.data.returnticket.total
+    // if(localStorage.getItem('booking_info') !=undefined){
+    //   this.data = JSON.parse(localStorage.getItem('booking_info'))
+    //   if(this.data.returnticket){
+    //     this.data.totalTicketPrice = this.data.onwardticket.total + this.data.returnticket.total
 
-      }else{
-        this.data.totalTicketPrice = this.data.onwardticket.total 
+    //   }else{
+    //     this.data.totalTicketPrice = this.data.onwardticket.total 
 
-      }
-    }
-    // this.commonService.review_info.subscribe((res)=>{
-    //   this.data=res
-    //   if(Object.entries(res).length==0){
-    //     this.router.navigateByUrl('/')
     //   }
+    // }
+    this.commonService.review_info.subscribe((res)=>{
+      this.data=res
+      if(Object.entries(res).length==0){
+        this.router.navigateByUrl('/')
+      }
     
-    // })
+    })
    
   }
   method(text){

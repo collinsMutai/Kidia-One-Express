@@ -242,6 +242,11 @@ mat-form-field {
   width: 100%;
 }
 
+.btn-custom {
+  background-color: #0F70B7 !important;
+  color: white;
+}
+
 .chair-right {
   position: absolute;
   bottom: 0;
