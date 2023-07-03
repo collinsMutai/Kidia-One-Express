@@ -50,12 +50,14 @@ export class BuslistComponent implements OnInit,AfterViewInit {
   user:any={};
   date = new Date()
   boardingForm: FormGroup;
+  currency="";
   constructor(public service:ServiceService,public activated:ActivatedRoute,private formBuilder: FormBuilder,public bookingService:BookingService,public route:Router,public datePipe:DatePipe,public commonService:CommonService,public returnService:ReturnService) { 
   }
   ngOnInit() {
     this.returnService.reset();
     this.bookingService.reset();
     this.initParams();
+    this.currency=sessionStorage.getItem('currencyId')
     this.user=JSON.parse(sessionStorage.getItem('loggedUser'));
     this.searchForm = this.formBuilder.group({
       date: ['', Validators.required],
@@ -306,5 +308,9 @@ ngAfterViewInit(): void {
   });
   
   
+  }
+  onCurrency(event){
+    sessionStorage.setItem('currencyId',event.value);
+    this.ngOnInit();
   }
 }

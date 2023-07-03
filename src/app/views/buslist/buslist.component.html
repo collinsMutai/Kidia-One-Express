@@ -21,11 +21,11 @@
       <div class="row">
         <div class="col-sm-10"></div>
         <div class="col-sm-2">
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" >
             <mat-label>Currency</mat-label>
-            <mat-select>
-              <mat-option value="TZS">TZS</mat-option>
-              <mat-option value="KES">KES</mat-option>
+            <mat-select [(ngModel)]="currency" (selectionChange)="onCurrency($event)">
+              <mat-option value="3">TZS</mat-option>
+              <mat-option value="1">KES</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
