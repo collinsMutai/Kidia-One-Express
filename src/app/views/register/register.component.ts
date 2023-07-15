@@ -15,7 +15,7 @@ import { DatePipe } from '@angular/common';
 export class RegisterComponent implements OnInit {
   loginForm: FormGroup;
   type='2'
-  codes=['254']
+  codes=['254','255']
   registerForm: FormGroup;
   user:any={};
   otp=false;

@@ -26,6 +26,7 @@ export class PaymentsComponent implements OnInit {
   id;
   id1;
   selectedPaymentMethod;
+  method='Tigo';
   time: any={};
   paymentMethods= [
     {
@@ -34,7 +35,7 @@ export class PaymentsComponent implements OnInit {
     },
     {
       name: 'tigo',
-      logoUrl: 'assets/img/tigo-logo.png'
+      logoUrl: 'assets/img/tigo.png'
     },
     // Add more payment methods as needed
   ];
@@ -84,9 +85,10 @@ export class PaymentsComponent implements OnInit {
     let formData=this.paymentForm.value
     let data ={
       "bookingRef": this.ref_no,
-      "queryoption":this.data.totalTicketPrice,
+      "queryoption":1,
       "queryvalue": formData.country_code+''+formData.mobile,
-      "requestType": "ticket",
+      "requestType": "mpesa",
+      "paymentMethod":"vodacom",
       "isWalletApply": false,
       "additionalInfo": {
         "onward": {"sponsorTrip": false, "discountId": 0},

@@ -123,7 +123,7 @@ export class TripReviewComponent implements OnInit {
     this.data.onwardticket.paymentMethod="tigo"
     this.data.onwardticket.currency="TZS"
     this.data.onwardticket.passenger.forEach((element,i)=> {
-      element.bookedThrough="Web"
+      element.bookedThrough="web"
       if(this.data.returnticket){
         delete this.data.returnticket.fareBreakup
         this.data.returnticket.c_email=element.c_email ? element.c_email :'';
@@ -136,10 +136,8 @@ export class TripReviewComponent implements OnInit {
         this.data.returnticket.passenger[i].nationality = element.nationality
         this.data.returnticket.passenger[i].mobile = element.mobile
         this.data.returnticket.selectedSeat=this.getSeatsBooked(this.data.returnticket.passenger);
-        this.data.returnticket.bookedThrough="Web"
+        this.data.returnticket.bookedThrough="web"
         this.data.returnticket.paymentMethod="tigo"
-     
-        
       }
     });
     this.unsetNotRequiredParams();
@@ -230,30 +228,5 @@ initPassenger(){
   
 }
 
-makePayment(){
-  this.spinner.show();
-  let formData=this.paymentForm.value
-  let data ={
-    "bookingRef": this.ref_no,
-    "queryoption":this.data.totalTicketPrice,
-    "queryvalue": formData.country_code+''+formData.mobile,
-    "requestType": "ticket",
-    "isWalletApply": false,
-    "additionalInfo": {
-      "onward": {"sponsorTrip": false, "discountId": 0},
-      "return": {"sponsorTrip": false, "discountId": 0}
-    },
-  }
-  this.service.makePayment(data).subscribe((res)=>{
-    this.spinner.hide();
-    if(res.isSuccess){
-      localStorage.setItem("payment_status",'initiated');
-      this.toastr.success("Successfully initiated","Success")
-      // this.payments.push("Mpesa Confirmation")
-      // this.selected=1;
-      // this.timer();
-    }
-  })
-}
 
 }
