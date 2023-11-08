@@ -38,7 +38,7 @@
                   <div class="row">
                     <mat-radio-group aria-label="Select an option">
                      <div class="row">
-                      <div class="col-sm-12" *ngFor="let method of paymentMethods">
+                      <div class="col-sm-3" *ngFor="let method of paymentMethods">
                         <mat-radio-button  [value]="method"  (change)="selectPaymentMethod(method)">
                           <img [src]="method.logoUrl" alt="{{ method.name }} " style="width:220px;" *ngIf="method !='tigo'">
                           <img [src]="method.logoUrl" alt="{{ method.name }}" style="width:220px;margin-left:300px !important;" *ngIf="method =='tigo'">
@@ -116,11 +116,11 @@
                     </li>
                   </ol>
                 </div>
-                <div class="col-sm-12 text-center">
+                <!-- <div class="col-sm-12 text-center">
                   <button class="btn btn-danger btn-sm" (click)="openModal()" style="margin-right:5px;">New Payment Request</button>
                   <button class="btn btn-success btn-sm" (click)="checkMpesaPayment()">Confirm Payment</button>
 
-                </div>
+                </div> -->
               </div>
             </div>
           </div>

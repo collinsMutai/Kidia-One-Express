@@ -251,14 +251,14 @@
             <h5>Onward Trip</h5>
           </div>
           <div class="col-sm-6" style="text-align: right;font-weight: 600;font-size: 22px;">
-            {{data.onwardticket.total  | number:'1.2-2'}}
+            {{data?.onwardticket?.total  | number:'1.2-2'}}
           </div>
 
           <div class="col-sm-6" *ngIf="data.returnticket">
            <h5> Return Trip</h5>
           </div>
           <div class="col-sm-6" *ngIf="data.returnticket" style="text-align: right;font-weight:600;font-size: 22px;">
-            {{data.returnticket.total | number:'1.2-2'}}
+            {{data?.returnticket?.total | number:'1.2-2'}}
           </div>
 
           <div class="col-sm-12">

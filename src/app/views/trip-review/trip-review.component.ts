@@ -122,8 +122,9 @@ export class TripReviewComponent implements OnInit {
     let token=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 20);
     this.data.onwardticket.paymentMethod="tigo"
     this.data.onwardticket.currency="TZS"
+    this.data.onwardticket.bookedThrough="web"
     this.data.onwardticket.passenger.forEach((element,i)=> {
-      element.bookedThrough="web"
+      
       if(this.data.returnticket){
         delete this.data.returnticket.fareBreakup
         this.data.returnticket.c_email=element.c_email ? element.c_email :'';
