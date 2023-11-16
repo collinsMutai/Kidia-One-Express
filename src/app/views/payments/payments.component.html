@@ -35,7 +35,7 @@
                
                
                 <div class="row">
-                  <div class="row">
+                  <div class="row" *ngIf="currency=='3'">
                     <mat-radio-group aria-label="Select an option">
                      <div class="row">
                       <div class="col-sm-3" *ngFor="let method of paymentMethods">
@@ -101,7 +101,7 @@
             </div>
             <div class="tab-pane fade " [ngClass]="{'active':selected==2,'show':selected==2}"  id="pills-paybill" role="tabpanel" aria-labelledby="pills-paybill-tab" tabindex="0">
               <div class="row mb-2">
-                <div class="col-sm-12">
+                <div class="col-sm-12" *ngIf="currency=='1'">
                   <h4 style="margin-left:15px">Proceed To pay</h4>
                   <ol>
                     <li>You will be prompted to enter your MPESA pin to authorize your payment request of KES <b>{{data?.totalTicketPrice}}</b> to <b>{{ref_no}}</b></li>
@@ -116,6 +116,24 @@
                     </li>
                   </ol>
                 </div>
+
+                <div class="col-sm-12"  *ngIf="currency=='3'">
+                  <h4 style="margin-left:15px">Proceed To pay</h4>
+                  <ol>
+                    <li>You will be prompted to enter your MPESA pin to authorize your payment request of KES <b>{{data?.totalTicketPrice}}</b> to <b>{{ref_no}}</b></li>
+                    <li>Choose MPESA
+                      <ol  style="list-style:upper-roman;">
+                        <li>Go to your sim toolkit enter</li>
+                        <li>Use account number <b>{{ref_no}}</b></li>
+                        <li>Enter 009009 as your business number</li>
+                        <li>Enter <b>{{ref_no}}</b></li>
+                        <li>Enter KES <b>{{data?.totalTicketPrice}}</b></li>
+                        <li>Enter PIN</li>
+                      </ol>
+                    </li>
+                  </ol>
+                </div>
+
                 <!-- <div class="col-sm-12 text-center">
                   <button class="btn btn-danger btn-sm" (click)="openModal()" style="margin-right:5px;">New Payment Request</button>
                   <button class="btn btn-success btn-sm" (click)="checkMpesaPayment()">Confirm Payment</button>

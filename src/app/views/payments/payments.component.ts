@@ -28,6 +28,7 @@ export class PaymentsComponent implements OnInit {
   selectedPaymentMethod;
   method='Tigo';
   time: any={};
+  currency=""
   paymentMethods= [
     {
       name: 'vodacom',
@@ -41,7 +42,8 @@ export class PaymentsComponent implements OnInit {
   ];
   constructor(public service:ServiceService,private formBuilder: FormBuilder,public commonService:CommonService,public toastr:ToastrService,public spinner:NgxSpinnerService,public activated:ActivatedRoute,public router:Router) { }
   ngOnInit(): void {
- 
+    this.currency=sessionStorage.getItem('currencyId')
+    console.log(this.currency);
     this.paymentForm = this.formBuilder.group({
       mobile: ['', Validators.required],
       country_code:['', Validators.required]
