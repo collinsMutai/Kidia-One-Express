@@ -1205,6 +1205,11 @@ class PaymentsComponent {
                 this.toastr.error("No Transaction Found", "Transaction");
                 this.spinner.hide();
             }
+        }, (err) => {
+            this.payments.push("Paybill Option");
+            this.selected = 2;
+            this.toastr.error("No Transaction Found", "Transaction");
+            this.spinner.hide();
         });
     }
     openModal() {
