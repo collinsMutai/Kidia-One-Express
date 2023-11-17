@@ -1139,8 +1139,8 @@ class PaymentsComponent {
             "bookingRef": this.ref_no,
             "queryoption": 1,
             "queryvalue": formData.country_code + '' + formData.mobile,
-            "requestType": "mpesa",
-            "paymentMethod": "vodacom",
+            "requestType": "ticket",
+            "paymentMethod": this.currency == '3' ? "vodacom" : "mpesa",
             "isWalletApply": false,
             "additionalInfo": {
                 "onward": { "sponsorTrip": false, "discountId": 0 },
