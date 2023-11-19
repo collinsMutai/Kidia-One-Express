@@ -160,7 +160,6 @@ export class TripReviewComponent implements OnInit {
 
   submitPayment() {
     if (this.selectedMethod === 'tigo') {
-      // Handle Tigo payment
       console.log('Tigo payment selected');
     } else if (this.selectedMethod === 'vodafone') {
       // Handle Vodafone payment
@@ -226,7 +225,6 @@ initPassenger(){
   this.data.onwardticket.passenger[0].nationality = this.user.nationality;
   this.data.onwardticket.passenger[0].mobile = this.user.mobile;
   this.data.onwardticket.selectedSeat=this.getSeatsBooked(this.data.onwardticket.passenger);
-  
 }
 
 
