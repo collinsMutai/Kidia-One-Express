@@ -5,6 +5,8 @@ import { BookingService } from 'src/app/services/booking.service';
 import { CommonService } from 'src/app/services/common.service';
 import { ServiceService } from 'src/app/services/service.service';
 import * as moment from 'moment';
+import * as CryptoJS from 'crypto-js';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-passengers',
@@ -73,13 +75,23 @@ export class PassengersComponent implements OnInit {
       }
     });
     this.unsetNotRequiredParams();
-    this.service.bookingTicket({ticketDetail:this.data}).subscribe((res)=>{
-      this.commonService.setToken(token);
-      sessionStorage.setItem('time',moment().format('HH:mm:ss a'))
-      if(res.isSuccess){
-        this.router.navigate(['/payment',res.booking_reference,this.data.onwardticket.passenger[0].mobileId + this.data.onwardticket.passenger[0].mobile,token])
-      }
-    })
+    const key = CryptoJS.enc.Utf8.parse('y(9;d36HtO0QbTaQ');
+    const iv = CryptoJS.lib.WordArray.random(16); 
+    const encrypted = CryptoJS.AES.encrypt(JSON.stringify({ticketDetail:this.data,bookedThrough:"web"}), key, {
+    iv: iv,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7
+    });
+    const encryptedData = encrypted.toString();
+    const encodedIV = iv.toString(CryptoJS.enc.Base64);
+  this.service.bookingTicket({data:encryptedData,iv:encodedIV,token:environment.token}).subscribe((res)=>{
+    this.commonService.setToken(token);
+    sessionStorage.setItem('time',moment().format('HH:mm:ss a'))
+    if(res.isSuccess){
+      this.router.navigate(['/payment',res.booking_reference,this.data.onwardticket.passenger[0].mobileId + this.data.onwardticket.passenger[0].mobile,token])
+    }
+  })
+  
   }
 
   getSeatsBooked(item){

@@ -8,6 +8,8 @@ import * as moment from 'moment';
 import { interval } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import * as CryptoJS from 'crypto-js';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-trip-review',
@@ -142,7 +144,18 @@ export class TripReviewComponent implements OnInit {
       }
     });
     this.unsetNotRequiredParams();
-    this.service.bookingTicket({ticketDetail:this.data}).subscribe((res)=>{
+
+    const key = CryptoJS.enc.Utf8.parse('y(9;d36HtO0QbTaQ');
+    const iv = CryptoJS.lib.WordArray.random(16); 
+    const encrypted = CryptoJS.AES.encrypt(JSON.stringify({ticketDetail:this.data,bookedThrough:"web"}), key, {
+    iv: iv,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7
+    });
+    const encryptedData = encrypted.toString();
+    const encodedIV = iv.toString(CryptoJS.enc.Base64);
+
+    this.service.bookingTicket({data:encryptedData,iv:encodedIV,token:environment.token}).subscribe((res)=>{
       this.commonService.setToken(token);
       
       sessionStorage.setItem('time',moment().format('HH:mm:ss a'))

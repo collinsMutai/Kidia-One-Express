@@ -144,7 +144,7 @@ export class BuslistComponent implements OnInit,AfterViewInit {
       this.params.source_city=res.get('id4');
       this.params.dest_city=res.get('id5');
       this.params.return_date=res.get('id6');
-      if (this.params.return_date !=''){
+      if (this.params.return_date !=""){
         this.returnTicket=true
       }
       sessionStorage.setItem('params',JSON.stringify(this.params))

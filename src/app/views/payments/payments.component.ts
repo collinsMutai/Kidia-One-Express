@@ -8,6 +8,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import * as CryptoJS from 'crypto-js';
+import { environment } from '../../../environments/environment.prod';
+
 
 @Component({
   selector: 'app-payments',
@@ -96,8 +99,19 @@ export class PaymentsComponent implements OnInit {
         "onward": {"sponsorTrip": false, "discountId": 0},
         "return": {"sponsorTrip": false, "discountId": 0}
       },
+      "token":environment.token
     }
-    this.service.makePayment(data).subscribe((res)=>{
+  
+    const key = CryptoJS.enc.Utf8.parse('y(9;d36HtO0QbTaQ');
+    const iv = CryptoJS.lib.WordArray.random(16); 
+    const encrypted = CryptoJS.AES.encrypt(JSON.stringify(data), key, {
+    iv: iv,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7
+    });
+    const encryptedData = encrypted.toString();
+    const encodedIV = iv.toString(CryptoJS.enc.Base64);
+    this.service.makePayment({data:encryptedData,iv:encodedIV,token:environment.token}).subscribe((res)=>{
       this.spinner.hide();
       this.paymentModal.hide();
       if(res.isSuccess){
@@ -107,6 +121,8 @@ export class PaymentsComponent implements OnInit {
         this.selected=1;
         this.timer();
       }
+    },(err)=>{
+      this.spinner.hide();
     })
   }
 timer(){
