@@ -736,8 +736,14 @@ class TripReviewComponent {
     }
     initPassenger() {
         this.user = this.data.onwardticket.passenger[0];
+        if (this.user.mobileId == '254') {
+            sessionStorage.setItem("currencyId", "1");
+        }
+        else {
+            sessionStorage.setItem("currencyId", "3");
+        }
         this.data.onwardticket.c_email = this.user.email ? this.user.email : '';
-        this.data.onwardticket.currencyId = sessionStorage.getItem('currencyId');
+        this.data.onwardticket.currencyId = '1' ? this.user.mobileId == '254' : undefined;
         this.data.onwardticket.passenger[0].name = this.user.name;
         this.data.onwardticket.passenger[0].age = parseInt(this.user.age);
         this.data.onwardticket.passenger[0].gender = (this.user.gender == 'male') ? 'M' : 'F';
