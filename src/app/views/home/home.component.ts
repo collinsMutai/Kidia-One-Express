@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ServiceService } from 'src/app/services/service.service';
@@ -20,7 +20,6 @@ export interface City {
 })
 export class HomeComponent implements OnInit,AfterViewInit {
   searchForm: FormGroup;
-  @ViewChild('carousel') carousel: ElementRef;
   cities=[];
   date= new Date()
   return_min:Date;
@@ -57,7 +56,6 @@ export class HomeComponent implements OnInit,AfterViewInit {
     }),
   );
 
-  
 
   this.destOptions = this.searchForm.get('destCity').valueChanges.pipe(
     startWith(''),
@@ -71,7 +69,6 @@ export class HomeComponent implements OnInit,AfterViewInit {
     }),
   );
   }
-  
   get f() { return this.searchForm.controls; }
 
   onSubmit(){
@@ -122,29 +119,26 @@ export class HomeComponent implements OnInit,AfterViewInit {
   }
    
   ngAfterViewInit(): void {
-// const textWrapper = document.querySelector('.an-1');
-// textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+const textWrapper = document.querySelector('.an-1');
+textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
 
-// anime.timeline({loop: true})
-// .add({
-//   targets: '.an-1 .letter',
-//   scale: [4,1],
-//   opacity: [0,1],
-//   translateZ: 0,
-//   easing: "easeOutExpo",
-//   duration: 950,
-//   delay: (el, i) => 70*i
-// }).add({
-//   targets: '.an-1',
-//   opacity: 0,
-//   duration: 1000,
-//   easing: "easeOutExpo",
-//   delay: 3000
-// });
+anime.timeline({loop: true})
+.add({
+  targets: '.an-1 .letter',
+  scale: [4,1],
+  opacity: [0,1],
+  translateZ: 0,
+  easing: "easeOutExpo",
+  duration: 950,
+  delay: (el, i) => 70*i
+}).add({
+  targets: '.an-1',
+  opacity: 0,
+  duration: 1000,
+  easing: "easeOutExpo",
+  delay: 3000
+});
 
-this.carousel.nativeElement.
-setInterval(() => {
-  this.carousel.nativeElement.click();
-}, 1000)
+
 }
 }
