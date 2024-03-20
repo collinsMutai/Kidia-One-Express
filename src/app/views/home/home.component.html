@@ -1,16 +1,37 @@
 <main>
   <app-header></app-header>
 
-    <div class="hero-section section pt-0">
+    <!-- <div class="hero-section section pt-0">
       <div class="container pt-5">
-      <!-- <app-header></app-header> -->
       </div>
       <div class="container h-100 text-white">
         <p class="display-6 fw-bold text-center pt-5 an-1"> Hi, Book,  <i class="fa-solid fa-angles-right"></i>  Pay <i class="fa-solid fa-angles-right"></i> & Travel with Us</p>
       </div>
+    </div> -->
+
+   <div >
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" data-bs-config='{"wrap":true}'>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="../../../assets/img/bg1.png" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="../../../assets/img/bg2.png" class="d-block w-100" alt="...">
+
+        </div>
+        <div class="carousel-item">
+          <img src="../../../assets/img/bg3.png" class="d-block w-100" alt="...">
+
+        </div>
+        <div class="carousel-item">
+          <img src="../../../assets/img/bg4.png" class="d-block w-100" alt="...">
+
+        </div>
+      </div>
     </div>
-    <div class="search-section section container">
-      <div class="card border-0 shadow p- p-lg-4" >
+   </div>
+    <div class="section container">
+      <div class="card border-0 shadow p-lg-4" >
         <div class="card-body">
           
           <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" >
@@ -64,14 +85,14 @@
       </div>
     </div>
    
-    <div class="container" style="bottom: 4rem; position: relative; margin-top: 100px;">
+    <div class="container" style="bottom: 3rem; position: relative; margin-top:40px;">
       <div>
-        <div >
-          <div class="feature-custom text-center hidden-xs ng-scope">
-            <div class="col-ld-3 col-md-3 col-sm-3 text-center" style="padding: 0;border-right:solid 1px black"><div class="feature-icon"><img src="../../assets/img/display1.png" style="width:60px"></div><h3 style="font-size: 16px;font-weight:bold;color:black ; ">VIP Treatment</h3></div>
-          <div class="col-ld-3 col-md-3 col-sm-3 text-center" style="padding: 0;border-right:solid 1px black"><div class="feature-icon"><img src="../../assets/img/display2.png" style="width:60px"></div><h3 style="font-size: 16px;font-weight:bold;color:black ; ">On Board Wifi Available</h3></div>
-          <div class="col-ld-3 col-md-3 col-sm-3 text-center" style="padding: 0;border-right:solid 1px black"><div class="feature-icon"><img src="../../assets/img/display3.png" style="width:60px"></div><h3 style="font-size: 16px;font-weight:bold;color:black ; ">Power Outlets</h3></div>
-          <div class="col-ld-3 col-md-3 col-sm-3 text-center" style="padding: 0;"><div class="feature-icon"><img src="../../assets/img/display4.png" style="width:60px"></div><h3 style="font-size: 16px;font-weight:bold;color:black">Extra Legroom</h3></div>
+        <div  >
+          <div class="feature-custom text-center hidden-xs ng-scope" style="background-color: #0e6ba8;">
+            <div class="col-ld-3 col-md-3 col-sm-3 text-center" style="padding: 0;border-right:solid 1px white"><div class="feature-icon"><img src="../../assets/img/display1.png" style="width:60px"></div><h3 style="font-size: 16px;font-weight:bold;color:white ; ">VIP Treatment</h3></div>
+          <div class="col-ld-3 col-md-3 col-sm-3 text-center" style="padding: 0;border-right:solid 1px white"><div class="feature-icon"><img src="../../assets/img/display2.png" style="width:60px"></div><h3 style="font-size: 16px;font-weight:bold;color:white ; ">On Board Wifi Available</h3></div>
+          <div class="col-ld-3 col-md-3 col-sm-3 text-center" style="padding: 0;border-right:solid 1px white"><div class="feature-icon"><img src="../../assets/img/display3.png" style="width:60px"></div><h3 style="font-size: 16px;font-weight:bold;color:white ; ">Power Outlets</h3></div>
+          <div class="col-ld-3 col-md-3 col-sm-3 text-center" style="padding: 0;"><div class="feature-icon"><img src="../../assets/img/display4.png" style="width:60px"></div><h3 style="font-size: 16px;font-weight:bold;color:white">Extra Legroom</h3></div>
           </div>
           
   
