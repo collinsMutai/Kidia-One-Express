@@ -229,7 +229,7 @@ export class BuslistComponent implements OnInit,AfterViewInit {
   tooltip(item,bus){
     if(item.seat_type =='normal' || item.seat_type =='bclass' || item.seat_type =='vip'){
       let obj=bus.defaultTripPriceList.find(ob=>ob.seatType == item.seat_type)
-      return item.seat_name+'| '+item.seat_type.charAt(0).toUpperCase() + item.seat_type.slice(1) +'|'+obj.currencyCode +' '+obj.amount
+      return item.seat_name+'| '+item.seat_type.charAt(0).toUpperCase() + item.seat_type.slice(1) +'|'+obj?.currencyCode +' '+obj?.amount
     }else{
       return item.seat_name+'| '+ item.seat_type.charAt(0).toUpperCase() + item.seat_type.slice(1) 
     }

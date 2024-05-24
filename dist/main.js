@@ -741,7 +741,6 @@ class TripReviewComponent {
             console.log('Tigo payment selected');
         }
         else if (this.selectedMethod === 'vodafone') {
-            // Handle Vodafone payment
             console.log('Vodafone payment selected');
         }
         else {
@@ -765,7 +764,7 @@ class TripReviewComponent {
             sessionStorage.setItem("currencyId", "3");
         }
         this.data.onwardticket.c_email = this.user.email ? this.user.email : '';
-        this.data.onwardticket.currencyId = '1' ? this.user.mobileId == '254' : undefined;
+        this.data.onwardticket.currencyId = sessionStorage.getItem("currencyId");
         this.data.onwardticket.passenger[0].name = this.user.name;
         this.data.onwardticket.passenger[0].age = parseInt(this.user.age);
         this.data.onwardticket.passenger[0].gender = (this.user.gender == 'male') ? 'M' : 'F';
@@ -6808,7 +6807,7 @@ class BuslistComponent {
     tooltip(item, bus) {
         if (item.seat_type == 'normal' || item.seat_type == 'bclass' || item.seat_type == 'vip') {
             let obj = bus.defaultTripPriceList.find(ob => ob.seatType == item.seat_type);
-            return item.seat_name + '| ' + item.seat_type.charAt(0).toUpperCase() + item.seat_type.slice(1) + '|' + obj.currencyCode + ' ' + obj.amount;
+            return item.seat_name + '| ' + item.seat_type.charAt(0).toUpperCase() + item.seat_type.slice(1) + '|' + (obj === null || obj === void 0 ? void 0 : obj.currencyCode) + ' ' + (obj === null || obj === void 0 ? void 0 : obj.amount);
         }
         else {
             return item.seat_name + '| ' + item.seat_type.charAt(0).toUpperCase() + item.seat_type.slice(1);
