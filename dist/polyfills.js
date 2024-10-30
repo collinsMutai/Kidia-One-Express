@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/davi/Documents/projects/george/bus template/travel/src/polyfills.ts */"hN/g");
+module.exports = __webpack_require__(/*! C:\Program Files\Git\boss-micro-sites-ng10\src\polyfills.ts */"hN/g");
 
 
 /***/ }),
